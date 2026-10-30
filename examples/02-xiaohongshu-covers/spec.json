@@ -1,0 +1,163 @@
+{
+ "project": "小红书封面样例",
+ "profile": {
+  "industry": "creator"
+ },
+ "brand": {
+  "name": "萝卜AI笔记",
+  "direction": "trust-blue"
+ },
+ "items": [
+  {
+   "id": "p-food",
+   "type": "xhs",
+   "layout": "photo",
+   "sizes": [
+    "portrait"
+   ],
+   "content": {
+    "title": "番茄炒蛋\n**这样做巨下饭**",
+    "badges": [
+     "10分钟",
+     "新手零失败"
+    ]
+   },
+   "art": {
+    "subject": "一盘家常番茄炒蛋的近景特写，鸡蛋金黄，番茄汁红亮，白瓷盘，木桌，自然窗光，手机随手拍的感觉",
+    "subject_en": "a close phone photo of home-cooked Chinese tomato and scrambled egg stir-fry on a white plate, wooden table, natural window light, realistic",
+    "motif": "noodle-bowl"
+   }
+  },
+  {
+   "id": "t-card",
+   "type": "xhs",
+   "layout": "textcard",
+   "sizes": [
+    "portrait"
+   ],
+   "content": {
+    "title": "Claude 真的被**低估**了，\n特别是用来写周报。",
+    "color": "green"
+   }
+  },
+  {
+   "id": "t-memo",
+   "type": "xhs",
+   "layout": "memo",
+   "sizes": [
+    "portrait"
+   ],
+   "content": {
+    "title": "重庆两天一夜｜我的行程单",
+    "date": "今天 14:20",
+    "items": [
+     {
+      "t": "10:00 解放碑，先吃一碗小面",
+      "d": "人少的时候去，十分钟就能吃上"
+     },
+     {
+      "t": "12:00 八一好吃街",
+      "d": "酸辣粉、烤苕皮、折耳根土豆"
+     },
+     {
+      "t": "15:00 山城步道",
+      "d": "穿平底鞋，台阶很多"
+     },
+     {
+      "t": "17:30 鹅岭二厂",
+      "d": "等日落，拍照很出片"
+     },
+     {
+      "t": "19:00 老火锅",
+      "d": "**微辣就够了**，别逞强"
+     },
+     {
+      "t": "21:00 洪崖洞夜景",
+      "d": "去对岸看，比挤在里面好"
+     }
+    ]
+   }
+  },
+  {
+   "id": "t-rank",
+   "type": "xhs",
+   "layout": "ranking",
+   "sizes": [
+    "portrait"
+   ],
+   "content": {
+    "kicker": "萝卜AI笔记",
+    "tag": "TOP10",
+    "title": "我每天都在用的\n**10个** AI 工具",
+    "sub": "不用全都学，按任务选就够了",
+    "items": [
+     {
+      "t": "Claude",
+      "d": "写作、代码、读长文档",
+      "v": "主力"
+     },
+     {
+      "t": "ChatGPT",
+      "d": "日常问答和生图",
+      "v": "主力"
+     },
+     {
+      "t": "Gemini",
+      "d": "看视频、查资料",
+      "v": "常用"
+     },
+     {
+      "t": "Kimi",
+      "d": "中文长文本",
+      "v": "常用"
+     },
+     {
+      "t": "DeepSeek",
+      "d": "推理和数学",
+      "v": "常用"
+     },
+     {
+      "t": "即梦",
+      "d": "中文海报和图片",
+      "v": "常用"
+     },
+     {
+      "t": "可灵",
+      "d": "视频生成",
+      "v": "偶尔"
+     },
+     {
+      "t": "Cursor",
+      "d": "写代码",
+      "v": "偶尔"
+     },
+     {
+      "t": "NotebookLM",
+      "d": "资料整理成播客",
+      "v": "偶尔"
+     },
+     {
+      "t": "豆包",
+      "d": "语音聊天",
+      "v": "偶尔"
+     }
+    ]
+   }
+  },
+  {
+   "id": "d-doodle",
+   "type": "xhs",
+   "layout": "doodle",
+   "sizes": [
+    "portrait"
+   ],
+   "content": {
+    "title": "两岁以后\n一定要教孩子的\n**83个**小常识",
+    "sub": "建议收藏，慢慢教"
+   },
+   "art": {
+    "motif": "open-book"
+   }
+  }
+ ]
+}

@@ -1,0 +1,203 @@
+{
+ "_note": "Canvas presets. Screen sizes are pixels at 1x. Print sizes are millimetres; the renderer lays them out in CSS px at 96 dpi and exports PNG at 300 dpi plus a vector PDF. safe = inset for text as a fraction of the short side (screen) or millimetres (print). min_px = smallest allowed font size in CSS px for body text and captions. bleed_mm adds a print bleed on every side: the PNG/PDF are trim size plus bleed, keep text inside safe.",
+ "square": {
+  "label": "方图 1:1",
+  "use": "朋友圈、社群、视频号封面、头像底图",
+  "w": 1080,
+  "h": 1080,
+  "kind": "screen",
+  "safe": 0.06,
+  "min_px": {
+   "body": 24,
+   "caption": 18
+  }
+ },
+ "portrait": {
+  "label": "竖图 3:4",
+  "use": "小红书、朋友圈竖图、社群海报",
+  "w": 1080,
+  "h": 1440,
+  "kind": "screen",
+  "safe": 0.06,
+  "min_px": {
+   "body": 24,
+   "caption": 18
+  }
+ },
+ "tall": {
+  "label": "竖图 4:5",
+  "use": "朋友圈、Instagram 竖图",
+  "w": 1080,
+  "h": 1350,
+  "kind": "screen",
+  "safe": 0.06,
+  "min_px": {
+   "body": 24,
+   "caption": 18
+  }
+ },
+ "story": {
+  "label": "手机全屏 9:16",
+  "use": "手机长海报、抖音/视频号竖封面、社群转发海报",
+  "w": 1080,
+  "h": 1920,
+  "kind": "screen",
+  "safe": 0.07,
+  "min_px": {
+   "body": 26,
+   "caption": 20
+  }
+ },
+ "landscape": {
+  "label": "横版 16:9",
+  "use": "门店电视屏、直播背景、电脑壁纸",
+  "w": 1920,
+  "h": 1080,
+  "kind": "screen",
+  "safe": 0.06,
+  "min_px": {
+   "body": 26,
+   "caption": 20
+  }
+ },
+ "wechat-cover": {
+  "label": "公众号头图 2.35:1",
+  "use": "公众号文章封面（文章配图请交给 article-visual-director）",
+  "w": 900,
+  "h": 383,
+  "kind": "screen",
+  "safe": 0.08,
+  "min_px": {
+   "body": 20,
+   "caption": 16
+  }
+ },
+ "a4": {
+  "label": "A4 纵向",
+  "use": "门店张贴海报、菜单、价目表、通知",
+  "mm": [
+   210,
+   297
+  ],
+  "kind": "print",
+  "safe_mm": 8,
+  "min_px": {
+   "body": 12,
+   "caption": 10
+  }
+ },
+ "a4-landscape": {
+  "label": "A4 横向",
+  "use": "横版菜单、桌面立牌、证书",
+  "mm": [
+   297,
+   210
+  ],
+  "kind": "print",
+  "safe_mm": 8,
+  "min_px": {
+   "body": 12,
+   "caption": 10
+  }
+ },
+ "a5": {
+  "label": "A5 纵向",
+  "use": "小传单、桌面价目卡、邀请卡",
+  "mm": [
+   148,
+   210
+  ],
+  "kind": "print",
+  "safe_mm": 6,
+  "min_px": {
+   "body": 11,
+   "caption": 9
+  }
+ },
+ "a3": {
+  "label": "A3 纵向",
+  "use": "门店大海报、橱窗海报",
+  "mm": [
+   297,
+   420
+  ],
+  "kind": "print",
+  "safe_mm": 10,
+  "min_px": {
+   "body": 16,
+   "caption": 12
+  }
+ },
+ "card": {
+  "label": "名片 90x54mm 横版",
+  "use": "名片，含 2mm 出血",
+  "mm": [
+   90,
+   54
+  ],
+  "bleed_mm": 2,
+  "kind": "print",
+  "safe_mm": 4,
+  "min_px": {
+   "body": 9.5,
+   "caption": 8
+  }
+ },
+ "card-v": {
+  "label": "名片 54x90mm 竖版",
+  "use": "竖版名片，含 2mm 出血",
+  "mm": [
+   54,
+   90
+  ],
+  "bleed_mm": 2,
+  "kind": "print",
+  "safe_mm": 4,
+  "min_px": {
+   "body": 9.5,
+   "caption": 8
+  }
+ },
+ "table-card": {
+  "label": "桌号卡 100x150mm",
+  "use": "婚宴、年会、寿宴的桌号牌，含 2mm 出血",
+  "mm": [
+   100,
+   150
+  ],
+  "bleed_mm": 2,
+  "kind": "print",
+  "safe_mm": 6,
+  "min_px": {
+   "body": 12,
+   "caption": 10
+  }
+ },
+ "tent": {
+  "label": "席位名牌 100x120mm 对折",
+  "use": "桌上的姓名牌，中线对折后两面都能看，含 2mm 出血",
+  "mm": [
+   100,
+   120
+  ],
+  "bleed_mm": 2,
+  "kind": "print",
+  "safe_mm": 5,
+  "min_px": {
+   "body": 11,
+   "caption": 9
+  }
+ },
+ "h5": {
+  "label": "H5 手机页（390 宽，按手机宽度缩放）",
+  "w": 390,
+  "h": 844,
+  "kind": "screen",
+  "safe": 0.06,
+  "min_px": {
+   "body": 15,
+   "caption": 12
+  },
+  "use": "电子请柬、门店微页面、报名页这类手机网页，只给 type 为 h5 的物料用"
+ }
+}

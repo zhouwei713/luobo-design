@@ -1,0 +1,8 @@
+{
+  "provider": "hiapi",
+  "model": "gpt-image-2.5-flare/text-to-image",
+  "api_key_env": "HIAPI_API_KEY",
+  "resolution": "2K",
+  "timeout": 240,
+  "retries": 1
+}

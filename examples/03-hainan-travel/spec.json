@@ -1,0 +1,93 @@
+{
+ "project": "海南岛冬季旅游宣传",
+ "profile": {
+  "industry": "travel",
+  "goal": "让北方怕冷的人想冬天去海南",
+  "confirmed": [
+   "海南岛旅游宣传海报"
+  ],
+  "inferred": [
+   "主打冬季避寒",
+   "受众是北方城市的年轻人和家庭",
+   "主要发朋友圈和小红书"
+  ],
+  "defaulted": [
+   "概念用“冬天留在登机口”",
+   "方向 clean-minimal 换成海蓝色"
+  ],
+  "missing": []
+ },
+ "brand": {
+  "name": "海南岛",
+  "direction": "clean-minimal",
+  "tokens": {
+   "bg": "#FFF6EA",
+   "ink": "#123B4A",
+   "accent": "#0FA3B1",
+   "accent2": "#FF7A59"
+  }
+ },
+ "items": [
+  {
+   "id": "winter",
+   "type": "poster",
+   "mode": "ai",
+   "layout": "art-hero",
+   "sizes": [
+    "portrait",
+    "square",
+    "story"
+   ],
+   "content": {
+    "kicker": "来海南过冬",
+    "headline": "冬天\n留在登机口",
+    "sub": "落地就能脱掉外套，椰风海浪都在等你",
+    "tags": [
+     "椰林",
+     "海浪",
+     "阳光"
+    ],
+    "note": "海南岛",
+    "art_label": "剪纸"
+   },
+   "art": {
+    "style": "papercut",
+    "motif": "palm-beach"
+   },
+   "concept": {
+    "idea": "一落地就把冬天脱掉",
+    "idea_en": "you take winter off the moment you land",
+    "scene": "海南机场的停机坪，飞机舱门口的舷梯上，阳光非常亮。一个年轻女孩刚走出舱门，笑着把一件厚厚的黑色羽绒服从肩膀上脱下来，羽绒服滑到一只手臂上，露出里面颜色鲜艳的扶桑花衬衫，墨镜推在头顶。背景是湛蓝的天空和几棵高高的椰子树。",
+    "scene_en": "On the boarding stairs of a plane at a sunny tropical airport in Hainan, very bright sunlight. A young Chinese woman has just stepped out of the cabin door, laughing as she peels a thick black puffy winter down jacket off her shoulders; the jacket slides down onto one arm, revealing a vivid hibiscus print shirt underneath, sunglasses pushed up on her head. Behind her a deep blue sky and a few tall coconut palms.",
+    "interlock": "标题在画面上方，左对齐分两行。女孩站得离标题很近，她的头顶和推在头上的墨镜挡在第二行“登”“机”两个字的下沿前面，最多盖住字高的五分之一，其余的字完整露出。羽绒服一直挂在她手臂上，不要有任何东西飘在字旁边",
+    "interlock_en": "The headline sits in the upper part, two left-aligned lines. She stands close below it, so the top of her head and the sunglasses pushed up in her hair overlap the bottom edge of the characters 登 and 机 on the second line, covering at most a fifth of their height; every other character stays fully visible. The jacket stays on her arm; nothing floats next to the letters.",
+    "headline_style": "超大号白色粗黑体，左对齐两行，带一点柔和的投影",
+    "headline_style_en": "huge white heavy Chinese sans serif, two left-aligned lines, with a soft subtle shadow",
+    "look": "明亮通透的热带阳光照片，电影感，天空湛蓝，暖金色的光，色彩饱和但自然，带一点胶片颗粒",
+    "look_en": "Bright, airy tropical sunlight photograph, cinematic, deep clear blue sky, warm golden light, saturated yet natural colours, a touch of film grain.",
+    "palette": [
+     "#1E8FD5",
+     "#FFFFFF",
+     "#FF7A59"
+    ],
+    "text": [
+     {
+      "text": "海南岛",
+      "where": "左上角，小字",
+      "where_en": "small, top left"
+     },
+     {
+      "text": "来海南过冬",
+      "where": "右上角，一个珊瑚橘色的小胶囊标签里",
+      "where_en": "inside a small coral pill label at the top right"
+     },
+     {
+      "text": "椰林 海浪 阳光",
+      "where": "底部一行小字",
+      "where_en": "as one small line along the bottom"
+     }
+    ]
+   }
+  }
+ ]
+}

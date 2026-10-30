@@ -1,0 +1,114 @@
+{
+ "project": "林先生和陈小姐的婚礼",
+ "profile": {
+  "industry": "celebration"
+ },
+ "brand": {
+  "name": "林知远 & 陈晚晴",
+  "direction": "xi-red"
+ },
+ "facts": {
+  "date": "2027 年 5 月 22 日 周六",
+  "time": "17:30 迎宾，18:18 仪式开始",
+  "place": "西湖国宾馆 紫薇厅"
+ },
+ "items": [
+  {
+   "id": "invite",
+   "type": "invitation",
+   "layout": "formal",
+   "sizes": [
+    "portrait",
+    "a5"
+   ],
+   "batch": [
+    {
+     "guest": "王叔叔、王阿姨"
+    },
+    {
+     "guest": "李老师"
+    }
+   ],
+   "content": {
+    "kicker": "WEDDING INVITATION",
+    "title": "我们结婚啦",
+    "big_number": "05.22",
+    "body": "从校园到今天，我们一起走过了九年。这一次，想请您来见证我们的婚礼，分享这一天的喜悦。",
+    "details": [
+     {
+      "k": "时间",
+      "v": "{date} {time}"
+     },
+     {
+      "k": "地点",
+      "v": "{place}"
+     }
+    ],
+    "rsvp": "请于 5 月 10 日前回复是否出席",
+    "closing": "恭候您的光临",
+    "host": "林知远 & 陈晚晴"
+   },
+   "art": {
+    "motif": "double-happiness"
+   }
+  },
+  {
+   "id": "table",
+   "type": "tablecard",
+   "layout": "number",
+   "sizes": [
+    "table-card"
+   ],
+   "batch": [
+    {
+     "number": "1",
+     "guests": [
+      "林建国",
+      "周淑芬",
+      "陈国强",
+      "吴美玲",
+      "林知远",
+      "陈晚晴"
+     ]
+    },
+    {
+     "number": "2",
+     "guests": [
+      "王海",
+      "王丽",
+      "李明",
+      "张静",
+      "赵磊",
+      "刘洋",
+      "孙悦",
+      "钱程"
+     ]
+    }
+   ],
+   "content": {
+    "label": "号 桌",
+    "event": "林知远 & 陈晚晴 婚宴",
+    "date": "2027.05.22"
+   },
+   "art": {
+    "motif": "double-happiness"
+   }
+  },
+  {
+   "id": "name",
+   "type": "tablecard",
+   "layout": "tent",
+   "sizes": [
+    "tent"
+   ],
+   "batch": [
+    "王叔叔",
+    "李老师"
+   ],
+   "content": {
+    "role": "诚挚邀请",
+    "event": "林知远 & 陈晚晴 婚宴"
+   }
+  }
+ ]
+}

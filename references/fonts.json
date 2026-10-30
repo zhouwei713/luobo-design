@@ -1,0 +1,43 @@
+{
+  "_note": "Font roles used by directions. Web fonts are open-licensed (OFL / MIT) packages fetched once from the npm registry by fonts.py into ~/.cache/luobo-design/fonts. When a download is impossible the fallback stack is used and the QA report says so.",
+  "sans": {
+    "family": "Noto Sans CJK SC", "source": "system",
+    "fallback": ["Source Han Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "sans-serif"],
+    "weights": [300, 400, 500, 700, 900], "feel": "黑体，清楚中性，正文首选"
+  },
+  "serif": {
+    "family": "Noto Serif CJK SC", "source": "system",
+    "fallback": ["Source Han Serif SC", "Songti SC", "STSong", "SimSun", "serif"],
+    "weights": [400, 600, 700, 900], "feel": "宋体，文雅、杂志感、正式"
+  },
+  "qingke": {
+    "family": "ZCOOL QingKe HuangYou", "source": "npm", "npm": "@fontsource/zcool-qingke-huangyou", "version": "5.3.0",
+    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
+    "fallback": ["Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+    "feel": "站酷庆科黄油体，粗壮紧凑，促销、开业、运动标题"
+  },
+  "kuaile": {
+    "family": "ZCOOL KuaiLe", "source": "npm", "npm": "@fontsource/zcool-kuaile", "version": "5.3.0",
+    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
+    "fallback": ["Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+    "feel": "站酷快乐体，圆润俏皮，童趣、宠物、校园活动标题"
+  },
+  "xiaowei": {
+    "family": "ZCOOL XiaoWei", "source": "npm", "npm": "@fontsource/zcool-xiaowei", "version": "5.3.0",
+    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
+    "fallback": ["Noto Serif CJK SC", "Songti SC", "SimSun", "serif"],
+    "feel": "站酷小薇体，清秀的标题宋，新中式、文艺、邀请函"
+  },
+  "mashan": {
+    "family": "Ma Shan Zheng", "source": "npm", "npm": "@fontsource/ma-shan-zheng", "version": "5.3.1",
+    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
+    "fallback": ["Noto Serif CJK SC", "STKaiti", "KaiTi", "serif"],
+    "feel": "马善政毛笔楷书，只用于两三个字的点睛，不做正文"
+  },
+  "wenkai": {
+    "family": "LXGW WenKai", "source": "npm", "npm": "lxgw-wenkai-webfont", "version": "1.7.0",
+    "css": ["lxgwwenkai-regular.css", "lxgwwenkai-bold.css"], "license": "OFL-1.1", "weights": [400, 700],
+    "fallback": ["Noto Serif CJK SC", "STKaiti", "KaiTi", "serif"],
+    "feel": "霞鹜文楷，温和有手写感，手作、烘焙、教育、生活方式"
+  }
+}

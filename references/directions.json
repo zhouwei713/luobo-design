@@ -1,0 +1,511 @@
+{
+ "_note": "Visual directions. tokens are the only colours a design may use (lint flags others). radius is in canvas units (1u = short side / 100). pattern: dots | grid | stripes | rays | waves | clouds | none. texture: grain | paper | none. deco: sticker | line | soft | seal | none decides badges and frames. image_style feeds the image prompt.",
+ "pop-fresh": {
+  "name": "元气撞色",
+  "name_en": "bold pop colour-block",
+  "mood": "热闹、好吃、年轻，一眼看到优惠",
+  "tokens": {
+   "bg": "#FFD84D",
+   "surface": "#FFFFFF",
+   "ink": "#211D16",
+   "muted": "#5C5442",
+   "accent": "#FF5733",
+   "accent2": "#1FB5A6"
+  },
+  "display": {
+   "font": "qingke",
+   "weight": 400,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "sans",
+   "weight": 500
+  },
+  "shape": {
+   "radius": 3.2,
+   "border": 0.5,
+   "deco": "sticker"
+  },
+  "pattern": "dots",
+  "texture": "none",
+  "image_style": "bright flat illustration or punchy studio product photo, saturated warm colours, clean colour-block background, playful",
+  "image_style_zh": "明亮的扁平插画或冲击力强的棚拍产品照，饱和暖色，干净的色块背景，活泼",
+  "fits": [
+   "奶茶",
+   "小吃",
+   "快餐",
+   "开业促销",
+   "零食"
+  ],
+  "avoid": "大面积暗色、细线条宋体、低饱和莫兰迪色"
+ },
+ "warm-hand": {
+  "name": "暖手作",
+  "name_en": "warm handmade",
+  "mood": "温暖、真诚、有手艺人的温度",
+  "tokens": {
+   "bg": "#F4EADB",
+   "surface": "#FFF9EF",
+   "ink": "#3A2A1D",
+   "muted": "#7A6553",
+   "accent": "#C4553B",
+   "accent2": "#D9A441"
+  },
+  "display": {
+   "font": "wenkai",
+   "weight": 700,
+   "tracking": 0.04
+  },
+  "body": {
+   "font": "wenkai",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 2,
+   "border": 0.3,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "paper",
+  "image_style": "warm natural light, handmade texture, linen and wood, soft film grain, cosy close-up",
+  "image_style_zh": "温暖的自然光，手作质感，亚麻和木头，轻微胶片颗粒，温馨的近景",
+  "fits": [
+   "烘焙",
+   "咖啡",
+   "手作",
+   "家常菜",
+   "花店"
+  ],
+  "avoid": "荧光色、科技感几何、硬朗黑体大字"
+ },
+ "clean-minimal": {
+  "name": "清爽极简",
+  "name_en": "clean minimal",
+  "mood": "干净、克制、质感靠留白",
+  "tokens": {
+   "bg": "#F6F5F1",
+   "surface": "#FFFFFF",
+   "ink": "#161616",
+   "muted": "#6A6A66",
+   "accent": "#2F6B4F",
+   "accent2": "#D8D2C4"
+  },
+  "display": {
+   "font": "sans",
+   "weight": 700,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0.8,
+   "border": 0.2,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "none",
+  "image_style": "minimal still life, soft daylight, lots of negative space, neutral background, editorial product photo",
+  "image_style_zh": "极简静物，柔和日光，大量留白，中性背景，杂志感产品照",
+  "fits": [
+   "咖啡",
+   "轻食",
+   "工作室",
+   "专业服务",
+   "个人品牌"
+  ],
+  "avoid": "满屏装饰、多种强调色、贴纸感"
+ },
+ "editorial": {
+  "name": "杂志感",
+  "name_en": "editorial magazine",
+  "mood": "有观点、有格调，像一本杂志的版面",
+  "tokens": {
+   "bg": "#F1EEE8",
+   "surface": "#FFFFFF",
+   "ink": "#121212",
+   "muted": "#58544E",
+   "accent": "#D23A1E",
+   "accent2": "#121212"
+  },
+  "display": {
+   "font": "serif",
+   "weight": 900,
+   "tracking": 0.0
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0,
+   "border": 0.25,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "none",
+  "image_style": "editorial photography, strong single subject, dramatic natural light, magazine cover composition",
+  "image_style_zh": "杂志摄影，单一强主体，戏剧性的自然光，杂志封面式构图",
+  "fits": [
+   "自媒体",
+   "讲座",
+   "读书会",
+   "咖啡",
+   "品牌发布"
+  ],
+  "avoid": "圆角卡片、卡通插画、渐变"
+ },
+ "dark-premium": {
+  "name": "黑金质感",
+  "name_en": "dark premium black-and-gold",
+  "mood": "高级、沉稳、晚上的氛围",
+  "tokens": {
+   "bg": "#15130F",
+   "surface": "#221E18",
+   "ink": "#F2EADB",
+   "muted": "#B3A68E",
+   "accent": "#C9A45C",
+   "accent2": "#6E5C3B"
+  },
+  "display": {
+   "font": "serif",
+   "weight": 700,
+   "tracking": 0.06
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0,
+   "border": 0.18,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "grain",
+  "image_style": "low-key lighting, dark background, warm rim light, luxurious materials, shallow depth of field",
+  "image_style_zh": "低调布光，深色背景，暖色轮廓光，高级材质，浅景深",
+  "fits": [
+   "酒吧",
+   "高端餐饮",
+   "年会",
+   "会员活动",
+   "珠宝"
+  ],
+  "avoid": "亮底、卡通、多彩撞色"
+ },
+ "guochao": {
+  "name": "新中式",
+  "name_en": "modern Chinese (new Chinese style)",
+  "mood": "东方、雅致、有节气和茶的味道",
+  "tokens": {
+   "bg": "#F2E8D6",
+   "surface": "#FBF5EA",
+   "ink": "#1E1A15",
+   "muted": "#6A5E4F",
+   "accent": "#B5322A",
+   "accent2": "#2E5B4F"
+  },
+  "display": {
+   "font": "xiaowei",
+   "weight": 400,
+   "tracking": 0.08
+  },
+  "body": {
+   "font": "serif",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0.4,
+   "border": 0.22,
+   "deco": "seal"
+  },
+  "pattern": "clouds",
+  "texture": "paper",
+  "image_style": "new Chinese style, rice paper texture, ink wash accents, muted vermilion and pine green, elegant still life",
+  "image_style_zh": "新中式风格，宣纸质感，水墨点缀，低饱和朱砂红和松石绿，雅致静物",
+  "fits": [
+   "新中式茶饮",
+   "茶馆",
+   "节气营销",
+   "春节",
+   "文创"
+  ],
+  "avoid": "荧光色、圆滚滚的卡通字、科技蓝"
+ },
+ "trust-blue": {
+  "name": "稳重专业",
+  "name_en": "trustworthy professional blue",
+  "mood": "可信、专业、有条理",
+  "tokens": {
+   "bg": "#F3F5F8",
+   "surface": "#FFFFFF",
+   "ink": "#0F1D31",
+   "muted": "#53637A",
+   "accent": "#1F4D8A",
+   "accent2": "#C2A367"
+  },
+  "display": {
+   "font": "sans",
+   "weight": 900,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0.8,
+   "border": 0.2,
+   "deco": "line"
+  },
+  "pattern": "grid",
+  "texture": "none",
+  "image_style": "clean corporate photography, natural office light, confident people at work, calm blue-grey palette",
+  "image_style_zh": "干净的商务摄影，自然的办公室光线，自信的工作场景，沉稳的蓝灰色调",
+  "fits": [
+   "律所",
+   "财税",
+   "咨询",
+   "企业通知",
+   "招聘"
+  ],
+  "avoid": "贴纸、手写字、高饱和撞色"
+ },
+ "soft-pastel": {
+  "name": "柔和治愈",
+  "name_en": "soft pastel",
+  "mood": "温柔、亲切、让人放松",
+  "tokens": {
+   "bg": "#FBEFEF",
+   "surface": "#FFFFFF",
+   "ink": "#4A373C",
+   "muted": "#8B7177",
+   "accent": "#E26D84",
+   "accent2": "#8FD3C1"
+  },
+  "display": {
+   "font": "wenkai",
+   "weight": 700,
+   "tracking": 0.04
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 4,
+   "border": 0.3,
+   "deco": "soft"
+  },
+  "pattern": "dots",
+  "texture": "none",
+  "image_style": "soft pastel palette, airy high-key light, gentle and cute, rounded shapes",
+  "image_style_zh": "柔和粉彩色调，明亮通透的高调光，温柔可爱，圆润的造型",
+  "fits": [
+   "美业",
+   "甜品",
+   "母婴",
+   "宠物",
+   "花店"
+  ],
+  "avoid": "纯黑大面积、尖锐几何、粗壮黑体"
+ },
+ "sport-bold": {
+  "name": "动感力量",
+  "name_en": "bold sporty",
+  "mood": "有劲、利落、让人想动起来",
+  "tokens": {
+   "bg": "#111111",
+   "surface": "#1D1D1D",
+   "ink": "#FFFFFF",
+   "muted": "#A6A6A6",
+   "accent": "#C8F031",
+   "accent2": "#FF4D2E"
+  },
+  "display": {
+   "font": "qingke",
+   "weight": 400,
+   "tracking": 0.01,
+   "italic": true
+  },
+  "body": {
+   "font": "sans",
+   "weight": 500
+  },
+  "shape": {
+   "radius": 0.4,
+   "border": 0.4,
+   "deco": "sticker"
+  },
+  "pattern": "stripes",
+  "texture": "grain",
+  "image_style": "high contrast sports photography, hard light, motion, sweat and energy, dark background",
+  "image_style_zh": "高反差运动摄影，硬光，动感，汗水和力量，深色背景",
+  "fits": [
+   "健身",
+   "瑜伽",
+   "运动赛事",
+   "电竞"
+  ],
+  "avoid": "粉彩、细宋体、大量留白的文艺排版"
+ },
+ "campus-fresh": {
+  "name": "校园清新",
+  "name_en": "fresh campus",
+  "mood": "明亮、友好、有朝气",
+  "tokens": {
+   "bg": "#EDF5FB",
+   "surface": "#FFFFFF",
+   "ink": "#1B3045",
+   "muted": "#566E84",
+   "accent": "#2F7DE1",
+   "accent2": "#FFB627"
+  },
+  "display": {
+   "font": "wenkai",
+   "weight": 700,
+   "tracking": 0.04
+  },
+  "body": {
+   "font": "sans",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 2.4,
+   "border": 0.3,
+   "deco": "soft"
+  },
+  "pattern": "grid",
+  "texture": "none",
+  "image_style": "bright friendly illustration, clean flat shapes, sunny palette, school and learning motifs",
+  "image_style_zh": "明亮友好的插画，干净的扁平造型，阳光配色，学校和学习元素",
+  "fits": [
+   "教育培训",
+   "老师",
+   "家长会",
+   "校园活动",
+   "亲子"
+  ],
+  "avoid": "黑金、暗色、夜店感"
+ },
+ "festive-red": {
+  "name": "喜庆红",
+  "name_en": "festive Chinese red",
+  "mood": "隆重、喜气、有过节和开张的仪式感",
+  "tokens": {
+   "bg": "#C8142F",
+   "surface": "#A80F27",
+   "ink": "#FFF3DA",
+   "muted": "#FFD6A3",
+   "accent": "#FFD04A",
+   "accent2": "#FFFFFF"
+  },
+  "display": {
+   "font": "qingke",
+   "weight": 400,
+   "tracking": 0.04
+  },
+  "body": {
+   "font": "sans",
+   "weight": 500
+  },
+  "shape": {
+   "radius": 1,
+   "border": 0.35,
+   "deco": "seal"
+  },
+  "pattern": "rays",
+  "texture": "grain",
+  "image_style": "festive Chinese red and gold, lanterns and paper-cut accents, warm celebratory light",
+  "image_style_zh": "喜庆的中国红和金色，灯笼和剪纸点缀，温暖热烈的节日光线",
+  "fits": [
+   "开业",
+   "年会",
+   "春节",
+   "周年庆",
+   "表彰"
+  ],
+  "avoid": "冷色、灰调、大面积留白"
+ },
+ "garden-romance": {
+  "name": "森系浪漫",
+  "name_en": "garden romance",
+  "mood": "清新、温柔、有仪式感，像一场草坪婚礼",
+  "tokens": {
+   "bg": "#F4F1EA",
+   "surface": "#FFFFFF",
+   "ink": "#2F3A2F",
+   "muted": "#66705F",
+   "accent": "#7D8F5A",
+   "accent2": "#D9A5A0"
+  },
+  "display": {
+   "font": "xiaowei",
+   "weight": 400,
+   "tracking": 0.1
+  },
+  "body": {
+   "font": "serif",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0.6,
+   "border": 0.2,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "paper",
+  "image_style": "airy garden wedding, soft natural daylight, eucalyptus and blush flowers, film-like softness, elegant and calm",
+  "image_style_zh": "草坪婚礼的通透感，柔和的自然光，尤加利叶和淡粉色花，胶片般的柔和，优雅安静",
+  "fits": [
+   "婚礼",
+   "订婚",
+   "满月宴",
+   "花店",
+   "下午茶"
+  ],
+  "avoid": "大红大金、粗壮黑体、荧光色"
+ },
+ "xi-red": {
+  "name": "喜事红",
+  "name_en": "Chinese wedding red",
+  "mood": "端庄、喜气、有老规矩的体面",
+  "tokens": {
+   "bg": "#B01522",
+   "surface": "#960F1B",
+   "ink": "#FBE6BE",
+   "muted": "#EDC98C",
+   "accent": "#E6B65A",
+   "accent2": "#FFF4DC"
+  },
+  "display": {
+   "font": "xiaowei",
+   "weight": 400,
+   "tracking": 0.1
+  },
+  "body": {
+   "font": "serif",
+   "weight": 500
+  },
+  "shape": {
+   "radius": 0,
+   "border": 0.3,
+   "deco": "line"
+  },
+  "pattern": "clouds",
+  "texture": "paper",
+  "image_style": "traditional Chinese wedding red and gold, paper-cut double happiness, silk and embroidery textures, warm candle light, elegant",
+  "image_style_zh": "传统中式喜事的正红和金色，剪纸囍字，丝绸和刺绣质感，温暖的烛光，端庄雅致",
+  "fits": [
+   "中式婚礼",
+   "订婚",
+   "回门宴",
+   "寿宴",
+   "满月宴",
+   "乔迁宴"
+  ],
+  "avoid": "黑白大色块、荧光色、卡通字体、促销式放射光芒"
+ }
+}

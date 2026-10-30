@@ -1,0 +1,151 @@
+{
+ "project": "萝卜萌宠 微信小店开张",
+ "profile": {
+  "industry": "retail",
+  "goal": "告诉朋友圈和小红书的人：萝卜萌宠的微信小店开张了，领新客券去下第一单",
+  "confirmed": [
+   "线上宠物店",
+   "刚开张",
+   "店名萝卜萌宠",
+   "开在微信小店，素材发朋友圈和小红书",
+   "开业优惠是新客券，金额待定"
+  ],
+  "inferred": [
+   "猫狗都卖，主粮、零食、玩具、日用都有",
+   "受众是养猫养狗的年轻人"
+  ],
+  "defaulted": [
+   "品牌口号写“给毛孩子挑好东西”"
+  ],
+  "missing": [
+   "新客券金额"
+  ],
+  "direction_candidates": [
+   "soft-pastel",
+   "pop-fresh",
+   "clean-minimal"
+  ],
+  "direction_choice": "用户回复“A”，按概念 A（毛孩子先验货）加方向 A（柔和治愈）来做",
+  "concept_choice": "A 毛孩子先验货"
+ },
+ "brand": {
+  "name": "萝卜萌宠",
+  "direction": "soft-pastel",
+  "voice": "像养宠物的朋友在聊天，俏皮一点，不端着"
+ },
+ "facts": {
+  "coupon": "【金额】"
+ },
+ "items": [
+  {
+   "id": "opening",
+   "type": "poster",
+   "layout": "product-hero",
+   "sizes": [
+    "portrait",
+    "square",
+    "story"
+   ],
+   "content": {
+    "kicker": "微信小店开张",
+    "headline": "毛孩子\n先验货",
+    "big_title": "毛孩子\n先验货",
+    "sub": "萝卜萌宠开张啦，主粮零食玩具都有",
+    "tags": [
+     "猫狗都有",
+     "新客有券"
+    ],
+    "cta": "微信搜索 萝卜萌宠，新客进店有券"
+   },
+   "art": {
+    "motif": "pet-box",
+    "ingredients": [
+     "paw",
+     "bone"
+    ]
+   },
+   "mode": "ai",
+   "concept": {
+    "idea": "毛孩子替你验货",
+    "idea_en": "the pet inspects the delivery for you",
+    "scene": "画面中下部放着一个刚拆开的快递纸箱，箱盖向两边翻开。一只真实的橘色小猫从箱子里钻出半个身子，两只前爪扒着箱沿，歪着头好奇地看着镜头，像在认真验收刚到的东西。箱子旁边散着一个毛线球和一根小骨头玩具。",
+    "scene_en": "In the lower middle of the poster sits a freshly opened cardboard delivery box with its flaps folded out. A real orange kitten pops half its body out of the box, both front paws gripping the rim, head tilted, looking curiously at the viewer as if carefully inspecting a new delivery. A small yarn ball and a little bone toy lie beside the box.",
+    "interlock": "标题“毛孩子先验货”在上方分两行居中。小猫竖起的左耳尖挡在第二行“验”字的左下角前面，最多盖住这个字的五分之一，其余的字完整露出",
+    "interlock_en": "The headline sits above in two centred lines. The tip of the kitten's raised left ear stands in front of the lower left corner of the character 验 on the second line, covering at most a fifth of it; every other character stays fully visible.",
+    "headline_style": "超大号圆润粗黑字，深可可色，两行居中",
+    "headline_style_en": "huge rounded heavy Chinese characters in deep cocoa brown, two centred lines",
+    "look": "柔和的奶油粉底色，柔光棚拍，小猫和纸箱是真实照片质感，毛发清晰，背景干净，只有很淡的圆点，整体温柔治愈",
+    "look_en": "Soft creamy pink background, gentle studio light, the kitten and box photographed with fine fur detail, clean backdrop with only very faint dots, warm and soothing.",
+    "palette": [
+     "#FBEFEF",
+     "#4A373C",
+     "#E26D84"
+    ],
+    "text": [
+     {
+      "text": "萝卜萌宠",
+      "where": "左上角，小字",
+      "where_en": "small, top left"
+     },
+     {
+      "text": "微信小店开张",
+      "where": "右上角，一个粉色小胶囊标签里",
+      "where_en": "inside a small pink pill label at the top right"
+     },
+     {
+      "text": "主粮 零食 玩具 日用",
+      "where": "底部一行小字",
+      "where_en": "as one small line along the bottom"
+     }
+    ]
+   }
+  },
+  {
+   "id": "coupon",
+   "type": "poster",
+   "layout": "product-hero",
+   "sizes": [
+    "portrait",
+    "square"
+   ],
+   "content": {
+    "kicker": "新客专享",
+    "headline": "新朋友\n先领张券",
+    "sub": "第一次来萝卜萌宠，下单直接抵扣",
+    "offer": {
+     "big": "新客券",
+     "small": "立减{coupon}元"
+    },
+    "details": [
+     {
+      "k": "在哪买",
+      "v": "微信搜索 萝卜萌宠"
+     },
+     {
+      "k": "有什么",
+      "v": "猫狗主粮 零食 玩具 日用"
+     }
+    ],
+    "cta": "进小店首页领券，下单自动抵扣"
+   },
+   "art": {
+    "motif": "pet-box",
+    "ingredients": [
+     "paw",
+     "bone"
+    ],
+    "subject": "一只橘色小猫从打开的快递纸箱里探出头，两只前爪扒着箱沿",
+    "subject_en": "an orange kitten peeking out of an opened cardboard delivery box, both front paws on the rim"
+   }
+  },
+  {
+   "id": "logo",
+   "type": "brandkit",
+   "content": {
+    "name": "萝卜萌宠",
+    "tagline": "给毛孩子挑好东西"
+   },
+   "art": {}
+  }
+ ]
+}

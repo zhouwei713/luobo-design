@@ -1,0 +1,75 @@
+{
+ "project": "幸福里社区停水通知和志愿者表彰",
+ "profile": {
+  "industry": "community"
+ },
+ "brand": {
+  "name": "幸福里小区物业服务中心",
+  "direction": "trust-blue"
+ },
+ "items": [
+  {
+   "id": "water",
+   "type": "poster",
+   "layout": "notice",
+   "sizes": [
+    "a4",
+    "portrait"
+   ],
+   "content": {
+    "kicker": "停水通知",
+    "headline": "10 月 16 日\n3 号楼至 8 号楼停水",
+    "org": "幸福里小区物业服务中心",
+    "details": [
+     {
+      "k": "停水时间",
+      "v": "10 月 16 日 9:00 至 17:00"
+     },
+     {
+      "k": "影响范围",
+      "v": "3 号楼至 8 号楼全部住户"
+     },
+     {
+      "k": "停水原因",
+      "v": "二次供水水箱清洗消毒"
+     }
+    ],
+    "body": "尊敬的各位业主：\n\n为保障大家的用水安全，物业将对二次供水水箱进行年度清洗消毒。请提前做好储水准备，停水期间请关闭家中水龙头，避免来水时跑水。\n\n给您带来的不便，敬请谅解。如有疑问请联系物业服务中心。",
+    "cta": "服务电话 0571 0000 0000",
+    "issuer": "幸福里小区物业服务中心",
+    "date_line": "2026 年 10 月 13 日"
+   },
+   "art": {
+    "motif": "building"
+   }
+  },
+  {
+   "id": "volunteer",
+   "type": "certificate",
+   "layout": "modern",
+   "sizes": [
+    "a4-landscape"
+   ],
+   "content": {
+    "title": "感谢信",
+    "subtitle": "THANK YOU",
+    "recipients": [
+     {
+      "recipient": "张阿姨",
+      "award": "社区优秀志愿者"
+     },
+     "李大伟"
+    ],
+    "recipient_suffix": "",
+    "body": "在 2026 年社区垃圾分类督导工作中，您坚持每天早晚值守，耐心引导居民分类投放，被评为",
+    "award": "社区优秀志愿者",
+    "body_after": "感谢您为我们共同的家园付出的时间和热情。",
+    "issuer": "幸福里社区居委会",
+    "date": "2026 年 10 月 13 日"
+   },
+   "art": {
+    "motif": "medal"
+   }
+  }
+ ]
+}

@@ -1,0 +1,730 @@
+{
+ "_note": "Festival pack. dates: fixed MM-DD for solar festivals, or per-year YYYY-MM-DD for lunar ones (checked against public calendars; Little New Year is derived from 腊月 dates). Official public-holiday periods are NOT stored: they are announced by the State Council each year, always confirm before writing 放假安排. mode full replaces the palette, mode accent keeps the brand colours and only adds accent2, pattern and motif. Brand tokens set explicitly by the user always win.",
+ "double-11": {
+  "name": "双十一",
+  "date": "11-11",
+  "kind": "promo",
+  "tokens": {
+   "bg": "#FFF1E6",
+   "surface": "#FFFFFF",
+   "ink": "#2A1410",
+   "muted": "#7A4A3A",
+   "accent": "#E8302A",
+   "accent2": "#FF9F1C"
+  },
+  "pattern": "confetti",
+  "motifs": [
+   "shopping-bag",
+   "gift"
+  ],
+  "directions": [
+   "pop-fresh",
+   "festive-red"
+  ],
+  "mode": "full",
+  "kickers": [
+   "双十一",
+   "年终大促",
+   "11.11 限时"
+  ],
+  "ideas": [
+   "囤货的日子到了",
+   "老顾客专属福利",
+   "一年就这一次"
+  ],
+  "tips": "价格必须真实，不写“全年最低价”“史上最低”；满减规则写清门槛和时间",
+  "avoid": "不用天猫、京东的标识和“双11”注册商标样式"
+ },
+ "thanksgiving": {
+  "name": "感恩节",
+  "date": "2026-11-26",
+  "kind": "warm",
+  "tokens": {
+   "bg": "#F6EBDD",
+   "surface": "#FFFBF4",
+   "ink": "#3A2618",
+   "muted": "#7A5D47",
+   "accent": "#C2571A",
+   "accent2": "#7A8B3D"
+  },
+  "pattern": "none",
+  "motifs": [
+   "gift",
+   "bouquet"
+  ],
+  "directions": [
+   "warm-hand",
+   "clean-minimal"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "感恩节",
+   "谢谢你一直都在"
+  ],
+  "ideas": [
+   "谢谢老朋友一直来",
+   "这一单我们请"
+  ],
+  "tips": "适合老客回馈，语气真诚，别写成促销轰炸"
+ },
+ "winter-solstice": {
+  "name": "冬至",
+  "date": "2026-12-22",
+  "kind": "solar-term",
+  "tokens": {
+   "bg": "#EEF2F6",
+   "surface": "#FFFFFF",
+   "ink": "#1E2B38",
+   "muted": "#5A6A7A",
+   "accent": "#3A6EA5",
+   "accent2": "#E07A5F"
+  },
+  "pattern": "snow",
+  "motifs": [
+   "noodle-bowl"
+  ],
+  "directions": [
+   "guochao",
+   "clean-minimal"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "冬至",
+   "今日冬至"
+  ],
+  "ideas": [
+   "冬至大如年，吃碗热乎的",
+   "最长的夜，来点暖的"
+  ],
+  "tips": "北方吃饺子、南方吃汤圆，文案按门店所在地写；日期按当年历书确认"
+ },
+ "christmas": {
+  "name": "圣诞节",
+  "date": "12-25",
+  "kind": "western",
+  "tokens": {
+   "bg": "#183F2E",
+   "surface": "#21523C",
+   "ink": "#FFF8EC",
+   "muted": "#CFE3D3",
+   "accent": "#D7263D",
+   "accent2": "#F2C14E"
+  },
+  "pattern": "snow",
+  "motifs": [
+   "xmas-tree",
+   "gift"
+  ],
+  "directions": [
+   "dark-premium",
+   "warm-hand",
+   "festive-red"
+  ],
+  "mode": "full",
+  "kickers": [
+   "MERRY CHRISTMAS",
+   "圣诞限定"
+  ],
+  "ideas": [
+   "今年的圣诞，给自己留一块蛋糕",
+   "平安夜见"
+  ],
+  "tips": "平安夜是 12 月 24 日，预订类物料要写清截止时间"
+ },
+ "new-year": {
+  "name": "元旦",
+  "date": "01-01",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#101A33",
+   "surface": "#182447",
+   "ink": "#F5F1E6",
+   "muted": "#B9C2D8",
+   "accent": "#E9C46A",
+   "accent2": "#E76F51"
+  },
+  "pattern": "stars",
+  "motifs": [
+   "fireworks",
+   "calendar"
+  ],
+  "directions": [
+   "dark-premium",
+   "editorial",
+   "festive-red"
+  ],
+  "mode": "full",
+  "kickers": [
+   "HAPPY NEW YEAR",
+   "新年快乐",
+   "2027"
+  ],
+  "ideas": [
+   "新的一年，从这一杯开始",
+   "2027，我们继续"
+  ],
+  "tips": "放假通知的日期以国务院办公厅公布的安排为准，公布前别写死"
+ },
+ "laba": {
+  "name": "腊八节",
+  "date": "2027-01-15",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#F3E6D3",
+   "surface": "#FBF5EA",
+   "ink": "#2A1E15",
+   "muted": "#6A5A4B",
+   "accent": "#B5322A",
+   "accent2": "#C9973A"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "noodle-bowl"
+  ],
+  "directions": [
+   "guochao",
+   "warm-hand"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "腊八",
+   "过了腊八就是年"
+  ],
+  "ideas": [
+   "一碗腊八粥，年味开始了"
+  ],
+  "tips": "餐饮可做腊八粥限定，学校和社区可做传统文化活动"
+ },
+ "little-new-year": {
+  "name": "小年",
+  "date": "2027-01-30",
+  "date_south": "2027-01-31",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#C8142F",
+   "surface": "#A80F27",
+   "ink": "#FFF3DA",
+   "muted": "#FFD6A3",
+   "accent": "#FFD04A",
+   "accent2": "#FFFFFF"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "lantern",
+   "red-envelope"
+  ],
+  "directions": [
+   "festive-red",
+   "guochao"
+  ],
+  "mode": "full",
+  "kickers": [
+   "小年",
+   "小年快乐"
+  ],
+  "ideas": [
+   "小年到，年货该备起来了"
+  ],
+  "tips": "北方腊月二十三，南方腊月二十四，按门店所在地写日期"
+ },
+ "spring-festival": {
+  "name": "春节",
+  "date": "2027-02-06",
+  "eve": "2027-02-05",
+  "kind": "lunar",
+  "zodiac": "羊年（丁未年）",
+  "tokens": {
+   "bg": "#C8142F",
+   "surface": "#A80F27",
+   "ink": "#FFF3DA",
+   "muted": "#FFD6A3",
+   "accent": "#FFD04A",
+   "accent2": "#FFFFFF"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "lantern",
+   "red-envelope",
+   "fireworks"
+  ],
+  "directions": [
+   "festive-red",
+   "guochao",
+   "dark-premium"
+  ],
+  "mode": "full",
+  "kickers": [
+   "新春快乐",
+   "过年好",
+   "春节营业安排"
+  ],
+  "ideas": [
+   "回家过年，也给自己带一份",
+   "春节不打烊",
+   "年夜饭预订开始了"
+  ],
+  "tips": "春节营业时间、放假安排、年夜饭预订截止都是高频物料；2027 是羊年，生肖形象自己画或用通用纹样，别用别人的 IP 形象"
+ },
+ "lantern": {
+  "name": "元宵节",
+  "date": "2027-02-20",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#7A1020",
+   "surface": "#8E1626",
+   "ink": "#FFF1D6",
+   "muted": "#F5C98A",
+   "accent": "#F7B733",
+   "accent2": "#FF6B4A"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "lantern"
+  ],
+  "directions": [
+   "guochao",
+   "festive-red"
+  ],
+  "mode": "full",
+  "kickers": [
+   "元宵节",
+   "闹元宵"
+  ],
+  "ideas": [
+   "猜灯谜，吃汤圆",
+   "正月十五，团团圆圆"
+  ],
+  "tips": "社区和学校常办猜灯谜活动，邀请函和活动海报都会用到"
+ },
+ "valentine": {
+  "name": "情人节",
+  "date": "02-14",
+  "kind": "western",
+  "tokens": {
+   "bg": "#FBE7EA",
+   "surface": "#FFFFFF",
+   "ink": "#4A1D2A",
+   "muted": "#8C5A66",
+   "accent": "#D6336C",
+   "accent2": "#F7A1B5"
+  },
+  "pattern": "hearts",
+  "motifs": [
+   "heart",
+   "bouquet"
+  ],
+  "directions": [
+   "soft-pastel",
+   "dark-premium"
+  ],
+  "mode": "full",
+  "kickers": [
+   "情人节限定",
+   "2.14"
+  ],
+  "ideas": [
+   "今天，把喜欢说出口",
+   "双人套餐已备好"
+  ],
+  "tips": "花店和烘焙要写清预订截止和配送范围"
+ },
+ "womens-day": {
+  "name": "妇女节",
+  "date": "03-08",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#FFF0EE",
+   "surface": "#FFFFFF",
+   "ink": "#3E2723",
+   "muted": "#7D5A55",
+   "accent": "#E4572E",
+   "accent2": "#F3A712"
+  },
+  "pattern": "none",
+  "motifs": [
+   "bouquet"
+  ],
+  "directions": [
+   "soft-pastel",
+   "clean-minimal"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "3.8 妇女节",
+   "致每一位她"
+  ],
+  "ideas": [
+   "今天，对自己好一点"
+  ],
+  "tips": "公司福利通知很常见；文案尊重，别物化女性，别拿身材容貌做文章"
+ },
+ "qingming": {
+  "name": "清明节",
+  "date": "2027-04-05",
+  "kind": "solar-term",
+  "tokens": {
+   "bg": "#EEF2EC",
+   "surface": "#FFFFFF",
+   "ink": "#2B3A33",
+   "muted": "#66756C",
+   "accent": "#4F7A64",
+   "accent2": "#A8C3B1"
+  },
+  "pattern": "none",
+  "motifs": [
+   "lotus"
+  ],
+  "directions": [
+   "clean-minimal",
+   "guochao"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "清明",
+   "清明时节"
+  ],
+  "ideas": [
+   "踏青正当时",
+   "清明放假通知"
+  ],
+  "tips": "清明是祭扫的日子，不写“清明快乐”，也不做打折促销；适合放假通知、踏青活动、文明祭扫倡议"
+ },
+ "labor-day": {
+  "name": "劳动节",
+  "date": "05-01",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#FFF4E0",
+   "surface": "#FFFFFF",
+   "ink": "#2B2116",
+   "muted": "#6B5A45",
+   "accent": "#E85D04",
+   "accent2": "#2A9D8F"
+  },
+  "pattern": "stripes",
+  "motifs": [
+   "gift"
+  ],
+  "directions": [
+   "pop-fresh",
+   "campus-fresh"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "五一",
+   "劳动节快乐"
+  ],
+  "ideas": [
+   "五一出游，记得来坐坐",
+   "致敬每一位劳动者"
+  ],
+  "tips": "放假日期以国务院办公厅公布为准"
+ },
+ "520": {
+  "name": "520",
+  "date": "05-20",
+  "kind": "promo",
+  "tokens": {
+   "bg": "#FBE7EA",
+   "surface": "#FFFFFF",
+   "ink": "#4A1D2A",
+   "muted": "#8C5A66",
+   "accent": "#D6336C",
+   "accent2": "#F7A1B5"
+  },
+  "pattern": "hearts",
+  "motifs": [
+   "heart",
+   "bouquet"
+  ],
+  "directions": [
+   "soft-pastel",
+   "pop-fresh"
+  ],
+  "mode": "full",
+  "kickers": [
+   "5.20",
+   "我爱你"
+  ],
+  "ideas": [
+   "520，给喜欢的人带一份"
+  ],
+  "tips": "和情人节一样，预订和配送信息写清楚"
+ },
+ "mothers-day": {
+  "name": "母亲节",
+  "date": "2027-05-09",
+  "kind": "western",
+  "tokens": {
+   "bg": "#FCEFEA",
+   "surface": "#FFFFFF",
+   "ink": "#4A2F2A",
+   "muted": "#836660",
+   "accent": "#E07A5F",
+   "accent2": "#F2CC8F"
+  },
+  "pattern": "none",
+  "motifs": [
+   "bouquet"
+  ],
+  "directions": [
+   "soft-pastel",
+   "warm-hand"
+  ],
+  "mode": "full",
+  "kickers": [
+   "母亲节",
+   "5 月第二个周日"
+  ],
+  "ideas": [
+   "今天，带妈妈出来坐坐",
+   "这束花，送给她"
+  ],
+  "tips": "母亲节是 5 月第二个星期日，每年日期不同"
+ },
+ "childrens-day": {
+  "name": "儿童节",
+  "date": "06-01",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#E8F6FF",
+   "surface": "#FFFFFF",
+   "ink": "#1D3557",
+   "muted": "#4F6A86",
+   "accent": "#FF6B6B",
+   "accent2": "#FFD93D"
+  },
+  "pattern": "dots",
+  "motifs": [
+   "gift"
+  ],
+  "directions": [
+   "campus-fresh",
+   "pop-fresh"
+  ],
+  "mode": "full",
+  "kickers": [
+   "六一快乐",
+   "儿童节"
+  ],
+  "ideas": [
+   "今天，大人也可以当回小孩"
+  ],
+  "tips": "学校和培训机构的活动海报很常见；孩子照片要家长授权"
+ },
+ "dragon-boat": {
+  "name": "端午节",
+  "date": "2027-06-09",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#EAF2E3",
+   "surface": "#FFFFFF",
+   "ink": "#1F3A2B",
+   "muted": "#5A6E5F",
+   "accent": "#2E7D4F",
+   "accent2": "#E3B23C"
+  },
+  "pattern": "waves",
+  "motifs": [
+   "zongzi"
+  ],
+  "directions": [
+   "guochao",
+   "clean-minimal"
+  ],
+  "mode": "full",
+  "kickers": [
+   "端午安康",
+   "粽情端午"
+  ],
+  "ideas": [
+   "今年的粽子，咸的还是甜的"
+  ],
+  "tips": "有人觉得端午不宜说“快乐”，稳妥起见用“端午安康”"
+ },
+ "fathers-day": {
+  "name": "父亲节",
+  "date": "2027-06-20",
+  "kind": "western",
+  "tokens": {
+   "bg": "#EEF1F5",
+   "surface": "#FFFFFF",
+   "ink": "#1B2A41",
+   "muted": "#56657A",
+   "accent": "#2B4C7E",
+   "accent2": "#C9A45C"
+  },
+  "pattern": "none",
+  "motifs": [
+   "gift"
+  ],
+  "directions": [
+   "clean-minimal",
+   "trust-blue"
+  ],
+  "mode": "accent",
+  "kickers": [
+   "父亲节",
+   "6 月第三个周日"
+  ],
+  "ideas": [
+   "那个不太会表达的人"
+  ],
+  "tips": "父亲节是 6 月第三个星期日"
+ },
+ "qixi": {
+  "name": "七夕",
+  "date": "2027-08-08",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#1C2340",
+   "surface": "#252E52",
+   "ink": "#F6EFE2",
+   "muted": "#C3C8DE",
+   "accent": "#E8A0BF",
+   "accent2": "#F3D27A"
+  },
+  "pattern": "stars",
+  "motifs": [
+   "heart",
+   "bouquet"
+  ],
+  "directions": [
+   "dark-premium",
+   "soft-pastel"
+  ],
+  "mode": "full",
+  "kickers": [
+   "七夕",
+   "浪漫七夕"
+  ],
+  "ideas": [
+   "鹊桥那天，见一面吧"
+  ],
+  "tips": "深色夜空配星星就够了，别做成紫蓝渐变"
+ },
+ "teachers-day": {
+  "name": "教师节",
+  "date": "09-10",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#F3F7EE",
+   "surface": "#FFFFFF",
+   "ink": "#1F3328",
+   "muted": "#5A6B60",
+   "accent": "#2F7D5B",
+   "accent2": "#F2B134"
+  },
+  "pattern": "grid",
+  "motifs": [
+   "open-book",
+   "bouquet"
+  ],
+  "directions": [
+   "campus-fresh",
+   "warm-hand"
+  ],
+  "mode": "full",
+  "kickers": [
+   "教师节",
+   "老师辛苦了"
+  ],
+  "ideas": [
+   "谢谢您，教会我的不止书本"
+  ],
+  "tips": "学校的表彰证书、感谢信都会用到；不送贵重礼品的倡议也常发"
+ },
+ "mid-autumn": {
+  "name": "中秋节",
+  "date": "2027-09-15",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#0F2A3F",
+   "surface": "#163852",
+   "ink": "#F8EFD9",
+   "muted": "#C9D3DA",
+   "accent": "#F2C14E",
+   "accent2": "#D96C4A"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "mooncake"
+  ],
+  "directions": [
+   "guochao",
+   "dark-premium"
+  ],
+  "mode": "full",
+  "kickers": [
+   "中秋",
+   "月圆人团圆"
+  ],
+  "ideas": [
+   "今年的月饼，我们自己做",
+   "中秋礼盒开始预订"
+  ],
+  "tips": "月饼礼盒要写清规格和价格，过度包装的说法别写"
+ },
+ "national-day": {
+  "name": "国庆节",
+  "date": "10-01",
+  "kind": "solar",
+  "tokens": {
+   "bg": "#C8102E",
+   "surface": "#A80D25",
+   "ink": "#FFF3DA",
+   "muted": "#FFD6A3",
+   "accent": "#FFD04A",
+   "accent2": "#FFFFFF"
+  },
+  "pattern": "rays",
+  "motifs": [
+   "fireworks"
+  ],
+  "directions": [
+   "festive-red",
+   "trust-blue"
+  ],
+  "mode": "full",
+  "kickers": [
+   "国庆快乐",
+   "十一黄金周"
+  ],
+  "ideas": [
+   "国庆出游，路过来坐坐"
+  ],
+  "tips": "广告法禁止在广告里使用国旗、国歌、国徽，商业海报只用红黄配色和烟花，不放国旗国徽；放假日期以官方公布为准"
+ },
+ "double-ninth": {
+  "name": "重阳节",
+  "date": "2027-10-08",
+  "date_2026": "2026-10-18",
+  "kind": "lunar",
+  "tokens": {
+   "bg": "#F3EAD8",
+   "surface": "#FBF5EA",
+   "ink": "#2E2416",
+   "muted": "#6B5B45",
+   "accent": "#B5651D",
+   "accent2": "#6B8E23"
+  },
+  "pattern": "clouds",
+  "motifs": [
+   "peach"
+  ],
+  "directions": [
+   "guochao",
+   "warm-hand"
+  ],
+  "mode": "full",
+  "kickers": [
+   "重阳",
+   "九九重阳"
+  ],
+  "ideas": [
+   "今天，陪爸妈走走",
+   "敬老爱老，社区在行动"
+  ],
+  "tips": "社区敬老活动、长者优惠都适合；长者优惠要写清年龄和证件要求"
+ }
+}
