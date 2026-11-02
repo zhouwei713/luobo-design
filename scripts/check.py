@@ -143,8 +143,51 @@ def run(spec_path, out_dir=None):
     qa = {"files": files, "copy": hits, "fonts": font_notes, "errors": n_err,
           "warnings": sum(len(f["warnings"]) for f in files) + sum(1 for h in hits if h["level"] == "warn"),
           "todo": sorted({x for f in files for x in f["todo"]})}
+    qa["next"] = next_steps(qa, out)
     save_json(out / "qa.json", qa)
     return qa
+
+
+FIXES = [  # problem text -> what to do about it, in the order an agent should work through them
+    ("文字放不下", "删减这段文案，或换一个字少也撑得住的版式；别靠缩小字号硬塞"),
+    ("文字超出画布", "文案太长或手动断行太宽，缩短这一行"),
+    ("文字互相压住", "两段字撞在一起：删减其中一段，或去掉 tags、details 里不必要的条目"),
+    ("字号", "这个尺寸放不下这么多字，删减文案或从 sizes 里去掉这个尺寸"),
+    ("图片没加载出来", "检查图片路径（相对 spec.json 所在目录），或者删掉这张图用程序插画"),
+    ("对比度", "在 brand.tokens 里换一个深一点或浅一点的颜色，或用 studio 编辑页调色"),
+    ("文字贴边", "这行字太长，缩短一点或手动断行"),
+    ("末行只剩一个字", "在标题里手动断行，或加减一两个字"),
+    ("整图里的字是模型画的", "看图逐字核对 -ai.png；有错字就重新生成或交付排版版"),
+    ("整图生成失败", "交付排版版，告诉用户整图这次没生成出来"),
+]
+
+
+def next_steps(qa, out):
+    """What to do now, so the agent does not have to work it out from the raw list."""
+    steps, seen = [], set()
+    problems = [(lvl, m, f["name"]) for f in qa["files"] for lvl, ms in (("error", f["errors"]), ("warn", f["warnings"])) for m in ms]
+    for key, fix in FIXES:
+        names = sorted({n for lvl, m, n in problems if m.startswith(key) or key in m[:12]})
+        if names and key not in seen:
+            seen.add(key)
+            lvl = "先改" if any(lvl == "error" for lvl, m, n in problems if key in m[:12] and n in names) else "最好改"
+            steps.append(f"{lvl}：{key}（{'、'.join(names[:4])}{'等' if len(names) > 4 else ''}）。{fix}")
+    errs = [h for h in qa["copy"] if h["level"] == "error"]
+    if errs:
+        steps.append("先改文案：" + "；".join(f"「{h['hit']}」{h['why']}" for h in errs[:3]))
+    if [h for h in qa["copy"] if h["level"] != "error"]:
+        steps.append("交付时把 qa.json 里 copy 的提醒告诉用户，让用户决定改不改")
+    if qa["todo"]:
+        steps.append("把待补信息列给用户：" + "；".join(x.replace("待补真实信息：", "") for x in qa["todo"][:5])
+                     + "。拿到后写进 spec.facts 重跑")
+    if qa["fonts"]:
+        steps.append("字体退回了系统字体，联网后重跑 setup_check.py --install；交付时说明一下")
+    if qa["errors"]:
+        steps.append("改完重跑 pipeline.py（只改了一件物料可以用 render.py --only 物料 id 再跑 check.py）")
+    else:
+        steps.append("看一眼 overview.png" + (" 和 preview-*.png" if list(Path(out).glob("preview-*.png")) else "")
+                     + "（看不了图就跳过，在交付时请用户自己看），然后交付；用户想自己改字调色，告诉他打开 editor.html")
+    return steps
 
 
 def summary(qa):
@@ -163,6 +206,9 @@ def summary(qa):
     if qa["todo"]:
         lines.append("待补信息：" + "；".join(x.replace("待补真实信息：", "") for x in qa["todo"]))
     lines.append(f"共 {qa['errors']} 个错误，{qa['warnings']} 个提醒")
+    if qa.get("next"):
+        lines.append("下一步：")
+        lines += [f"  {n}. {s}" for n, s in enumerate(qa["next"], 1)]
     return "\n".join(lines)
 
 

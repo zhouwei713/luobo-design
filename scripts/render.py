@@ -159,6 +159,63 @@ REPORT_JS = """() => {
 }"""
 
 
+SKIP_KEYS = {"photos", "qr", "map", "music", "rsvp_url", "color", "colors", "src", "image", "font", "align", "title_pos",
+             "split", "app", "series"}
+
+
+def content_fields(obj, path=""):
+    """Every piece of copy in an item's content as (path, text): what the studio page lets people retype."""
+    out = []
+    if isinstance(obj, str):
+        if obj.strip() and not re.match(r"^(https?|data|file):|.*\.(png|jpe?g|webp|svg|gif)$", obj.strip(), re.I):
+            out.append((path, obj))
+    elif isinstance(obj, list):
+        for i, x in enumerate(obj):
+            out += content_fields(x, f"{path}.{i}" if path else str(i))
+    elif isinstance(obj, dict):
+        for k, v in obj.items():
+            if k in SKIP_KEYS or k.startswith("_"):
+                continue
+            out += content_fields(v, f"{path}.{k}" if path else k)
+    return out
+
+
+FIELDS_JS = """(targets) => {
+  const norm = s => (s || '').replace(/[\\s\\u200b\\u00ad]+/g, '');
+  const cv = document.getElementById('canvas'); const c = cv.getBoundingClientRect();
+  const els = Array.from(cv.querySelectorAll('*')).filter(el => {
+    const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) return false;
+    const cs = getComputedStyle(el); return cs.visibility !== 'hidden' && cs.display !== 'none' && parseFloat(cs.opacity || 1) > 0.05;
+  }).map(el => ({el, t: norm(el.textContent)}));
+  const out = [];
+  for (const tg of targets) {
+    const want = norm(tg.text); if (!want) continue;
+    let hits = els.filter(e => e.t === want);
+    if (!hits.length && want.length >= 4) {  // the copy may sit inside a longer line ("立减20元" in "新客券 立减20元")
+      hits = els.filter(e => e.t.includes(want) && want.length / e.t.length >= 0.5);
+      const best = Math.min(...hits.map(e => e.t.length)); hits = hits.filter(e => e.t.length === best);
+    }
+    hits = hits.filter(h => !hits.some(o => o !== h && h.el.contains(o.el)));  // innermost only
+    if (!hits.length) continue;
+    let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    for (const h of hits) { const r = h.el.getBoundingClientRect(); x0 = Math.min(x0, r.left); y0 = Math.min(y0, r.top); x1 = Math.max(x1, r.right); y1 = Math.max(y1, r.bottom); }
+    out.push({path: tg.path, x: x0 - c.left, y: y0 - c.top, w: x1 - x0, h: y1 - y0});
+  }
+  return out;
+}"""
+
+
+def raw_id(it):
+    """The id of the item as written in spec.json (batch copies, card sides and h5 screens point back to it)."""
+    if it.get("_batch_of"):
+        return it["_batch_of"]
+    if it.get("_h5_of"):
+        return it["_h5_of"]
+    if it.get("_side"):
+        return re.sub(r"-(front|back)$", "", it["id"])
+    return it["id"]
+
+
 def write_logos(browser, logos, folder):
     """SVG files (outlined, no fonts needed) plus transparent PNGs at 1200 px wide."""
     folder.mkdir(parents=True, exist_ok=True)
@@ -206,7 +263,7 @@ def render(spec_path, out_dir=None, only=None, hd=False):
               "fonts": fstatus, "renders": []}
     jobs = []
     for it in spec.get("items", []):
-        if only and it["id"] != only:
+        if only and only not in (it["id"], raw_id(it)):
             continue
         for size in it.get("sizes") or ["portrait"]:
             jobs.append((it, size))
@@ -231,12 +288,17 @@ def render(spec_path, out_dir=None, only=None, hd=False):
                 print(f"  ! {name}: fit script did not finish", file=sys.stderr)
             page.wait_for_timeout(150)
             rep = page.evaluate(REPORT_JS)
+            try:
+                rep["fields"] = page.evaluate(FIELDS_JS, [{"path": pth, "text": txt.replace("**", "")}
+                                                          for pth, txt in content_fields(it.get("content") or {})])
+            except Exception:  # noqa: BLE001  the studio page just loses click-to-edit on this one
+                rep["fields"] = []
             if it["type"] == "h5page":  # keep the fitted markup: h5.py stitches these screens together as they are
                 frozen = page.evaluate("() => document.getElementById('canvas').innerHTML")
                 (out / "src" / f"{name}.frozen.html").write_text(frozen, encoding="utf-8")
             png = out / f"{name}.png"
             page.screenshot(path=str(png), clip={"x": 0, "y": 0, "width": cv["w"], "height": cv["h"]})
-            entry = {"item": it["id"], "type": it["type"], "layout": it.get("layout"), "size": size,
+            entry = {"item": it["id"], "raw_item": raw_id(it), "type": it["type"], "layout": it.get("layout"), "size": size,
                      "png": str(png), "html": str(src), "canvas": {k: cv[k] for k in ("w", "h", "kind", "safe_px", "u", "min_px", "orient", "bleed_px")},
                      **rep}
             if cv["kind"] == "print":
@@ -248,6 +310,14 @@ def render(spec_path, out_dir=None, only=None, hd=False):
             page.close()
             print(f"  {name}.png  {cv['w']:.0f}x{cv['h']:.0f}{' + pdf' if cv['kind'] == 'print' else ''}  ({time.time() - t0:.1f}s)")
         browser.close()
+    prev = out / "render_report.json"
+    if only and prev.exists():  # re-rendering one item: keep what the others reported last time
+        try:
+            old = load_json(prev)
+            report["renders"] = [r for r in old.get("renders", []) if r.get("raw_item", r.get("item")) != only
+                                 and r.get("item") != only] + report["renders"]
+        except Exception:  # noqa: BLE001
+            pass
     save_json(out / "render_report.json", report)
     return out, report
 

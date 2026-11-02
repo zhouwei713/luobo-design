@@ -1,6 +1,6 @@
 # luobo-design 安装说明
 
-luobo-design（萝卜设计）遵循 SKILL.md 开放标准，Claude、Codex、Gemini CLI、Cursor、GitHub Copilot 等支持 skill 的 Agent 都能装。装好之后，Agent 需要能执行命令、能看图片，skill 才能完整跑起来。
+luobo-design（萝卜设计）遵循 SKILL.md 开放标准，Claude、Codex、Gemini CLI、Cursor、GitHub Copilot 等支持 skill 的 Agent 都能装。装好之后，Agent 需要能执行命令。能看图片更好，它会自己看成品挑毛病；看不了图也能用，检查交给程序，好不好看交给你。
 
 安装脚本会做三件事：把 skill 复制到对应 Agent 的 skills 目录，检查并安装依赖，最后渲染两张小样做自测。
 
@@ -8,7 +8,25 @@ luobo-design（萝卜设计）遵循 SKILL.md 开放标准，Claude、Codex、Ge
 
 在对话里点 `.skill` 文件卡片上的保存按钮即可。Claude 的云端环境里依赖基本是现成的。
 
-## 方式二：本地 Agent 一键安装（推荐）
+## 方式二：用 skills 命令行装（电脑上有 Node.js 就行）
+
+Vercel 做的 [skills](https://github.com/vercel-labs/skills) 命令行能直接从 GitHub 装，会自己认出你用的是哪个 Agent，放进对应的目录。
+
+```bash
+# 装进当前项目
+npx skills add zhouwei713/luobo-design
+
+# 装给所有项目用
+npx skills add zhouwei713/luobo-design -g
+
+# 指定 Agent
+npx skills add zhouwei713/luobo-design --agent claude-code
+npx skills add zhouwei713/luobo-design --agent codex
+```
+
+以后更新用 `npx skills update luobo-design`。装完第一次用之前，让 Agent 跑一次 `python scripts/setup_check.py --install --selftest` 补装依赖。
+
+## 方式三：本地 Agent 一键安装脚本
 
 1. 解压 `luobo-design.zip`（或 `.skill`，它本质也是 zip，Windows 上可以先把后缀改成 `.zip`）
 2. 进入解压出来的 `luobo-design` 文件夹，运行安装脚本
@@ -33,7 +51,7 @@ Windows
 | `--skip-deps` | 只复制文件，不检查依赖 |
 | `--uninstall` | 卸载 |
 
-## 方式三：手动安装
+## 方式四：手动安装
 
 把整个 `luobo-design` 文件夹复制到下表对应的目录，然后运行一次依赖检查。
 

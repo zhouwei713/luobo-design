@@ -17,4 +17,6 @@ python scripts/pipeline.py examples/01-pet-shop-opening/spec.json
 | 05-wedding-h5 | 电子请柬 H5 | 一屏一屏滑动、导航、加日历、倒计时、宾客专属链接 |
 | 06-community-notice | 停水通知、志愿者证书 | 信息优先的正式物料 |
 
+每份样例跑完都有 `editor.html`，双击打开就能点字改字、调颜色、在图上圈点提意见。想改完立刻看到新图，运行 `python scripts/studio.py open examples/01-pet-shop-opening/spec.json`。
+
 接了生图模型以后整图会多出 `*-ai.png`，交付前要看图逐字核对，`qa.json` 会列出要核对的字。

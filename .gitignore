@@ -8,3 +8,5 @@ luobo-design.config.json
 # renders made while testing
 examples/out/
 work/
+# brand profiles kept in a project
+luobo-brands/

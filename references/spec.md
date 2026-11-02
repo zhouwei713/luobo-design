@@ -60,6 +60,8 @@
 - `fonts` 可选，覆盖字体，`{"display": "wenkai"}`
 - `logo` 图片路径（相对 spec 所在目录），没有就用店名做文字标
 - 有 brand.json 时，把里面的 direction、tokens、fonts、voice 抄进来
+- 品牌有档案时（`brands.py list`），用 `brands.py apply spec.json --name 店名` 自动填，不用手抄
+- `remember` 可选，写 `false` 时这次的品牌不进档案库
 
 **festival** 可选，节日包，`{"id": "spring-festival", "mode": "full"}` 或只写 id。full 换上节日配色，accent 保留品牌色只加节日点缀。没写 art.motif 的物料自动用节日插画，提示词也会加上节日元素。id 和用法见 festival-pack.md。
 

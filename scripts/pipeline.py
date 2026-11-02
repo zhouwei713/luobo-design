@@ -168,6 +168,21 @@ def validate(spec):
     return errs, warns
 
 
+def brand_hint(spec):
+    """A saved brand whose look this spec quietly drifts from: say so before rendering."""
+    import brands
+    b = spec.get("brand") or {}
+    prof = brands.find(b.get("name")) if b.get("name") else None
+    if not prof or spec.get("festival"):
+        return None
+    pb = prof.get("brand") or {}
+    diff = [k for k in ("direction", "tokens", "fonts") if pb.get(k) and b.get(k) != pb.get(k)]
+    if diff:
+        return (f"“{prof['name']}”有品牌档案，这份规格的 {'、'.join(diff)} 和档案不一样。是用户要换风格就不用管，"
+                f"否则运行 brands.py apply spec.json --force 换回档案里的")
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("spec")
@@ -184,6 +199,9 @@ def main():
         for e in errs:
             print("spec ERROR", e)
         sys.exit(2)
+    brand_note = brand_hint(load_json(spec_path))
+    if brand_note:
+        print("spec warn ", brand_note)
     if not a.no_images:
         import images
         images.run(spec_path, a.config)
@@ -193,15 +211,24 @@ def main():
         aiposter.run(spec_path, out, a.config)
     import h5
     h5.build(spec_path, out)
+    import preview
+    previews = preview.build(spec_path, out)
     qa = check.run(spec_path, out)
     sheet.make(out)
     prompts.build(spec_path, out)
     brand_mod.build(spec_path, out)
+    import studio
+    studio.build_static(spec_path, out)
+    import brands
+    saved = brands.save(spec_path, out, quiet=True)
     print(check.summary(qa))
-    print(f"\n交付目录 {out}\n  成品图 *.png（印刷尺寸另有 *.pdf）\n  overview.png 总览\n  prompts.md 生图提示词\n"
-          f"  brand.md / brand.json 品牌小卡\n  src/*.html 可编辑源文件\n  qa.json 检查结果"
+    print(f"\n交付目录 {out}\n  成品图 *.png（印刷尺寸另有 *.pdf）\n  overview.png 总览\n"
+          + ("  preview-*.png 发出去的样子（小红书信息流、朋友圈里按实际大小看）\n" if previews else "")
+          + "  prompts.md 生图提示词\n"
+          "  brand.md / brand.json 品牌小卡\n  editor.html 编辑页（双击打开，点字改字、调颜色、在图上圈点提意见）\n  src/*.html 源文件\n  qa.json 检查结果"
           + ("\n  *-ai.png 生图模型按创意概念画的整张海报（字要看图核对），同名不带 -ai 的是排版版" if list(out.glob("*-ai.png")) else "")
-          + ("\n  h5/*.html 手机互动页（-preview.png 长图预览，-links.md 每位宾客的专属链接）" if (out / "h5").exists() else ""))
+          + ("\n  h5/*.html 手机互动页（-preview.png 长图预览，-links.md 每位宾客的专属链接）" if (out / "h5").exists() else "")
+          + (f"\n品牌档案已更新：{load_json(spec_path)['brand']['name']}，下次同一个品牌直接沿用（brands.py list 能看到）" if saved else ""))
     sys.exit(1 if qa["errors"] else 0)
 
 

@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>萝卜设计 编辑页</title>
+<style>
+:root{--bg:#F6F3EE;--panel:#FFFFFF;--ink:#26221E;--muted:#7A716A;--line:#E4DDD3;--accent:#E8641E;--accent-soft:#FDEBDD;--ok:#2E8A57;--warn:#B7791F}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.top{height:52px;display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--panel);border-bottom:1px solid var(--line)}
+.top h1{font-size:15px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mode{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:#A4410C;white-space:nowrap}
+.mode.off{background:#EEE9E2;color:var(--muted)}
+.sp{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 12px}
+.btn:hover{border-color:#CFC5B8}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn.pri:disabled{opacity:.5;cursor:default}
+.btn.sm{padding:3px 8px;font-size:12px}
+.main{display:grid;grid-template-columns:200px 1fr 360px;height:calc(100% - 52px)}
+.list{border-right:1px solid var(--line);overflow:auto;padding:12px;background:#FBF9F6}
+.it{display:block;width:100%;text-align:left;border:1px solid transparent;background:none;border-radius:10px;padding:8px;margin-bottom:6px}
+.it img{width:100%;border-radius:6px;display:block;background:#eee;aspect-ratio:auto}
+.it span{display:block;font-size:12px;margin-top:6px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it.on{background:var(--panel);border-color:var(--line);box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.it.on span{color:var(--ink);font-weight:600}
+.stage{display:flex;flex-direction:column;min-width:0}
+.bar{display:flex;gap:6px;align-items:center;padding:10px 16px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:3px 12px;font-size:13px}
+.tab.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tool{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-left:auto}
+.tool button{border:0;background:var(--panel);padding:5px 12px;font-size:13px}
+.tool button.on{background:var(--accent-soft);color:#A4410C;font-weight:600}
+.view{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:8px 24px 32px}
+.frame{position:relative;box-shadow:0 6px 24px rgba(0,0,0,.12);background:#fff;line-height:0}
+.frame img{display:block;width:100%;height:auto}
+.box{position:absolute;border:1.5px dashed transparent;border-radius:3px;cursor:text}
+.editing .box:hover,.box.hl{border-color:var(--accent);background:rgba(232,100,30,.08)}
+.box.chg{border-color:var(--ok);border-style:solid}
+.commenting .frame{cursor:crosshair}
+.commenting .box{pointer-events:none}
+.pin{position:absolute;width:26px;height:26px;margin:-26px 0 0 -2px;border-radius:13px 13px 13px 2px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.25);cursor:pointer}
+.pin.done{background:#9C948C}
+.pop{position:absolute;z-index:5;width:260px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.15);line-height:1.5}
+.pop textarea{width:100%;height:70px;border:1px solid var(--line);border-radius:6px;padding:6px;resize:vertical}
+.pop .row{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.note{font-size:12px;color:var(--muted);padding:0 16px 8px}
+.note.warn{color:var(--warn)}
+.side{border-left:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.stabs{display:flex;border-bottom:1px solid var(--line)}
+.stabs button{flex:1;border:0;background:none;padding:12px 0;font-size:13px;color:var(--muted);border-bottom:2px solid transparent}
+.stabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--accent)}
+.stabs b{display:inline-block;min-width:16px;padding:0 4px;margin-left:2px;border-radius:8px;background:var(--accent);color:#fff;font-size:11px;font-weight:600}
+.pane{flex:1;overflow:auto;padding:14px 16px}
+.f{margin-bottom:12px}
+.f label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.f textarea,.f input[type=text]{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;resize:vertical;min-height:38px;background:#FFFDFB}
+.f textarea:focus,.f input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.f.chg textarea,.f.chg input{border-color:var(--ok)}
+.f.flash textarea{animation:flash 1.2s}
+@keyframes flash{0%{box-shadow:0 0 0 4px rgba(232,100,30,.45)}100%{box-shadow:0 0 0 0 rgba(232,100,30,0)}}
+.h{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:18px 0 8px}
+.h:first-child{margin-top:0}
+.ro{font-size:12px;color:var(--muted);background:#F4F0EA;border-radius:6px;padding:6px 8px}
+.col{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.col input[type=color]{width:40px;height:32px;border:1px solid var(--line);border-radius:8px;padding:2px;background:#fff}
+.col span{flex:1}
+.col code{font-size:12px;color:var(--muted)}
+.slot{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:8px}
+.slot img,.slot .ph{width:56px;height:56px;object-fit:cover;border-radius:6px;background:#EEE9E2;flex:none}
+.slot div{flex:1;min-width:0;font-size:12px}
+.slot div b{display:block;font-size:13px}
+.slot div em{font-style:normal;color:var(--muted);word-break:break-all}
+.cm{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px}
+.cm.done{opacity:.6}
+.cm .hd{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.cm .msg{margin:4px 0}
+.cm .msg.ag{background:#F4F0EA;border-radius:8px;padding:6px 8px}
+.cm .msg.ag::before{content:"Agent：";font-weight:600}
+.foot{border-top:1px solid var(--line);padding:12px 16px;display:flex;gap:8px;align-items:center}
+.foot .info{flex:1;font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);font-size:13px;padding:8px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;max-width:90vw}
+.toast.on{opacity:1}
+.mask{position:fixed;inset:0;background:rgba(246,243,238,.7);display:none;align-items:center;justify-content:center;z-index:15;font-size:15px}
+.mask.on{display:flex}
+dialog{border:1px solid var(--line);border-radius:12px;max-width:560px;width:calc(100% - 32px)}
+dialog textarea{width:100%;height:220px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
+@media (max-width:900px){
+  .main{grid-template-columns:1fr;height:auto}
+  .list{display:flex;gap:8px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .it{width:110px;flex:none}
+  .side{border-left:0;border-top:1px solid var(--line);min-height:60vh}
+  .view{padding:8px 16px 24px}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1 id="title">萝卜设计</h1>
+  <span class="mode" id="mode"></span>
+  <span class="sp"></span>
+  <button class="btn" id="undo" hidden>撤销上一次</button>
+</div>
+<div class="main">
+  <nav class="list" id="list"></nav>
+  <section class="stage editing" id="stage">
+    <div class="bar" id="bar"></div>
+    <div class="note" id="note"></div>
+    <div class="view" id="view"><div class="frame" id="frame"></div></div>
+  </section>
+  <aside class="side">
+    <div class="stabs" id="stabs">
+      <button data-p="text" class="on">文字</button>
+      <button data-p="color">颜色</button>
+      <button data-p="image">图片</button>
+      <button data-p="comment">意见</button>
+    </div>
+    <div class="pane" id="pane"></div>
+    <div class="foot"><span class="info" id="info">还没有改动</span><button class="btn pri" id="save" disabled>保存并重出图</button></div>
+  </aside>
+</div>
+<div class="mask" id="mask">正在重新出图，稍等几秒…</div>
+<div class="toast" id="toast"></div>
+<dialog id="dlg"><p style="margin-top:0">把下面这段发给 Agent，或者把下载的“修改单.json”拖进对话里。换了照片的话，记得把照片一起发过去。</p><textarea id="dlgtext" readonly></textarea><p style="text-align:right;margin-bottom:0"><button class="btn" id="dlgcopy">复制</button> <button class="btn pri" id="dlgclose">好</button></p></dialog>
+<input type="file" id="file" accept="image/png,image/jpeg,image/webp" hidden>
+<script>
+/*__BOOT__*/
+(function () {
+const LIVE = window.__MODE__ === 'live';
+let S = window.__STATE__ || null;
+let cur = {item: null, view: 0, ai: false}, panel = 'text', tool = 'edit';
+let pending = {fields: {}, facts: {}, colors: {}, images: {}};
+let localComments = [];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const KEYNAMES = {kicker: '小标题', headline: '标题', big_title: '大标题', sub: '副标题', title: '标题', subtitle: '副标题', cta: '行动语',
+  body: '正文', details: '信息', offer: '优惠', big: '大字', small: '小字', tags: '标签', note: '备注', name: '名称', name_en: '英文名',
+  tagline: '口号', slogan: '口号', org: '单位', issuer: '落款', date: '日期', date_line: '日期', recipient: '名字', award: '奖项',
+  guest: '宾客', host: '主人', closing: '结束语', salutation: '称呼', k: '项目', v: '内容', label: '名称', value: '内容',
+  sections: '分组', items: '条目', price: '价格', desc: '说明', stickers: '贴纸', badges: '角标', tag: '标签', handle: '账号',
+  big_number: '大数字', lines: '文字行', contacts: '联系方式', venue: '地点', address: '地址', when: '时间', schedule: '流程',
+  number: '编号', event: '活动', role: '身份', guests: '宾客', signers: '签名', body_after: '正文后段', recipient_suffix: '称谓',
+  invite_line: '邀请语', rsvp: '回执', art_label: '画面文字', looks: '款式'};
+const FACTNAMES = {phone: '电话', address: '地址', date: '日期', time: '时间', hours: '营业时间', wechat: '微信', price: '价格', coupon: '券额', name: '名称', qr: '二维码'};
+const COLORNAMES = {accent: '主色', accent2: '辅色', bg: '底色', surface: '卡片色', ink: '文字色', muted: '次要文字'};
+const SIZENAMES = {portrait: '竖版', square: '方图', story: '手机长图', landscape: '横版', wide: '横幅', screen: '门店屏', a4: 'A4', a3: 'A3', a5: 'A5', h5: '手机页', xhs: '小红书', card: '名片', tent: '桌卡'};
+function pathName(p) {
+  return p.split('.').map(s => /^\d+$/.test(s) ? '第' + (+s + 1) + '条' : (KEYNAMES[s] || s)).join(' · ');
+}
+function toast(t, ms) { const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => el.classList.remove('on'), ms || 2200); }
+function src(name) { return LIVE ? '/files/' + encodeURI(name).replace(/[?#]/g, encodeURIComponent) + '?v=' + (S.stamp || '') : name; }
+function item() { return S.items.find(i => i.id === cur.item) || S.items[0]; }
+function count() { return Object.keys(pending.fields).length + Object.keys(pending.facts).length + Object.keys(pending.colors).length + Object.keys(pending.images).length; }
+
+function saveLocal() { if (LIVE) return; try { localStorage.setItem('luobo-studio:' + S.spec, JSON.stringify({pending, localComments})); } catch (e) {} }
+function loadLocal() { if (LIVE) return; try { const v = JSON.parse(localStorage.getItem('luobo-studio:' + S.spec) || 'null'); if (v) { pending = v.pending || pending; localComments = v.localComments || []; } } catch (e) {} }
+
+async function api(path, body, raw) {
+  const r = await fetch(path, {method: body === undefined ? 'GET' : 'POST', headers: raw ? raw.headers : {'Content-Type': 'application/json'}, body: raw ? raw.body : (body === undefined ? undefined : JSON.stringify(body))});
+  const j = await r.json().catch(() => ({ok: false, error: '服务没有回应'}));
+  if (!r.ok || j.ok === false) throw new Error(j.error || ('出错了 ' + r.status));
+  return j;
+}
+
+function render() {
+  $('title').textContent = S.title || '萝卜设计';
+  $('mode').textContent = LIVE ? '实时模式 · 保存后自动重出全部尺寸' : '离线模式 · 改完导出修改单发给 Agent';
+  $('mode').classList.toggle('off', !LIVE);
+  $('undo').hidden = !LIVE || !S.can_undo;
+  if (!cur.item || !S.items.some(i => i.id === cur.item)) cur.item = S.items[0] && S.items[0].id;
+  renderList(); renderBar(); renderFrame(); renderPane(); renderFoot();
+}
+function renderList() {
+  $('list').innerHTML = S.items.map(it => {
+    const v = it.views[0];
+    return `<button class="it ${it.id === cur.item ? 'on' : ''}" data-id="${esc(it.id)}">${v ? `<img src="${src(v.png)}" alt="">` : ''}<span>${esc(it.label)}</span></button>`;
+  }).join('') || '<div class="empty">还没有出图</div>';
+}
+function renderBar() {
+  const it = item(); if (!it) { $('bar').innerHTML = ''; return; }
+  if (cur.view >= it.views.length) cur.view = 0;
+  const v = it.views[cur.view];
+  let h = it.views.map((w, i) => `<button class="tab ${i === cur.view && !cur.ai ? 'on' : ''}" data-v="${i}">${esc(w.label)}</button>`).join('');
+  if (v && v.ai_png) h += `<button class="tab ${cur.ai ? 'on' : ''}" data-ai="1">AI 整图</button>`;
+  h += `<div class="tool"><button data-t="edit" class="${tool === 'edit' ? 'on' : ''}">点字修改</button><button data-t="comment" class="${tool === 'comment' ? 'on' : ''}">圈点提意见</button></div>`;
+  $('bar').innerHTML = h;
+  const notes = [];
+  if (tool === 'comment') notes.push('点图上任意位置，写下想改的地方。Agent 会看到你点的位置。');
+  else notes.push('点图上的文字，右边会跳到对应的输入框。');
+  if (it.mode_ai) notes.push('这张有 AI 整图版：保存后只重出排版版，AI 整图要回到对话里让 Agent 重新生成。');
+  if (it.batch) notes.push('这是批量物料，名单里的名字请在对话里让 Agent 改。');
+  $('note').textContent = notes.join(' ');
+  $('note').classList.toggle('warn', !!(it.mode_ai || it.batch));
+}
+function renderFrame() {
+  const it = item(), fr = $('frame');
+  if (!it || !it.views.length) { fr.innerHTML = '<div class="empty" style="padding:40px;line-height:1.6">这一项还没有成品图</div>'; return; }
+  const v = it.views[cur.view];
+  const vw = $('view').clientWidth - 48, vh = Math.max(360, $('view').clientHeight - 40);
+  const k = Math.min(1, vw / v.w, vh / v.h);
+  fr.style.width = Math.round(v.w * Math.max(k, 0.2)) + 'px';
+  let h = `<img src="${src(cur.ai ? v.ai_png : v.png)}" alt="" draggable="false">`;
+  if (!cur.ai) {
+    // the same words can feed two fields (headline and big_title): one box for both; small boxes drawn last so they stay clickable
+    const groups = [];
+    for (const b of v.fields) {
+      const g = groups.find(o => Math.abs(o.x - b.x) < 3 && Math.abs(o.y - b.y) < 3 && Math.abs(o.w - b.w) < 3 && Math.abs(o.h - b.h) < 3);
+      if (g) g.paths.push(b.path); else groups.push({...b, paths: [b.path]});
+    }
+    groups.sort((a, b) => b.w * b.h - a.w * a.h);
+    for (const b of groups) {
+      const changed = b.paths.some(p => (it.id + '|' + p) in pending.fields);
+      h += `<div class="box ${changed ? 'chg' : ''}" data-path="${esc(b.paths.join(','))}" title="${esc(b.paths.map(pathName).join(' / '))}" style="left:${b.x / v.w * 100}%;top:${b.y / v.h * 100}%;width:${b.w / v.w * 100}%;height:${b.h / v.h * 100}%"></div>`;
+    }
+  }
+  allComments().filter(c => c.item === it.id && c.view === v.key).forEach(c => {
+    h += `<div class="pin ${c.status === 'resolved' ? 'done' : ''}" data-cid="${esc(c.id)}" style="left:${c.x * 100}%;top:${c.y * 100}%">${c.n}</div>`;
+  });
+  fr.innerHTML = h;
+}
+function allComments() { return (S.comments || []).concat(localComments); }
+
+function fieldRow(it, f) {
+  const key = it.id + '|' + f.path, val = key in pending.fields ? pending.fields[key] : f.value;
+  if (f.readonly) return `<div class="f"><label>${esc(pathName(f.path))}<span>名单里改</span></label><div class="ro">${esc(f.shown)}</div></div>`;
+  const rows = Math.min(6, Math.max(1, String(val).split('\n').length + (String(val).length > 26 ? 1 : 0)));
+  const hint = f.value !== f.shown ? `<span title="花括号里的内容来自下面的共用信息">显示为：${esc(f.shown.slice(0, 18))}${f.shown.length > 18 ? '…' : ''}</span>` : '';
+  return `<div class="f ${key in pending.fields ? 'chg' : ''}" data-f="${esc(f.path)}"><label>${esc(pathName(f.path))}${hint}</label><textarea rows="${rows}" data-key="${esc(key)}" data-orig="${esc(f.value)}">${esc(val)}</textarea></div>`;
+}
+function renderPane() {
+  document.querySelectorAll('#stabs button').forEach(b => {
+    b.classList.toggle('on', b.dataset.p === panel);
+    if (b.dataset.p === 'comment') { const n = allComments().filter(c => c.status !== 'resolved').length; b.innerHTML = '意见' + (n ? `<b>${n}</b>` : ''); }
+  });
+  const it = item(), P = $('pane');
+  if (panel === 'text') {
+    let h = '';
+    if (it) {
+      h += `<div class="h">${esc(it.label)}</div>`;
+      h += it.fields.length ? it.fields.map(f => fieldRow(it, f)).join('') : '<div class="empty">这一项没有可以改的文字</div>';
+      if (it.fields.some(f => f.value.includes('\n'))) h += '<div class="empty" style="font-size:12px">输入框里换行，图上的字也会在那里换行。</div>';
+    }
+    const facts = Object.entries(S.facts || {});
+    if (facts.length) {
+      h += '<div class="h">共用信息（所有物料一起改）</div>';
+      h += facts.map(([k, v]) => {
+        const val = k in pending.facts ? pending.facts[k] : v;
+        return `<div class="f ${k in pending.facts ? 'chg' : ''}"><label>${esc(FACTNAMES[k] || k)}</label><input type="text" data-fact="${esc(k)}" data-orig="${esc(v)}" value="${esc(val)}"></div>`;
+      }).join('');
+    }
+    P.innerHTML = h;
+  } else if (panel === 'color') {
+    let h = '<div class="h">品牌颜色（所有物料一起改）</div>';
+    for (const [k, name] of Object.entries(COLORNAMES)) {
+      if (!S.colors[k]) continue;
+      const val = k in pending.colors ? (pending.colors[k] || S.colors[k].auto) : S.colors[k].value;
+      const fixed = (k in pending.colors ? pending.colors[k] : S.colors[k].fixed);
+      h += `<div class="col"><input type="color" data-color="${k}" value="${esc(val)}"><span>${name}<br><code>${esc(val)}${fixed ? '' : ' · 跟随风格'}</code></span>${fixed ? `<button class="btn sm" data-reset="${k}">恢复</button>` : ''}</div>`;
+    }
+    h += '<div class="empty" style="font-size:12px">文字太浅看不清时，程序会自动把颜色调深一点，保证读得清。</div>';
+    P.innerHTML = h;
+  } else if (panel === 'image') {
+    const slots = S.images.filter(s => !s.item || s.item === cur.item || s.global);
+    let h = '<div class="h">图片</div>';
+    h += slots.length ? slots.map(s => {
+      const p = pending.images[s.slot];
+      const shown = p ? (p.preview || '') : (s.url ? src(s.url) : '');
+      const name = p ? (p.file || p.path) : (s.current || '还没有图');
+      return `<div class="slot"><${shown ? `img src="${esc(shown)}"` : 'span class="ph"'}></${shown ? 'img' : 'span'}><div><b>${esc(s.label)}</b><em>${esc(name)}</em></div><button class="btn sm" data-slot="${esc(s.slot)}">${s.current || p ? '换一张' : '放一张'}</button></div>`;
+    }).join('') : '<div class="empty">这一项没有可换的图片</div>';
+    h += '<div class="empty" style="font-size:12px">' + (LIVE ? '换上的照片会存进 spec 旁边的 assets 文件夹。' : '离线模式下照片不会上传，导出修改单后把照片一起发给 Agent。') + ' 真人出镜请用你自己的照片。</div>';
+    P.innerHTML = h;
+  } else {
+    const cs = allComments().slice().sort((a, b) => (a.status === 'resolved') - (b.status === 'resolved') || a.n - b.n);
+    P.innerHTML = cs.length ? cs.map(c => `<div class="cm ${c.status === 'resolved' ? 'done' : ''}" data-cid="${esc(c.id)}"><div class="hd"><span>#${c.n} · ${esc(c.item_label || c.item)} · ${esc(c.view_label || '')}</span><span>${c.status === 'resolved' ? '已处理' : (c.local ? '待导出' : '待处理')}</span></div>`
+      + c.messages.map(m => `<div class="msg ${m.by === 'agent' ? 'ag' : ''}">${esc(m.text)}</div>`).join('')
+      + (c.status !== 'resolved' && !c.local && LIVE ? `<button class="btn sm" data-resolve="${esc(c.id)}">标记已处理</button>` : '')
+      + (c.local ? `<button class="btn sm" data-drop="${esc(c.id)}">删除</button>` : '') + '</div>').join('')
+      : '<div class="empty">还没有意见。切到“圈点提意见”，点图上的位置写下来。</div>';
+  }
+}
+function renderFoot() {
+  const n = count(), nl = localComments.length;
+  $('info').textContent = n || nl ? `${n ? n + ' 处改动' : ''}${n && nl ? '，' : ''}${nl ? nl + ' 条意见' : ''}还没${LIVE ? '保存' : '导出'}` : (LIVE ? '改完点保存，全部尺寸会一起重出' : '还没有改动');
+  $('save').textContent = LIVE ? '保存并重出图' : '导出修改单';
+  $('save').disabled = !(n || nl);
+}
+
+// ---------- events
+document.addEventListener('click', e => {
+  const t = e.target.closest('button, .box, .pin, .frame');
+  if (!t) return;
+  if (t.classList.contains('it')) { cur = {item: t.dataset.id, view: 0, ai: false}; closePop(); render(); return; }
+  if (t.dataset.v !== undefined) { cur.view = +t.dataset.v; cur.ai = false; closePop(); renderBar(); renderFrame(); return; }
+  if (t.dataset.ai) { cur.ai = true; renderBar(); renderFrame(); return; }
+  if (t.dataset.t) { tool = t.dataset.t; $('stage').classList.toggle('editing', tool === 'edit'); $('stage').classList.toggle('commenting', tool === 'comment'); closePop(); renderBar(); return; }
+  if (t.dataset.p) { panel = t.dataset.p; renderPane(); return; }
+  if (t.dataset.reset) { pending.colors[t.dataset.reset] = ''; if (!S.colors[t.dataset.reset].fixed) delete pending.colors[t.dataset.reset]; saveLocal(); renderPane(); renderFoot(); return; }
+  if (t.dataset.slot) { pickImage(t.dataset.slot); return; }
+  if (t.dataset.resolve) { resolveComment(t.dataset.resolve); return; }
+  if (t.dataset.drop) { localComments = localComments.filter(c => c.id !== t.dataset.drop); saveLocal(); renderPane(); renderFrame(); renderFoot(); return; }
+  if (t.classList.contains('box') && tool === 'edit') { focusField(t.dataset.path); return; }
+  if (t.classList.contains('pin')) { panel = 'comment'; renderPane(); const el = document.querySelector(`.cm[data-cid="${CSS.escape(t.dataset.cid)}"]`); if (el) el.scrollIntoView({block: 'center'}); return; }
+  if (t.id === 'frame' || t.classList.contains('frame')) { if (tool === 'comment' && !e.target.closest('.pop') && !cur.ai) openPop(e); return; }
+});
+$('pane').addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.key) {
+    // copy written twice in the spec (headline and big_title with the same words) changes together
+    const twins = [...document.querySelectorAll('#pane textarea[data-key]')].filter(o => o.dataset.orig === el.dataset.orig);
+    for (const o of twins) {
+      if (o !== el) o.value = el.value;
+      if (el.value === o.dataset.orig) delete pending.fields[o.dataset.key]; else pending.fields[o.dataset.key] = el.value;
+      o.closest('.f').classList.toggle('chg', o.dataset.key in pending.fields);
+    }
+    renderFrame();
+  }
+  else if (el.dataset.fact) { if (el.value === el.dataset.orig) delete pending.facts[el.dataset.fact]; else pending.facts[el.dataset.fact] = el.value; el.closest('.f').classList.toggle('chg', el.dataset.fact in pending.facts); }
+  else if (el.dataset.color) { pending.colors[el.dataset.color] = el.value.toUpperCase(); }
+  saveLocal(); renderFoot();
+});
+$('pane').addEventListener('change', e => { if (e.target.dataset.color) renderPane(); });
+$('save').addEventListener('click', () => LIVE ? saveLive() : exportOffline());
+$('undo').addEventListener('click', async () => {
+  if (!confirm('撤销上一次保存的改动？')) return;
+  $('mask').classList.add('on');
+  try { const j = await api('/api/undo', {}); S = j.state; toast('已撤销'); render(); } catch (err) { toast(err.message, 4000); }
+  $('mask').classList.remove('on');
+});
+window.addEventListener('resize', () => renderFrame());
+
+function focusField(paths) {
+  panel = 'text'; renderPane();
+  const els = paths.split(',').map(p => document.querySelector(`.f[data-f="${CSS.escape(p)}"]`)).filter(Boolean);
+  if (!els.length) { toast('这段字在名单或共用信息里，往下找找'); return; }
+  els[0].scrollIntoView({block: 'center', behavior: 'smooth'});
+  for (const el of els) { el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+  const ta = els[0].querySelector('textarea'); if (ta) ta.focus();
+  if (els.length > 1) toast("这段字在规格里写了 " + els.length + " 处，改一处另一处会跟着改");
+  document.querySelectorAll('.box').forEach(b => b.classList.toggle('hl', b.dataset.path === paths));
+}
+
+let popAt = null;
+function openPop(e) {
+  closePop();
+  const fr = $('frame'), r = fr.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+  const it = item(), v = it.views[cur.view];
+  const px = x * v.w, py = y * v.h;
+  const hit = v.fields.filter(b => px >= b.x && px <= b.x + b.w && py >= b.y && py <= b.y + b.h).sort((a, b) => a.w * a.h - b.w * b.h)[0];
+  popAt = {x, y, field: hit ? hit.path : null};
+  const pop = document.createElement('div'); pop.className = 'pop';
+  pop.style.left = Math.min(r.width - 270, Math.max(0, x * r.width - 10)) + 'px';
+  pop.style.top = (y * r.height + 10) + 'px';
+  pop.innerHTML = `<div style="font-size:12px;color:var(--muted);margin-bottom:4px">${hit ? '关于“' + esc(pathName(hit.path)) + '”' : '这个位置'}</div><textarea placeholder="比如：这里字太小了，再大一点"></textarea><div class="row"><button class="btn sm" data-x>取消</button><button class="btn sm pri" data-ok>${LIVE ? '发给 Agent' : '记下来'}</button></div>`;
+  fr.appendChild(pop);
+  pop.querySelector('textarea').focus();
+  pop.addEventListener('click', ev => {
+    ev.stopPropagation();
+    if (ev.target.dataset.x !== undefined) closePop();
+    if (ev.target.dataset.ok !== undefined) addComment(pop.querySelector('textarea').value.trim());
+  });
+}
+function closePop() { const p = document.querySelector('.pop'); if (p) p.remove(); popAt = null; }
+async function addComment(text) {
+  if (!text || !popAt) return;
+  const it = item(), v = it.views[cur.view];
+  const c = {item: it.id, item_label: it.label, view: v.key, view_label: v.label, x: +popAt.x.toFixed(4), y: +popAt.y.toFixed(4), field: popAt.field, text};
+  closePop();
+  if (LIVE) {
+    try { const j = await api('/api/comment', c); S.comments = j.comments; toast('已发给 Agent。它在对话里等着时会马上看到'); } catch (err) { toast(err.message, 4000); return; }
+  } else {
+    const n = allComments().reduce((m, x) => Math.max(m, x.n), 0) + 1;
+    localComments.push({...c, id: 'local-' + Date.now(), n, status: 'open', local: true, messages: [{by: 'user', text}]});
+    saveLocal(); toast('记下了，导出修改单时会一起带上');
+  }
+  renderFrame(); renderPane(); renderFoot();
+}
+async function resolveComment(id) {
+  try { const j = await api('/api/comment/resolve', {id}); S.comments = j.comments; renderPane(); renderFrame(); } catch (err) { toast(err.message, 4000); }
+}
+
+let pickSlot = null;
+function pickImage(slot) { pickSlot = slot; $('file').value = ''; $('file').click(); }
+$('file').addEventListener('change', async () => {
+  const f = $('file').files[0]; if (!f || !pickSlot) return;
+  if (f.size > 20 * 1024 * 1024) { toast('照片太大了，控制在 20MB 以内'); return; }
+  const preview = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(f); });
+  if (LIVE) {
+    try {
+      const j = await api('/api/upload', null, {headers: {'Content-Type': f.type || 'application/octet-stream', 'X-Filename': encodeURIComponent(f.name)}, body: f});
+      pending.images[pickSlot] = {path: j.path, file: f.name, preview};
+    } catch (err) { toast(err.message, 4000); return; }
+  } else {
+    pending.images[pickSlot] = {file: f.name, preview: preview.length < 400000 ? preview : ''};
+  }
+  saveLocal(); renderPane(); renderFoot(); toast('换好了，保存后生效');
+});
+
+function changeList() {
+  const ch = [];
+  for (const [key, value] of Object.entries(pending.fields)) { const [item, path] = key.split('|'); ch.push({kind: 'field', item, path, value}); }
+  for (const [key, value] of Object.entries(pending.facts)) ch.push({kind: 'fact', key, value});
+  for (const [key, value] of Object.entries(pending.colors)) ch.push({kind: 'color', key, value});
+  for (const [slot, v] of Object.entries(pending.images)) ch.push({kind: 'image', slot, path: v.path || null, file: v.file || null});
+  return ch;
+}
+async function saveLive() {
+  const changes = changeList(); if (!changes.length) return;
+  $('mask').classList.add('on');
+  try {
+    const j = await api('/api/apply', {changes});
+    S = j.state; pending = {fields: {}, facts: {}, colors: {}, images: {}};
+    toast(j.message || '已重新出图', 3500); render();
+  } catch (err) { toast(err.message, 5000); }
+  $('mask').classList.remove('on');
+}
+function exportOffline() {
+  const doc = {kind: 'luobo-design-edits', spec: S.spec, made: new Date().toISOString(), changes: changeList(),
+    comments: localComments.map(c => ({item: c.item, view: c.view, view_label: c.view_label, x: c.x, y: c.y, field: c.field, text: c.text}))};
+  const json = JSON.stringify(doc, null, 2);
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([json], {type: 'application/json'})); a.download = '修改单.json'; a.click(); } catch (e) {}
+  const lines = ['按这份修改单改一下设计（python scripts/studio.py apply 能直接读）：', json];
+  $('dlgtext').value = lines.join('\n'); $('dlg').showModal();
+}
+$('dlgcopy').addEventListener('click', () => { $('dlgtext').select(); try { navigator.clipboard.writeText($('dlgtext').value); } catch (e) { document.execCommand('copy'); } toast('已复制'); });
+$('dlgclose').addEventListener('click', () => $('dlg').close());
+
+// live: pick up what the agent changes from the chat (new renders, replies)
+async function poll() {
+  if (!LIVE || document.hidden || document.querySelector('.pop') || $('mask').classList.contains('on')) return;
+  try { const j = await api('/api/stamp'); if (j.stamp !== S.stamp || j.cstamp !== S.cstamp) { const st = await api('/api/state'); S = st.state; render(); } } catch (e) {}
+}
+async function boot() {
+  if (LIVE) { try { S = (await api('/api/state')).state; } catch (e) { document.body.innerHTML = '<p style="padding:40px">连不上编辑服务，回到对话里让 Agent 重新运行 studio.py open。</p>'; return; } setInterval(poll, 3000); }
+  loadLocal(); render();
+}
+boot();
+})();
+</script>
+</body>
+</html>

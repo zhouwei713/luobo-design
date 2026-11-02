@@ -24,6 +24,16 @@
 
 ![小红书封面七种结构](docs/xiaohongshu-covers.jpg)
 
+## 做完还能自己改
+
+每次交付都带一个 `editor.html`，双击在浏览器里打开。点图上的字就能改，颜色、照片也能换，改完导出一份修改单发给 Agent。想提意见就切到“圈点提意见”，在图上点一下写下来，Agent 能看到你点在哪、那里原来写的是什么。
+
+![编辑页：点字改字，在图上圈点提意见，Agent 改完回复](docs/editor.jpg)
+
+用 Claude Code、Codex、Cursor 这类本地 Agent 时，还能开实时编辑页（`python scripts/studio.py open spec.json`），在页面上点保存，全部尺寸几秒内就重出好了，不用回对话里说。
+
+另外三件小事。交付里有 `preview-feed.png` 和 `preview-moments.png`，把小红书封面放进信息流、海报放进朋友圈，按手机上的实际大小看。品牌做过一次就记住了，下次说“给萝卜萌宠做个双十一海报”，配色、字体、logo、电话地址自动沿用。模型看不了图时会自动换一套做法，靠程序检查，再请你看一眼。
+
 ## 接不接生图模型
 
 不接也能用。字一律由排版程序排，画面用程序画的插画和画风滤镜，还会给出能贴进即梦、GPT Image、Nano Banana 的提示词。
@@ -34,13 +44,19 @@
 
 ## 安装
 
-在 Agent 里说一句就能装：
+电脑上有 Node.js 的话，一行装好（会自动认出你用的 Agent）：
+
+```bash
+npx skills add zhouwei713/luobo-design
+```
+
+也可以在 Agent 里说一句：
 
 ```text
 帮我安装这个 skill：https://github.com/zhouwei713/luobo-design
 ```
 
-也可以手动装：
+或者手动装：
 
 ```bash
 git clone https://github.com/zhouwei713/luobo-design.git ~/.claude/skills/luobo-design
@@ -50,7 +66,7 @@ python -m playwright install chromium
 
 其他 Agent 的装法见 [INSTALL.md](INSTALL.md)。
 
-最省事的办法是解压后运行 `install.sh`（macOS、Linux）或双击 `install.bat`（Windows），脚本会识别你装了哪些 Agent，复制过去，补装依赖，再跑一次自测。
+下载压缩包的话，最省事的办法是解压后运行 `install.sh`（macOS、Linux）或双击 `install.bat`（Windows），脚本会识别你装了哪些 Agent，复制过去，补装依赖，再跑一次自测。
 
 ## 怎么用
 
@@ -69,6 +85,7 @@ python -m playwright install chromium
 
 ```bash
 python scripts/pipeline.py examples/02-xiaohongshu-covers/spec.json
+python scripts/studio.py open examples/02-xiaohongshu-covers/spec.json   # 打开实时编辑页
 ```
 
 `examples/` 里有六份样例规格，宠物店开业、小红书封面、海南旅游、婚礼一套、电子请柬、社区通知，改改文字就能出你自己的。
@@ -96,7 +113,7 @@ OpenAI、Gemini、即梦、兼容 OpenAI 接口的服务和本地命令也都支
 |---|---|
 | `SKILL.md` | 给 Agent 看的主说明，流程和硬规则 |
 | `references/` | 行业包、物料说明、设计精华、方向和平台数据 |
-| `scripts/` | 渲染、检查、生图、提示词，`pipeline.py` 一条命令跑完 |
+| `scripts/` | 渲染、检查、生图、提示词、编辑页，`pipeline.py` 一条命令跑完 |
 | `templates/` | 生图配置模板 |
 | `examples/` | 六份样例规格 |
 | `install.*` | 一键安装 |

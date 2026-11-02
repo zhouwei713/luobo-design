@@ -2,10 +2,10 @@
 name: luobo-design
 display_name: 萝卜设计
 display_name_en: Luobo Design
-description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘七种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报会先想一个画面上的创意概念，配了生图模型时能按概念让模型一步画出整张海报（连图带字），没配时用排版和程序插画实现，并给出可以贴进即梦、GPT 的整图提示词。先出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
-description_zh: 一句模糊的想法进去，能直接用的设计物料出来。活动海报、小红书封面、通知、菜单价目表、邀请函和电子请柬、奖状、名片、logo 都能做，先想创意再出三个方向让你选，中文由程序排版不会错字，交付前自动检查溢出、对比度和广告法用语，也能接生图模型出照片级画面。
-description_en: Turn a vague idea into design materials you can use right away, with copy-ready image prompts. Covers event posters, Xiaohongshu covers, notices, menus and price lists, invitations and H5 e-invites, certificates, business cards and logos. It thinks up a visual concept first, offers three directions, sets Chinese text by code so no character is wrong, and checks overflow, contrast and ad-law wording before delivery. An image model can be plugged in for photo-grade results.
-version: 0.10.1
+description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘七种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报会先想一个画面上的创意概念，配了生图模型时能按概念让模型一步画出整张海报（连图带字），没配时用排版和程序插画实现，并给出可以贴进即梦、GPT 的整图提示词。先出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息，并给出小红书信息流和朋友圈里的发布预览。交付附带编辑页，用户能自己点字改字、调颜色、换照片、在图上圈点提意见；会记住品牌，下次同一家店自动沿用。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
+description_zh: 一句模糊的想法进去，能直接用的设计物料出来。活动海报、小红书封面、通知、菜单价目表、邀请函和电子请柬、奖状、名片、logo 都能做，先想创意再出三个方向让你选，中文由程序排版不会错字，交付前自动检查溢出、对比度和广告法用语，附带能自己改字调色、圈点提意见的编辑页，还会记住品牌下次沿用，也能接生图模型出照片级画面。
+description_en: Turn a vague idea into design materials you can use right away, with copy-ready image prompts. Covers event posters, Xiaohongshu covers, notices, menus and price lists, invitations and H5 e-invites, certificates, business cards and logos. It thinks up a visual concept first, offers three directions, sets Chinese text by code so no character is wrong, and checks overflow, contrast and ad-law wording before delivery. Every delivery comes with an editor page where people retype copy, change colours, swap photos and pin comments on the picture, and the brand is remembered for the next order. An image model can be plugged in for photo-grade results.
+version: 0.11.0
 author: 萝卜哥
 ---
 
@@ -16,6 +16,8 @@ author: 萝卜哥
 脚本负责确定的活，排版、渲染、测量、检查。你负责听懂人、写文案、选方向、看图挑毛病。
 
 下面命令里的 `scripts/` 指本 skill 目录下的 scripts 文件夹。每次开工前先跑一次 `python scripts/setup_check.py --quick --install`，环境查过就秒过，缺东西会自动补装。样例规格在 `examples/`。
+
+开工时顺手做两件小事。一是打开 `templates/vision-probe.png` 看一眼，能看出橙色圆里的数字，说明你能看图；看不出来或者打不开，按第六步最后一段的办法走。二是跑 `python scripts/brands.py list`，看用户的店或账号以前有没有做过，有的话第一步就能少问很多。
 
 ## 第一步 听懂需求，填需求表
 
@@ -49,6 +51,8 @@ author: 萝卜哥
 
 用户的行业不在表里时，挑最接近的行业包，按它的思路推断。
 
+用户的品牌在 `brands.py list` 里有档案时（店名对得上就算），写 spec 草稿后跑 `python scripts/brands.py apply work/spec.json --name 店名`，方向、品牌色、字体、语气、logo，还有电话、地址、微信、营业时间这类固定信息会自动填进去，这些就不用再问了。活动日期、价格、优惠这种每次都变的信息档案里没有，照常确认。每次跑完 pipeline，档案会自动更新；用户不想被记住，在 spec.brand 里写 `"remember": false`。
+
 用户想要某种画风（水彩、剪纸、黏土、霓虹、水墨……），或者一个系列想每张画法不一样，读 @references/art-styles.md，在 art 里写 style，海报用 art-hero 或 art-frame 版式。
 
 用户提到节日（"春节海报""中秋礼盒""元旦放假通知"），再读 @references/festival-pack.md。节日包叠在行业包上面，在 spec 顶层写 `festival`，配色、底纹、插画和提示词会跟着变。农历节日的日期已经写好，法定放假安排每年由国务院办公厅公布，必须和用户确认。
@@ -81,7 +85,7 @@ python scripts/directions.py work/spec.json
 
 以下情况跳过这一步，直接用一个方向，用一句话说明并给两个备选名字：
 - 用户说了"直接做""你定就行""不用给我选"
-- 用户已经有品牌小卡（brand.json），沿用里面的方向。节日物料例外，照样出三个选项，比的是节日配色还是保留品牌色
+- 用户的品牌已经有档案（brands.py 里有），或者给了品牌小卡 brand.json，沿用里面的方向。节日物料例外，照样出三个选项，比的是节日配色还是保留品牌色
 - 同一单里已经选过方向，现在只是改稿、加物料、换尺寸
 - 无人值守的任务，没人能回答。用最稳妥的那个方向，交付时附上 board.png，说明可以换
 
@@ -95,7 +99,7 @@ python scripts/directions.py work/spec.json
 python scripts/pipeline.py work/spec.json
 ```
 
-依次做校验、拉字体、生成配图、排版渲染、生成整图、检查、出总览图、写提示词和品牌小卡。
+依次做校验、拉字体、生成配图、排版渲染、生成整图、检查、出总览图和发布预览、写提示词和品牌小卡、生成编辑页、更新品牌档案。最后打印的“下一步”是按检查结果排好的待办，照着做就行。
 
 有没有生图模型，前面几步完全一样，概念照样要想，分叉只在“谁来画、谁来写字”这一步，而且是按每件物料分的。
 
@@ -114,13 +118,27 @@ python scripts/pipeline.py work/spec.json
 
 检查脚本只能管尺寸、溢出、对比度、文字重叠、末行孤字、极限词这些硬指标。好不好看要你自己看，按 @references/critique.md 打五个维度的分，低于 3 分的改 spec 重出，最多三轮。
 
-一定要打开 overview.png 和每张成品图看过再交付，脚本全绿不代表好看。
+一定要打开 overview.png 和每张成品图看过再交付，脚本全绿不代表好看。有 preview-feed.png（小红书封面放进信息流）和 preview-moments.png（海报放进朋友圈）时也看一眼，这是用户的朋友真正看到的大小，标题在这里读不出来就要改。
 
 整图要多看两件事。第一是字，qa.json 会列出模型画的每一处文字，打开图逐字对，错一个字就改提示词后跑 `python scripts/aiposter.py work/spec.json --force` 重画，最多重画两次（每次都要扣费），还不对就交付排版版。第二是概念有没有画出来，尤其是字和图有没有咬上、字有没有被挡得认不出，没做到就把 concept.interlock 写得更死再重画。
 
+看不了图怎么办。有的模型不能读图片，开工时的探测图看不出数字就属于这种。这时候不要写 `"mode": "ai"`，整图里的字你没法核对；第六步只能靠 check.py，把它报的问题全部改掉，好不好看这一关交给用户。交付时直说你这边看不了图，已经用程序查过溢出、对比度、文字重叠和广告法用语，请用户打开 overview.png 看一眼，不满意的地方在 editor.html 里圈出来发给你。
+
 ## 第七步 交付
 
-成品 PNG（整图模式另有 -ai.png）（印刷尺寸另附 PDF），overview.png 总览，prompts.md，brand.md 和 brand.json，src 里的 HTML 源文件。有 h5 物料时还有 h5 文件夹，里面是能直接打开的 html、长图预览和每位宾客的专属链接；告诉用户这个文件要放到网上才能发进微信，放法见 item-h5.md，别承诺发出去就一定能打开。交付时用一两句话说明做了什么、用了什么方向，再把还缺的信息和文案风险（qa.json 里的 todo 和 copy）告诉用户。
+成品 PNG（整图模式另有 -ai.png）（印刷尺寸另附 PDF），overview.png 总览，preview-*.png 发布预览，editor.html 编辑页，prompts.md，brand.md 和 brand.json，src 里的 HTML 源文件。有 h5 物料时还有 h5 文件夹，里面是能直接打开的 html、长图预览和每位宾客的专属链接；告诉用户这个文件要放到网上才能发进微信，放法见 item-h5.md，别承诺发出去就一定能打开。交付时用一两句话说明做了什么、用了什么方向，再把还缺的信息和文案风险（qa.json 里的 todo 和 copy）告诉用户。
+
+告诉用户成品可以自己改。editor.html 双击就能在浏览器打开，点图上的字直接改、改颜色、换照片，也能在图上点一下写意见。改完点“导出修改单”，把修改单.json（换了照片的话连照片一起）发回来，你跑 `python scripts/studio.py apply work/spec.json 修改单.json`，再按它说的重跑 pipeline，意见用 `studio.py comments work/spec.json` 读。
+
+你和用户在同一台电脑上（Claude Code、Codex、Cursor 这类本地 Agent）时，可以开实时编辑页，体验更好：
+
+```bash
+python scripts/studio.py open work/spec.json      # 放后台跑，把打印出的地址给用户
+python scripts/studio.py comments work/spec.json --wait   # 后台等用户在页面上发来的意见
+python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolve
+```
+
+用户在页面上改字、调色、换图后点保存，全部尺寸几秒内自动重出，不用经过你。用户圈点的意见会带着位置和那一处原来的文字，`comments --wait` 一收到就返回，你按意见改 spec、重跑，再用 reply 回一句改了什么，然后接着等。页面上改的东西都写回 spec.json，之后重跑 pipeline 结果一样。云端环境里用户打不开你的 127.0.0.1，就用 editor.html 那条路。
 
 ## 硬规则
 
@@ -134,7 +152,7 @@ python scripts/pipeline.py work/spec.json
 - 证书只留"盖章处"，不画任何仿制的公章或印章
 - 招聘物料不写性别、年龄、婚育、地域限制
 - 商业物料不放国旗、国徽；清明不写"快乐"
-- 宾客名单、业主信息只用在这一单里，提醒用户别把带全部名单的总览图发到群里
+- 宾客名单、业主信息只用在这一单里，提醒用户别把带全部名单的总览图发到群里。品牌档案只记品牌本身和店铺的固定信息，不记名单和个人信息
 
 ## 文件
 
@@ -157,6 +175,10 @@ python scripts/pipeline.py work/spec.json
 | `scripts/artstyle.py`、`scripts/layouts_art.py`、`scripts/layouts_artthemes.py` | 10 种艺术画风（SVG 滤镜和生成背景），art-hero、art-frame 两种艺术海报版式，竖版时每种画风一套整页主题 |
 | `scripts/fonts.py`、`scripts/fontfix.py` | 首次运行从 npm 拉开源中文字体到缓存，顺手修好个别字体里会印成黑块的字 |
 | `scripts/brand.py`、`scripts/sheet.py` | 品牌小卡、总览图 |
+| `scripts/brands.py` | 品牌档案，list 看有哪些、apply 填进新规格，pipeline 跑完自动保存 |
+| `scripts/studio.py`、`scripts/studio.html` | 编辑页。build 出离线的 editor.html，open 开实时页（保存即重出图），comments、reply 读写用户在图上圈点的意见，apply 读入离线修改单 |
+| `scripts/preview.py` | 发布预览，小红书封面放进信息流、海报放进朋友圈，按实际大小看 |
+| `templates/vision-probe.png` | 看图能力探测图 |
 | `references/poster-craft.md` | 海报的设计精华，想概念和写 concept 之前读 |
 | `references/*.json` | 方向、平台尺寸、字体、文案风险词、节日的数据 |
 | `templates/config.example.json` | 生图配置模板 |
