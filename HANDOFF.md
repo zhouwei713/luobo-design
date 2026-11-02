@@ -25,7 +25,8 @@
 | `layouts.py` | 海报和菜单的版式，Ctx、T（一个文字节点）、page（页面骨架和自适应脚本 FIT_JS），也是所有版式的注册入口 |
 | `layouts_more.py`、`layouts_trend.py`、`layouts_art.py`、`layouts_artthemes.py`、`layouts_xhs.py`、`layouts_h5.py` | 其余版式，按物料和风格分文件，各自在 layouts.py 里注册 |
 | `art.py`、`art_drinks.py`、`artstyle.py` | 程序插画、饮品杯、十种画风滤镜 |
-| `layouts_refined.py` | 杂志和瑞士两套克制版式和精修通知；方向带 `system` 字段时自动启用，装饰开关看方向的 `ornament` |
+| `layouts_refined.py` | 书卷和细线两套克制版式和精修通知；方向带 `system` 字段时自动启用，装饰开关看方向的 `ornament` |
+| `layouts_refined_more.py` | 同样两组方向下的请柬、证书、名片、桌号牌、菜单；layouts.build 遇到带 `system` 的方向自动转到这里，电子请柬和品牌小卡在原文件里按 `system` 收掉装饰 |
 | `imgtone.py` | 读照片放字的区域，算出按需的同色调遮罩 |
 | `shotframe.py` | 截图加圆角、阴影、浏览器框、手机框 |
 | `stock.py` | 免费图库搜图下载，记来源和许可 |

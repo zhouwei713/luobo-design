@@ -46,6 +46,12 @@ def pages_for(item):
 def _frame(ctx):
     from layouts_more import ornate_frame
     t = ctx.t
+    if ctx.d.get("system"):  # restrained systems: one fine rule on paper, nothing in swiss
+        if ctx.d["system"] != "magazine":
+            return ""
+        from layouts_refined import wash
+        return wash(ctx) + (f'<div style="position:absolute;inset:{2.6 * ctx.u:.1f}px;border:1px solid {rgba(t["ink"], .4)};'
+                            f'z-index:1;pointer-events:none"></div>')
     if ctx.d["shape"].get("deco") not in ("line", "seal"):
         return ""
     return ornate_frame(ctx, t["accent"], rgba(t["accent"], .55), 2.6 * ctx.u)
@@ -66,6 +72,10 @@ def _sp(ctx, n=None, grow=False):
 
 def _label(ctx, s):
     u = ctx.u
+    if ctx.d.get("system"):
+        from layouts_refined import meta
+        return (meta(ctx, s.replace(" ", "") if any("\u4e00" <= ch <= "\u9fff" for ch in s) else s, size=max(ctx.minc, 3.1 * u))
+                + f'<div style="width:{ctx.px(8)};height:1px;background:{rgba(ctx.t["ink"], .45)};margin:{ctx.px(2.4)} auto 0"></div>')
     return (T(ctx, "label", s, c="accent_text", style=f"font-size:{max(ctx.minc, 3.3 * u):.1f}px;letter-spacing:.4em;font-weight:700;")
             + f'<div style="width:{ctx.px(8)};height:{ctx.px(0.5)};background:{ctx.t["accent"]};margin:{ctx.px(2.4)} auto 0"></div>')
 
@@ -80,10 +90,10 @@ def _btn(ctx, label, action, href="#", primary=True, extra=""):
     r = max(ctx.d["shape"]["radius"] * 0.6, 0.6) * u if ctx.d["shape"]["radius"] else 0
     if primary:
         st = f"background:{t['accent']};border:{ctx.px(0.3)} solid {t['accent']};"
-        txt = T(ctx, "label", label, c="on_accent", on="accent", style=f"font-size:{max(ctx.minb, 4.1 * u):.1f}px;font-weight:700;letter-spacing:.12em;white-space:nowrap;")
+        txt = T(ctx, "label", label, c="on_accent", on="accent", style=f"font-size:{max(ctx.minb, 4.1 * u):.1f}px;font-weight:{500 if ctx.d.get('system') else 700};letter-spacing:.12em;white-space:nowrap;")
     else:
         st = f"background:transparent;border:{ctx.px(0.3)} solid {t['accent']};"
-        txt = T(ctx, "label", label, c="accent_text", style=f"font-size:{max(ctx.minb, 3.8 * u):.1f}px;font-weight:700;letter-spacing:.08em;white-space:nowrap;")
+        txt = T(ctx, "label", label, c="accent_text", style=f"font-size:{max(ctx.minb, 3.8 * u):.1f}px;font-weight:{500 if ctx.d.get('system') else 700};letter-spacing:.08em;white-space:nowrap;")
     return (f'<a class="btn rv" data-action="{action}" href="{_html.escape(href, quote=True)}" {extra} '
             f'style="{st}display:flex;align-items:center;justify-content:center;min-height:{ctx.px(13)};padding:0 {ctx.px(4)};'
             f'border-radius:{r:.1f}px;text-decoration:none;flex:1 1 0;min-width:0;-webkit-tap-highlight-color:transparent">{txt}</a>')
@@ -127,7 +137,7 @@ def h5_cover(ctx, fonts_css):
                  f'border:{ctx.px(0.3)} solid {t["accent"]}">{art_block(ctx, {**a, "image_fit": "cover"})}</div>')
     else:
         motif = (f'<div class="rv" style="width:{ctx.px(30)};height:{ctx.px(30)};position:relative;flex:none">{art_block(ctx, a)}</div>'
-                 if a.get("motif") else "")
+                 if a.get("motif") and not ctx.d.get("system") else "")
     host = c.get("host") or ctx.brand.get("name")
     inner = (_sp(ctx, 2)
              + T(ctx, "label", c.get("kicker") or "INVITATION", c="accent_text", cls="rv",
@@ -240,7 +250,7 @@ def h5_rsvp(ctx, fonts_css):
     c, t, u = ctx.item["content"], ctx.t, ctx.u
     a = ctx.item.get("art") or {}
     motif = (f'<div class="rv" style="width:{ctx.px(20)};height:{ctx.px(20)};position:relative;flex:none">{art_block(ctx, a)}</div>'
-             if (a.get("motif") or a.get("image")) else "")
+             if (a.get("image") or (a.get("motif") and not ctx.d.get("system"))) else "")
     url = c.get("rsvp_url")
     rsvp_btn = _btn(ctx, c.get("rsvp_label") or "回复是否出席", "rsvp", url or "#")
     missing = (T(ctx, "caption", "【回执链接】", c="muted", style=f"font-size:{max(ctx.minc, 3 * u):.1f}px;margin-top:{ctx.px(1.4)};")

@@ -22,9 +22,9 @@ from layouts import LAYOUTS
 KEYS = {
     "poster": {"kicker", "headline", "sub", "offer", "details", "cta", "qr", "big_number", "org", "body", "issuer", "date_line",
                "tags", "note", "art_label", "big_title", "lines", "looks", "credit", "en"},
-    "menu": {"title", "subtitle", "sections", "details", "note", "qr"},
+    "menu": {"title", "subtitle", "sections", "details", "note", "qr", "kicker", "date_line"},
     "invitation": {"kicker", "title", "big_number", "guest", "salutation", "body", "details", "rsvp", "closing",
-                   "host", "date_line", "qr"},
+                   "host", "date_line", "qr", "en"},
     "certificate": {"title", "subtitle", "recipient", "recipient_suffix", "recipients", "body", "award", "body_after",
                     "issuer", "date", "signers", "seal", "number"},
     "card": {"name", "name_en", "title", "org", "contacts", "qr", "slogan"},
@@ -32,7 +32,7 @@ KEYS = {
     "tablecard": {"number", "label", "guests", "event", "date", "name", "role"},
     "h5": {"kicker", "title", "host", "guest", "default_guest", "invite_line", "salutation", "body", "closing", "when",
            "date_text", "big_number", "details", "venue", "address", "map", "schedule", "rsvp", "rsvp_url", "rsvp_label",
-           "contacts", "date_line", "music", "share_title", "share_desc", "nav_label", "countdown_label", "after_label",
+           "contacts", "date_line", "music", "en", "share_title", "share_desc", "nav_label", "countdown_label", "after_label",
            "letter_label", "info_label", "schedule_label"},
 }
 KEYS["xhs"] = {"title", "sub", "kicker", "tag", "stickers", "badges", "items", "photos", "labels", "color", "colors", "series",

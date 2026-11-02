@@ -60,6 +60,8 @@ def emblem_shape(d, s, fill, line):
                 f'fill="none" stroke="{line}" stroke-width="{s * 0.025:.1f}"/>')
     if deco == "sticker":
         return f'<rect x="0" y="0" width="{s}" height="{s}" rx="{s * 0.28:.1f}" fill="{fill}"/>'
+    if deco == "block":  # swiss: a plain square
+        return f'<rect x="0" y="0" width="{s}" height="{s}" fill="{fill}"/>'
     if deco == "line":
         return f'<circle cx="{s / 2}" cy="{s / 2}" r="{s / 2 - s * 0.03:.1f}" fill="none" stroke="{fill}" stroke-width="{s * 0.05:.1f}"/>'
     return f'<circle cx="{s / 2}" cy="{s / 2}" r="{s / 2}" fill="{fill}"/>'
@@ -144,8 +146,14 @@ def board(ctx, fonts_css):
     pad = ctx.safe
     name = plain(c.get("name") or ctx.brand.get("name") or "品牌")
     r = ctx.px(d["shape"]["radius"])
+    sysd = d.get("system")
+    if sysd:  # restrained systems: a quiet metadata line instead of a bold label
+        from layouts_refined import meta as _meta
+        _lab = lambda s: _meta(ctx, s, c="accent_text", size=max(ctx.minc, 1.8 * u))  # noqa: E731
+    else:
+        _lab = lambda s: T(ctx, "label", s, c="accent_text", style=f"font-size:{max(ctx.minc, 1.8 * u):.1f}px;letter-spacing:.3em;font-weight:700;")  # noqa: E731
     head = (f'<div style="display:flex;justify-content:space-between;align-items:flex-end;flex:none">'
-            f'<div>' + T(ctx, "label", "BRAND KIT", c="accent_text", style=f"font-size:{max(ctx.minc, 1.9 * u):.1f}px;letter-spacing:.4em;font-weight:700;")
+            f'<div>' + (_lab("BRAND KIT") if sysd else T(ctx, "label", "BRAND KIT", c="accent_text", style=f"font-size:{max(ctx.minc, 1.9 * u):.1f}px;letter-spacing:.4em;font-weight:700;"))
             + T(ctx, "headline", f"{name} 品牌小卡", cls="d", style=f"font-size:{ctx.px(5.4)};line-height:1.2;margin-top:{ctx.px(0.8)};white-space:nowrap;")
             + "</div>"
             + T(ctx, "body", f"视觉方向 {d['name']} · {d['mood']}", c="muted",
@@ -163,23 +171,23 @@ def board(ctx, fonts_css):
             + f'<div style="width:78%;height:62%;display:flex;align-items:center;justify-content:center">{_fit_svg(lg["svg"], "100%", "100%")}</div></div>'
             f'<div style="flex:3 1 0;min-height:0;background:{t["accent"]};display:flex;align-items:center;justify-content:center;padding:{ctx.px(1.6)}">'
             f'<div style="width:56%;height:70%;display:flex;align-items:center;justify-content:center">{_fit_svg(lg["reversed"], "100%", "100%")}</div></div></div>')
-    row1 = f'<div style="flex:1.25 1 0;min-height:0;display:flex;gap:{ctx.px(2.4)}">{"".join(cards)}</div>'
+    row1 = f'<div style="flex:1.6 1 0;min-height:0;display:flex;gap:{ctx.px(2.4)}">{"".join(cards)}</div>'
     sw = []
     for key, zh in (("bg", "底色"), ("surface", "卡片"), ("ink", "主文字"), ("muted", "次文字"), ("accent", "强调"), ("accent2", "辅助")):
         on = "ink" if key not in ("ink",) else "on_ink"
         sw.append(f'<div style="display:flex;flex-direction:column;gap:{ctx.px(0.5)}">'
-                  f'<div style="height:{ctx.px(4.6)};border-radius:{ctx.px(0.8)};background:{t[key]};border:{ctx.px(0.15)} solid {t["line"]}"></div>'
+                  f'<div style="height:{ctx.px(4.6)};border-radius:{0 if sysd else ctx.px(0.8)};background:{t[key]};border:{ctx.px(0.15)} solid {t["line"]}"></div>'
                   + T(ctx, "caption", f"{zh}", c="muted", style=f"font-size:{max(ctx.minc, 1.6 * u):.1f}px;")
                   + T(ctx, "caption", t[key].upper(), style=f"font-size:{max(ctx.minc, 1.6 * u):.1f}px;font-family:monospace;")
                   + "</div>")
     palette = (f'<div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:{ctx.px(1.2)}">'
-               + T(ctx, "label", "颜色", c="accent_text", style=f"font-size:{max(ctx.minc, 1.8 * u):.1f}px;letter-spacing:.3em;font-weight:700;")
+               + _lab("颜色")
                + f'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:{ctx.px(1.2)}">{"".join(sw)}</div></div>')
     from common import load_ref
     fonts = load_ref("fonts.json")
     df, bf = fonts.get(d["display"]["font"], {}), fonts.get(d["body"]["font"], {})
     typo = (f'<div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:{ctx.px(1)}">'
-            + T(ctx, "label", "字体", c="accent_text", style=f"font-size:{max(ctx.minc, 1.8 * u):.1f}px;letter-spacing:.3em;font-weight:700;")
+            + _lab("字体")
             + T(ctx, "headline", f"{name} Aa 123", cls="d", style=f"font-size:{ctx.px(5)};line-height:1.2;white-space:nowrap;overflow:hidden;")
             + T(ctx, "caption", f"标题 {df.get('family', '')}", c="muted", style=f"font-size:{max(ctx.minc, 1.6 * u):.1f}px;")
             + T(ctx, "body", "正文用这款字，清楚好读，适合价目、地址和说明文字。", style=f"font-size:{max(ctx.minb, 2.2 * u):.1f}px;margin-top:{ctx.px(1)};")
@@ -187,13 +195,14 @@ def board(ctx, fonts_css):
             + "</div>")
     icon = logos["B"]["icon"]
     apps = (f'<div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:{ctx.px(1.2)}">'
-            + T(ctx, "label", "用起来", c="accent_text", style=f"font-size:{max(ctx.minc, 1.8 * u):.1f}px;letter-spacing:.3em;font-weight:700;")
+            + _lab("用起来")
             + f'<div style="display:flex;gap:{ctx.px(2)};align-items:center;flex:1 1 auto">'
             f'<div style="display:flex;flex-direction:column;align-items:center;gap:{ctx.px(0.6)}">'
             f'<div style="width:{ctx.px(11)};height:{ctx.px(11)};border-radius:50%;overflow:hidden;background:{t["surface"]};display:flex;align-items:center;justify-content:center">{_fit_svg(icon, "100%", "100%")}</div>'
             + T(ctx, "caption", "头像", c="muted", style=f"font-size:{max(ctx.minc, 1.5 * u):.1f}px;") + "</div>"
             f'<div style="flex:1 1 auto;aspect-ratio:90/54;max-height:{ctx.px(15)};background:{t["surface"]};border-radius:{ctx.px(0.6)};'
-            f'box-shadow:0 {ctx.px(0.4)} {ctx.px(1.6)} {rgba(t["ink"], .18)};display:flex;flex-direction:column;justify-content:space-between;padding:{ctx.px(1.4)}">'
+            + (f'border:1px solid {t["line"]};' if sysd else f'box-shadow:0 {ctx.px(0.4)} {ctx.px(1.6)} {rgba(t["ink"], .18)};')
+            + f'display:flex;flex-direction:column;justify-content:space-between;padding:{ctx.px(1.4)}">'
             f'<div style="height:{ctx.px(4)};display:flex">{_fit_svg(logos["A"]["svg"], "60%", "100%")}</div>'
             f'<div style="display:flex;flex-direction:column;gap:{ctx.px(0.5)}">'
             + "".join(f'<div style="height:{ctx.px(0.6)};width:{w}%;background:{rgba(t["ink"], .2)};border-radius:2px"></div>' for w in (60, 45, 52))

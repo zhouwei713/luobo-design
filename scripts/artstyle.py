@@ -32,7 +32,7 @@ STYLES = {
              "prompt_zh": "可爱的 3D 黏土质感，软软的橡皮泥材质，圆鼓鼓的造型，柔和的棚拍光，浅色背景，隐约的手捏痕迹"},
     "lineart": {"name": "线描", "name_en": "line art",
                 "prompt_en": "minimal single-weight line drawing with one offset block of colour, lots of white space, editorial illustration",
-                "prompt_zh": "极简的等粗线描，配一块错开的色块，大量留白，杂志插画感"},
+                "prompt_zh": "极简的等粗线描，配一块错开的色块，大量留白，刊物插画感"},
     "crayon": {"name": "蜡笔手绘", "name_en": "crayon drawing",
                "prompt_en": "childlike crayon and oil-pastel drawing on kraft paper, waxy texture, rough strokes, playful scribbles",
                "prompt_zh": "蜡笔和油画棒手绘，牛皮纸底，蜡质的颗粒感，粗糙的笔触，童趣的涂鸦"},

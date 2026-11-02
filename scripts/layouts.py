@@ -776,6 +776,9 @@ def build(item, brand, direction, cv, facts, fonts_css):
     if system and item["type"] == "poster" and lay == "notice":
         import layouts_refined
         return layouts_refined.notice_refined(Ctx(item, brand, direction, cv, facts), fonts_css)
+    if system and item["type"] in ("invitation", "certificate", "card", "tablecard", "menu"):
+        import layouts_refined_more  # the same restraint for the print pieces; the old layout name is a hint
+        return layouts_refined_more.BUILD[item["type"]](Ctx(item, brand, direction, cv, facts), fonts_css)
     key = (item["type"], lay)
     if key not in BUILDERS:
         raise SystemExit(f"no layout {key}. Known: {sorted(BUILDERS)}")

@@ -17,6 +17,7 @@ from common import mix, rgba
 from fonts import stack
 from layouts import T, esc, page, plain, qr_block, rich
 
+CJK = re.compile(r"[\u3400-\u9fff]")
 LATIN = re.compile(r"[A-Za-z0-9 .,:;!?'\"()\-+/%#&@]")
 
 
@@ -58,6 +59,10 @@ def title_px(ctx, text, system, roomy=False):
 def meta(ctx, text, c="muted", on="bg", upper=True, size=None):
     """Tracked mono metadata: issue line, labels, numbers."""
     fs = size or max(ctx.minc, 1.85 * ctx.u)
+    if CJK.search(plain(text or "")):  # Chinese in a mono face spreads digits apart: set it in the body face, tracked less
+        return T(ctx, "label", text, c=c, on=on, tag="span",
+                 style=f"font-family:{stack(ctx.d['body']['font'])};font-size:{fs * 1.08:.1f}px;letter-spacing:.1em;font-weight:500;"
+                       "white-space:nowrap;line-height:1.2;")
     return T(ctx, "label", text, c=c, on=on, tag="span",
              style=f"font-family:{stack('mono')};font-size:{fs:.1f}px;letter-spacing:.18em;font-weight:500;"
                    + ("text-transform:uppercase;" if upper else "") + "white-space:nowrap;line-height:1.2;")

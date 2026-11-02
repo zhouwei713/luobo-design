@@ -109,7 +109,7 @@
   "pattern": "none",
   "texture": "none",
   "image_style": "minimal still life, soft daylight, lots of negative space, neutral background, editorial product photo",
-  "image_style_zh": "极简静物，柔和日光，大量留白，中性背景，杂志感产品照",
+  "image_style_zh": "极简静物，柔和日光，大量留白，中性背景，画报感产品照",
   "fits": [
    "咖啡",
    "轻食",
@@ -122,9 +122,9 @@
   "system": "swiss"
  },
  "editorial": {
-  "name": "杂志感",
-  "name_en": "editorial magazine",
-  "mood": "有观点、有格调，像一本杂志的版面",
+  "name": "刊物感",
+  "name_en": "editorial",
+  "mood": "有观点、有格调，像一本刊物的版面",
   "tokens": {
    "bg": "#F1EEE8",
    "surface": "#FFFFFF",
@@ -150,7 +150,7 @@
   "pattern": "none",
   "texture": "paper",
   "image_style": "editorial photography, strong single subject, dramatic natural light, magazine cover composition",
-  "image_style_zh": "杂志摄影，单一强主体，戏剧性的自然光，杂志封面式构图",
+  "image_style_zh": "画报摄影，单一强主体，戏剧性的自然光，封面式构图",
   "fits": [
    "自媒体",
    "讲座",
@@ -525,8 +525,8 @@
   "ornament": false
  },
  "mag-ink": {
-  "name": "杂志·墨",
-  "name_en": "magazine ink",
+  "name": "纸墨",
+  "name_en": "paper ink",
   "mood": "纸和墨，像一本安静的刊物，朱砂只点一处",
   "system": "magazine",
   "ornament": false,
@@ -555,7 +555,7 @@
   "pattern": "none",
   "texture": "paper",
   "image_style": "documentary photograph, soft natural light, muted film colour, calm composition with open space, magazine feature",
-  "image_style_zh": "纪实摄影，柔和自然光，低饱和胶片色，构图安静留有空白，杂志专题照",
+  "image_style_zh": "纪实摄影，柔和自然光，低饱和胶片色，构图安静留有空白，专题纪实照",
   "fits": [
    "咖啡",
    "书店",
@@ -568,8 +568,8 @@
   "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
  },
  "mag-indigo": {
-  "name": "杂志·青",
-  "name_en": "magazine indigo",
+  "name": "青瓷",
+  "name_en": "celadon blue",
   "mood": "青花瓷的蓝配白瓷底，清冷、有书卷气",
   "system": "magazine",
   "ornament": false,
@@ -610,8 +610,8 @@
   "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
  },
  "mag-forest": {
-  "name": "杂志·松",
-  "name_en": "magazine forest",
+  "name": "松烟",
+  "name_en": "pine green",
   "mood": "松绿配米纸，户外、植物、慢生活",
   "system": "magazine",
   "ornament": false,
@@ -653,8 +653,8 @@
   "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
  },
  "mag-night": {
-  "name": "杂志·夜",
-  "name_en": "magazine night",
+  "name": "夜金",
+  "name_en": "night gold",
   "mood": "深墨底配金色，夜晚、电影感、高端",
   "system": "magazine",
   "ornament": false,
@@ -694,9 +694,51 @@
   ],
   "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
  },
+ "mag-xi": {
+  "name": "喜帖",
+  "name_en": "quiet celebration",
+  "mood": "米白纸配一点正红，婚礼和喜事的安静版本",
+  "system": "magazine",
+  "ornament": false,
+  "tokens": {
+   "bg": "#F4EEE6",
+   "surface": "#F9F5EF",
+   "ink": "#1E1515",
+   "muted": "#6B5B55",
+   "accent": "#B4232C",
+   "accent2": "#D8C2A6"
+  },
+  "display": {
+   "font": "song",
+   "weight": 500,
+   "tracking": 0.08
+  },
+  "body": {
+   "font": "song",
+   "weight": 400
+  },
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "line"
+  },
+  "pattern": "none",
+  "texture": "paper",
+  "image_style": "quiet documentary wedding photograph, soft window light, warm muted film colour, lots of open space",
+  "image_style_zh": "安静的纪实婚礼照片，柔和窗光，暖调低饱和胶片色，留大片空白",
+  "fits": [
+   "婚礼",
+   "订婚",
+   "满月",
+   "寿宴",
+   "乔迁",
+   "喜事"
+  ],
+  "avoid": "大面积红底、金色描边花框、双喜剪贴画、烫金渐变、三种以上颜色"
+ },
  "swiss-blue": {
-  "name": "瑞士·蓝",
-  "name_en": "swiss blue",
+  "name": "细线蓝",
+  "name_en": "fine line blue",
   "mood": "网格、细线、细体大字，一种克莱因蓝",
   "system": "swiss",
   "ornament": false,
@@ -738,8 +780,8 @@
   "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
  },
  "swiss-orange": {
-  "name": "瑞士·橙",
-  "name_en": "swiss orange",
+  "name": "细线橙",
+  "name_en": "fine line orange",
   "mood": "网格和安全橙，醒目但不吵",
   "system": "swiss",
   "ornament": false,
@@ -780,8 +822,8 @@
   "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
  },
  "swiss-yellow": {
-  "name": "瑞士·黄",
-  "name_en": "swiss yellow",
+  "name": "细线黄",
+  "name_en": "fine line yellow",
   "mood": "柠檬黄色块配黑字，明快、年轻",
   "system": "swiss",
   "ornament": false,
@@ -821,8 +863,8 @@
   "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
  },
  "swiss-green": {
-  "name": "瑞士·绿",
-  "name_en": "swiss green",
+  "name": "细线绿",
+  "name_en": "fine line green",
   "mood": "深绿配白，干净、可信、健康",
   "system": "swiss",
   "ornament": false,

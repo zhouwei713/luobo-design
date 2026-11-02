@@ -71,8 +71,8 @@
 
 ## 视觉方向：挑三个给用户看
 
-先看行业包里的推荐，再看用户的形容词。"高级""有格调"往杂志组、瑞士组、clean-minimal、editorial、dark-premium 走；"热闹""喜庆"往 pop-fresh、festive-red 走，婚礼寿宴这类喜事往 xi-red 走；"国风""茶""节气"往 guochao 走；"温暖""手作"往 warm-hand 走。
+先看行业包里的推荐，再看用户的形容词。"高级""有格调"往书卷组、细线组、clean-minimal、editorial、dark-premium 走；"热闹""喜庆"往 pop-fresh、festive-red 走，婚礼寿宴这类喜事往 xi-red 走；"国风""茶""节气"往 guochao 走；"温暖""手作"往 warm-hand 走。
 
-三个候选要拉开差距，最好分别来自三个温度组，热闹组（pop-fresh、festive-red、sport-bold）、中间组（warm-hand、soft-pastel、campus-fresh、guochao、trust-blue、garden-romance、xi-red）、讲究组（杂志组 mag-ink、mag-indigo、mag-forest、mag-night，瑞士组 swiss-blue、swiss-orange、swiss-yellow、swiss-green，还有 clean-minimal、editorial、dark-premium）。第一个放你最推荐的，大部分情况下讲究组里挑一个当第一个，它最不容易土；行业包表格里的首选方向放第二、第三个。婚宴寿宴这类喜事和节日物料例外，第一个仍然是喜庆的方向。directions.py 会自动给每个方向配不同的版式。
+三个候选要拉开差距，最好分别来自三个温度组，热闹组（pop-fresh、festive-red、sport-bold）、中间组（warm-hand、soft-pastel、campus-fresh、guochao、trust-blue、garden-romance、xi-red）、讲究组（书卷组 mag-ink、mag-indigo、mag-forest、mag-night，细线组 swiss-blue、swiss-orange、swiss-yellow、swiss-green，还有 clean-minimal、editorial、dark-premium）。第一个放你最推荐的，大部分情况下讲究组里挑一个当第一个，它最不容易土；行业包表格里的首选方向放第二、第三个。婚宴寿宴这类喜事和节日物料例外，第一个仍然是喜庆的方向。directions.py 会自动给每个方向配不同的版式。
 
 不要用文字描述让用户选风格，也不要连问"喜欢什么颜色""要什么感觉"。把三张图摆出来，用户一眼就知道要哪个。用户有 brand.json 时直接沿用，不再出三版。

@@ -35,7 +35,7 @@
       700,
       900
     ],
-    "feel": "宋体，文雅、杂志感、正式"
+    "feel": "宋体，文雅、有书卷气、正式"
   },
   "qingke": {
     "family": "ZCOOL QingKe HuangYou",
@@ -166,7 +166,7 @@
       "STSong",
       "serif"
     ],
-    "feel": "思源宋体可变字重，杂志感的标题和正文，标题用 400 到 500，不要加粗"
+    "feel": "思源宋体可变字重，书卷组的标题和正文，标题用 400 到 500，不要加粗"
   },
   "hei": {
     "family": "Noto Sans SC Variable",
@@ -196,7 +196,7 @@
       "Microsoft YaHei",
       "sans-serif"
     ],
-    "feel": "思源黑体可变字重，瑞士风的细体大字（200 到 300）和正文"
+    "feel": "思源黑体可变字重，细线组的细体大字（200 到 300）和正文"
   },
   "inter": {
     "family": "Inter Variable",
@@ -229,7 +229,7 @@
       "Microsoft YaHei",
       "sans-serif"
     ],
-    "feel": "Inter 管拉丁字母和数字，中文落到思源黑体；瑞士风的标题和大数字"
+    "feel": "Inter 管拉丁字母和数字，中文落到思源黑体；细线组的标题和大数字"
   },
   "mono": {
     "family": "JetBrains Mono",
@@ -280,6 +280,6 @@
       "Songti SC",
       "serif"
     ],
-    "feel": "英文衬线斜体，杂志风的英文副标题，中文永远不用斜体"
+    "feel": "英文衬线斜体，书卷组的英文副标题，中文永远不用斜体"
   }
 }
