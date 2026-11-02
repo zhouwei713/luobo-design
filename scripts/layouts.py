@@ -259,6 +259,8 @@ def badge(ctx, offer, size_u):
                  f"inset 0 0 0 {s * 0.04:.1f}px {t['on_accent']};")
     elif deco == "soft":
         shape = "border-radius:50%;"
+    elif deco == "block":  # swiss: a plain square-cornered block
+        shape = ""
     else:  # line
         shape = f"border-radius:50%;box-shadow:0 0 0 {s * 0.02:.1f}px {t['bg']},0 0 0 {s * 0.03:.1f}px {t['accent']};"
     # data-grp: texts inside one rotated sticker are laid out together; their tilted boxes may touch
@@ -338,6 +340,8 @@ def art_block(ctx, a, mode="contain", radius_u=0):
 
 
 def sparkles(ctx, spots):
+    if not ctx.d.get("ornament"):  # little stars read as template decoration; only lively directions keep them
+        return ""
     out = []
     for x, y, s, c in spots:
         out.append(f'<div style="position:absolute;left:{x}%;top:{y}%;width:{ctx.px(s)};height:{ctx.px(s)};z-index:3">'
@@ -355,7 +359,7 @@ def product_stage(ctx, offer, bsize_u):
         return (f'<div class="stage" style="position:relative;flex:1 1 auto;min-height:0;min-width:0">'
                 f'<div style="position:absolute;inset:0;z-index:2">{art_block(ctx, {**a, "image_fit": "contain"})}</div>'
                 f'<div style="position:absolute;right:0;top:0;z-index:6">{badge(ctx, offer, bsize_u)}</div></div>')
-    rays = ("" if cover else
+    rays = ("" if cover or not ctx.d.get("ornament") else
             f'<div style="position:absolute;inset:-18%;border-radius:50%;'
             f'background:repeating-conic-gradient(from 0deg, {rgba(t["surface"], .5)} 0deg 7deg, transparent 7deg 14deg);'
             f'-webkit-mask:radial-gradient(circle, #000 30%, transparent 68%);mask:radial-gradient(circle, #000 30%, transparent 68%)"></div>'
@@ -767,7 +771,12 @@ BUILDERS = {
 
 
 def build(item, brand, direction, cv, facts, fonts_css):
-    key = (item["type"], item.get("layout") or LAYOUTS[item["type"]][0])
+    system = direction.get("system")
+    lay = item.get("layout") or (system if system and item["type"] == "poster" else LAYOUTS[item["type"]][0])
+    if system and item["type"] == "poster" and lay == "notice":
+        import layouts_refined
+        return layouts_refined.notice_refined(Ctx(item, brand, direction, cv, facts), fonts_css)
+    key = (item["type"], lay)
     if key not in BUILDERS:
         raise SystemExit(f"no layout {key}. Known: {sorted(BUILDERS)}")
     ctx = Ctx(item, brand, direction, cv, facts)
@@ -787,3 +796,5 @@ import layouts_h5  # noqa: E402  (phone pages)
 layouts_h5.register(BUILDERS, LAYOUTS)
 import layouts_xhs  # noqa: E402  (Xiaohongshu note covers)
 layouts_xhs.register(BUILDERS, LAYOUTS)
+import layouts_refined  # noqa: E402  (magazine and swiss: the restrained systems)
+layouts_refined.register(BUILDERS, LAYOUTS)

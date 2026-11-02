@@ -46,6 +46,6 @@ id 是 `fitness`。覆盖健身房、私教工作室、瑜伽普拉提馆、舞�
 
 用户："我开了个瑜伽馆，下个月有周末体验课，帮我做张海报，再把课表做一下。"
 
-- 推断：受众是附近上班族女性为主，方向 clean-minimal，备选 soft-pastel、warm-hand
+- 推断：受众是附近上班族女性为主，方向 swiss-orange，备选 mag-forest、soft-pastel
 - 缺：体验课价格和日期、课表具体时间、地址
 - 物料：trial（poster editorial，portrait + square），schedule（menu list，a4 + story）

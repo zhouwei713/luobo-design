@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-SKILL_VERSION = "0.12.0"
+SKILL_VERSION = "0.13.0"
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 REF_DIR = SKILL_DIR / "references"

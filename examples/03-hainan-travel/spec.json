@@ -19,20 +19,14 @@
  },
  "brand": {
   "name": "海南岛",
-  "direction": "clean-minimal",
-  "tokens": {
-   "bg": "#FFF6EA",
-   "ink": "#123B4A",
-   "accent": "#0FA3B1",
-   "accent2": "#FF7A59"
-  }
+  "direction": "mag-indigo"
  },
  "items": [
   {
    "id": "winter",
    "type": "poster",
    "mode": "ai",
-   "layout": "art-hero",
+   "layout": "magazine",
    "sizes": [
     "portrait",
     "square",
@@ -41,19 +35,15 @@
    "content": {
     "kicker": "来海南过冬",
     "headline": "冬天\n留在登机口",
-    "sub": "落地就能脱掉外套，椰风海浪都在等你",
+    "sub": "落地就能脱掉外套。椰风、海浪和阳光，都在等你。",
     "tags": [
      "椰林",
      "海浪",
      "阳光"
     ],
-    "note": "海南岛",
-    "art_label": "剪纸"
+    "en": "Leave the winter at the gate."
    },
-   "art": {
-    "style": "papercut",
-    "motif": "palm-beach"
-   },
+   "art": {},
    "concept": {
     "idea": "一落地就把冬天脱掉",
     "idea_en": "you take winter off the moment you land",

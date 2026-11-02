@@ -13,18 +13,25 @@ type 是 `poster`。开业、促销、新品、讲座、活动海报都用它，
 | details | 信息行，`[{"k": "地址", "v": "{address}"}]` | 最多 4 行 |
 | cta | 行动句，告诉人做什么 | 16 字以内 |
 | qr | 二维码，`{"label": "扫码进群", "src": "qr.png"}`，没图就留占位 | |
-| big_number | 只有 editorial 版式用，大号日期或数字，"10.18" | |
+| big_number | editorial 和 swiss 版式用，大号日期或数字，"10.18" | |
+| en | magazine 版式标题下的英文斜体副标题，可选。只写真的有意思的一句，别硬翻译 | "Leave the winter at the gate." |
 | org | notice 用，顶部色带里的发布单位 | |
 | body | notice 用，正文，段落之间空一行（`\n\n`）。"尊敬的各位业主："这种称呼单独成段，不缩进 | 三段以内 |
 | issuer、date_line | notice 用，右下角落款和日期 | |
-| tags | art-hero 用，名字下面的小标签，`["新品", "冰饮"]` | 最多 4 个 |
+| tags | art-hero、magazine、swiss 用，`["新品", "冰饮"]` | 最多 4 个 |
 | note | art-hero 用，右下角一行小字，常放品牌名 | |
 | art_label | art-hero 和 art-frame 用，画面角上或展签里的小字，比如"水彩""NO.03 系列" | |
 | big_title | type-sandwich 用，穿插用的超大标题，用 `\n` 断行 | 每行 2 到 4 字 |
 | lines | type-stack 用，一行一句的列表 | 4 到 6 行 |
 | looks | type-stack 用，每行的样子 ink、accent、bar、outline、serif | |
 
-## 十种版式
+## 十二种版式
+
+**magazine** 杂志版式，杂志组方向（mag-*、editorial、dark-premium）的默认版式。顶上一行店名和日期，下面一条细线；宋体大标题，字重 500，字距拉开；可以跟一句英文斜体（en）；有照片就放进直角方框，没有照片就在中间留出空，再用一条细线引出 sub，排成一段引言；tags 排成底部一行信息带，details 排成细线条目，offer 是一个强调色细框。不画插画。
+
+**swiss** 瑞士版式，瑞士组方向（swiss-*、clean-minimal）的默认版式。顶上一行店名和日期加粗细线；细体大标题（字重 250），强调词用 `**` 标成强调色；sub 是一段导语；有照片放进直角方框；tags 或 details 排成带编号的细线条目，靠在底部；offer 是一块直角的强调色色块，和行动语并排。方图放不下时优先保留优惠，条目省掉。不画插画。
+
+这两种版式在对应方向下不写 layout 也会自动用上，tags 也会用上（排成条目或信息带）。标题越短越好看，一行四到六个字最理想。
 
 **product-hero** 产品当主角。标题在上，产品在中间的圆盘上，光芒和小星星衬托，优惠贴纸贴在产品肩上，信息卡在底部。横版时左文右图，方图时上下两段、中间左文右图。适合有明星产品的店。
 

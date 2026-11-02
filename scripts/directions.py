@@ -26,7 +26,8 @@ from sheet import font
 TEMPERATURE = {
     "bold": ["pop-fresh", "festive-red", "sport-bold"],
     "middle": ["warm-hand", "soft-pastel", "campus-fresh", "guochao", "trust-blue", "garden-romance", "xi-red"],
-    "quiet": ["clean-minimal", "editorial", "dark-premium"],
+    "quiet": ["mag-ink", "swiss-blue", "mag-indigo", "mag-forest", "mag-night", "swiss-orange", "swiss-yellow", "swiss-green",
+              "clean-minimal", "editorial", "dark-premium"],
 }
 # which layout shows a direction at its best, in order of preference
 LAYOUT_PREF = {
@@ -36,7 +37,9 @@ LAYOUT_PREF = {
         "warm-hand": ["product-hero", "editorial"], "soft-pastel": ["product-hero", "editorial"],
         "campus-fresh": ["product-hero", "type-hero"], "guochao": ["editorial", "product-hero"],
         "clean-minimal": ["editorial", "product-hero"], "editorial": ["editorial", "type-hero"],
-        "dark-premium": ["editorial", "product-hero"], "garden-romance": ["editorial", "product-hero"], "xi-red": ["editorial", "type-hero"],
+        "dark-premium": ["magazine", "editorial"], "garden-romance": ["editorial", "product-hero"], "xi-red": ["editorial", "type-hero"],
+        **{k: ["magazine", "editorial"] for k in ("mag-ink", "mag-indigo", "mag-forest", "mag-night", "editorial")},
+        **{k: ["swiss", "type-hero"] for k in ("swiss-blue", "swiss-orange", "swiss-yellow", "swiss-green", "clean-minimal")},
     },
     "invitation": {k: (["split", "formal"] if k in TEMPERATURE["bold"] else ["formal", "split"])
                    for k in TEMPERATURE["bold"] + TEMPERATURE["middle"] + TEMPERATURE["quiet"]},
@@ -72,8 +75,8 @@ def assign_layouts(item_type, dirs, photo=False, current=None):
     used, out = set(), []
     for d in dirs:
         prefs = list(LAYOUT_PREF.get(item_type, {}).get(d, []))
-        if photo and item_type == "poster":
-            prefs = ["photo-full"] + prefs
+        if photo and item_type == "poster" and not (prefs and prefs[0] in ("magazine", "swiss")):
+            prefs = ["photo-full"] + prefs  # the magazine and swiss layouts frame a photo themselves
         rest = [l for l in LAYOUTS.get(item_type, []) if (l != "photo-full" or photo) and l not in KEEP]
         choice = next((l for l in prefs + rest if l not in used), (prefs + rest)[0])
         used.add(choice)

@@ -21,16 +21,16 @@
    "新客券金额"
   ],
   "direction_candidates": [
+   "swiss-orange",
    "soft-pastel",
-   "pop-fresh",
-   "clean-minimal"
+   "mag-ink"
   ],
   "direction_choice": "用户回复“A”，按概念 A（毛孩子先验货）加方向 A（柔和治愈）来做",
   "concept_choice": "A 毛孩子先验货"
  },
  "brand": {
   "name": "萝卜萌宠",
-  "direction": "soft-pastel",
+  "direction": "swiss-orange",
   "voice": "像养宠物的朋友在聊天，俏皮一点，不端着"
  },
  "facts": {
@@ -40,7 +40,6 @@
   {
    "id": "opening",
    "type": "poster",
-   "layout": "product-hero",
    "sizes": [
     "portrait",
     "square",
@@ -48,12 +47,13 @@
    ],
    "content": {
     "kicker": "微信小店开张",
-    "headline": "毛孩子\n先验货",
-    "big_title": "毛孩子\n先验货",
-    "sub": "萝卜萌宠开张啦，主粮零食玩具都有",
+    "headline": "毛孩子\n**先验货**",
+    "sub": "萝卜萌宠的微信小店开张了，主粮、零食、玩具、日用，猫狗都有。",
     "tags": [
-     "猫狗都有",
-     "新客有券"
+     "主粮",
+     "零食",
+     "玩具",
+     "日用"
     ],
     "cta": "微信搜索 萝卜萌宠，新客进店有券"
    },
@@ -103,7 +103,6 @@
   {
    "id": "coupon",
    "type": "poster",
-   "layout": "product-hero",
    "sizes": [
     "portrait",
     "square"

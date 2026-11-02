@@ -81,6 +81,8 @@ def _fix_glyph(g):
 def fix_file(path):
     from fontTools.ttLib import TTFont
     f = TTFont(str(path))
+    if "fvar" in f:  # variable fonts carry per-point deltas; reordering contours would scramble them
+        return []
     if "glyf" not in f:
         return []
     glyf = f["glyf"]

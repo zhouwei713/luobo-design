@@ -298,9 +298,13 @@ def render(spec_path, out_dir=None, only=None, hd=False):
     fonts_needed |= {THEME_FONTS[a["style"]] for a in ((it.get("art") or {}) for it in spec.get("items", [])) if a.get("style") in THEME_FONTS}
     from layouts_trend import LAYOUT_FONTS  # trend layouts mix several display faces
     from layouts_xhs import LAYOUT_FONTS as XHS_FONTS  # note covers: chunky outlined type, hand lettering
+    from layouts_refined import LAYOUT_FONTS as REFINED_FONTS  # magazine / swiss bring their metadata and italic faces
+    if direction.get("system"):
+        fonts_needed |= set(REFINED_FONTS[direction["system"]])
     for it in spec.get("items", []):
         table = XHS_FONTS if it.get("type") == "xhs" else LAYOUT_FONTS
         fonts_needed |= set(table.get(it.get("layout") or ("photo" if it.get("type") == "xhs" else ""), ()))
+        fonts_needed |= set(REFINED_FONTS.get(it.get("layout") or "", ()))
     css, fstatus = font_css(fonts_needed)
     try:
         from playwright.sync_api import sync_playwright

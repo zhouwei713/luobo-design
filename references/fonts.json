@@ -1,43 +1,285 @@
 {
   "_note": "Font roles used by directions. Web fonts are open-licensed (OFL / MIT) packages fetched once from the npm registry by fonts.py into ~/.cache/luobo-design/fonts. When a download is impossible the fallback stack is used and the QA report says so.",
   "sans": {
-    "family": "Noto Sans CJK SC", "source": "system",
-    "fallback": ["Source Han Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "sans-serif"],
-    "weights": [300, 400, 500, 700, 900], "feel": "黑体，清楚中性，正文首选"
+    "family": "Noto Sans CJK SC",
+    "source": "system",
+    "fallback": [
+      "Source Han Sans SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "Hiragino Sans GB",
+      "sans-serif"
+    ],
+    "weights": [
+      300,
+      400,
+      500,
+      700,
+      900
+    ],
+    "feel": "黑体，清楚中性，正文首选"
   },
   "serif": {
-    "family": "Noto Serif CJK SC", "source": "system",
-    "fallback": ["Source Han Serif SC", "Songti SC", "STSong", "SimSun", "serif"],
-    "weights": [400, 600, 700, 900], "feel": "宋体，文雅、杂志感、正式"
+    "family": "Noto Serif CJK SC",
+    "source": "system",
+    "fallback": [
+      "Source Han Serif SC",
+      "Songti SC",
+      "STSong",
+      "SimSun",
+      "serif"
+    ],
+    "weights": [
+      400,
+      600,
+      700,
+      900
+    ],
+    "feel": "宋体，文雅、杂志感、正式"
   },
   "qingke": {
-    "family": "ZCOOL QingKe HuangYou", "source": "npm", "npm": "@fontsource/zcool-qingke-huangyou", "version": "5.3.0",
-    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
-    "fallback": ["Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+    "family": "ZCOOL QingKe HuangYou",
+    "source": "npm",
+    "npm": "@fontsource/zcool-qingke-huangyou",
+    "version": "5.3.0",
+    "css": [
+      "400.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400
+    ],
+    "fallback": [
+      "Noto Sans CJK SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "sans-serif"
+    ],
     "feel": "站酷庆科黄油体，粗壮紧凑，促销、开业、运动标题"
   },
   "kuaile": {
-    "family": "ZCOOL KuaiLe", "source": "npm", "npm": "@fontsource/zcool-kuaile", "version": "5.3.0",
-    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
-    "fallback": ["Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+    "family": "ZCOOL KuaiLe",
+    "source": "npm",
+    "npm": "@fontsource/zcool-kuaile",
+    "version": "5.3.0",
+    "css": [
+      "400.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400
+    ],
+    "fallback": [
+      "Noto Sans CJK SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "sans-serif"
+    ],
     "feel": "站酷快乐体，圆润俏皮，童趣、宠物、校园活动标题"
   },
   "xiaowei": {
-    "family": "ZCOOL XiaoWei", "source": "npm", "npm": "@fontsource/zcool-xiaowei", "version": "5.3.0",
-    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
-    "fallback": ["Noto Serif CJK SC", "Songti SC", "SimSun", "serif"],
+    "family": "ZCOOL XiaoWei",
+    "source": "npm",
+    "npm": "@fontsource/zcool-xiaowei",
+    "version": "5.3.0",
+    "css": [
+      "400.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400
+    ],
+    "fallback": [
+      "Noto Serif CJK SC",
+      "Songti SC",
+      "SimSun",
+      "serif"
+    ],
     "feel": "站酷小薇体，清秀的标题宋，新中式、文艺、邀请函"
   },
   "mashan": {
-    "family": "Ma Shan Zheng", "source": "npm", "npm": "@fontsource/ma-shan-zheng", "version": "5.3.1",
-    "css": ["400.css"], "license": "OFL-1.1", "weights": [400],
-    "fallback": ["Noto Serif CJK SC", "STKaiti", "KaiTi", "serif"],
+    "family": "Ma Shan Zheng",
+    "source": "npm",
+    "npm": "@fontsource/ma-shan-zheng",
+    "version": "5.3.1",
+    "css": [
+      "400.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400
+    ],
+    "fallback": [
+      "Noto Serif CJK SC",
+      "STKaiti",
+      "KaiTi",
+      "serif"
+    ],
     "feel": "马善政毛笔楷书，只用于两三个字的点睛，不做正文"
   },
   "wenkai": {
-    "family": "LXGW WenKai", "source": "npm", "npm": "lxgw-wenkai-webfont", "version": "1.7.0",
-    "css": ["lxgwwenkai-regular.css", "lxgwwenkai-bold.css"], "license": "OFL-1.1", "weights": [400, 700],
-    "fallback": ["Noto Serif CJK SC", "STKaiti", "KaiTi", "serif"],
+    "family": "LXGW WenKai",
+    "source": "npm",
+    "npm": "lxgw-wenkai-webfont",
+    "version": "1.7.0",
+    "css": [
+      "lxgwwenkai-regular.css",
+      "lxgwwenkai-bold.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400,
+      700
+    ],
+    "fallback": [
+      "Noto Serif CJK SC",
+      "STKaiti",
+      "KaiTi",
+      "serif"
+    ],
     "feel": "霞鹜文楷，温和有手写感，手作、烘焙、教育、生活方式"
+  },
+  "song": {
+    "family": "Noto Serif SC Variable",
+    "source": "npm",
+    "npm": "@fontsource-variable/noto-serif-sc",
+    "version": "5.3.1",
+    "css": [
+      "index.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ],
+    "variable": true,
+    "fallback": [
+      "Noto Serif CJK SC",
+      "Source Han Serif SC",
+      "Songti SC",
+      "STSong",
+      "serif"
+    ],
+    "feel": "思源宋体可变字重，杂志感的标题和正文，标题用 400 到 500，不要加粗"
+  },
+  "hei": {
+    "family": "Noto Sans SC Variable",
+    "source": "npm",
+    "npm": "@fontsource-variable/noto-sans-sc",
+    "version": "5.3.1",
+    "css": [
+      "index.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ],
+    "variable": true,
+    "fallback": [
+      "Noto Sans CJK SC",
+      "Source Han Sans SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "sans-serif"
+    ],
+    "feel": "思源黑体可变字重，瑞士风的细体大字（200 到 300）和正文"
+  },
+  "inter": {
+    "family": "Inter Variable",
+    "source": "npm",
+    "npm": "@fontsource-variable/inter",
+    "version": "5.3.0",
+    "css": [
+      "index.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ],
+    "variable": true,
+    "with": [
+      "hei"
+    ],
+    "fallback": [
+      "Noto Sans SC Variable",
+      "Noto Sans CJK SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "sans-serif"
+    ],
+    "feel": "Inter 管拉丁字母和数字，中文落到思源黑体；瑞士风的标题和大数字"
+  },
+  "mono": {
+    "family": "JetBrains Mono",
+    "source": "npm",
+    "npm": "@fontsource/jetbrains-mono",
+    "version": "5.3.0",
+    "css": [
+      "400.css",
+      "500.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400,
+      500
+    ],
+    "with": [
+      "hei"
+    ],
+    "fallback": [
+      "Noto Sans SC Variable",
+      "Noto Sans CJK SC",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "monospace"
+    ],
+    "feel": "等宽字体，只用于信息行、编号、日期这类小字，全大写拉开字距"
+  },
+  "playfair": {
+    "family": "Playfair Display",
+    "source": "npm",
+    "npm": "@fontsource/playfair-display",
+    "version": "5.3.0",
+    "css": [
+      "400-italic.css",
+      "500-italic.css"
+    ],
+    "license": "OFL-1.1",
+    "weights": [
+      400,
+      500
+    ],
+    "with": [
+      "song"
+    ],
+    "fallback": [
+      "Noto Serif SC Variable",
+      "Noto Serif CJK SC",
+      "Songti SC",
+      "serif"
+    ],
+    "feel": "英文衬线斜体，杂志风的英文副标题，中文永远不用斜体"
   }
 }

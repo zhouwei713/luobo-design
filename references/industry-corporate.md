@@ -43,6 +43,6 @@ id 是 `corporate`。公司内部和对外的日常物料：年会、表彰、�
 
 用户："公司 1 月 16 号年会，帮我做邀请函，再做几张年度表彰的证书。"
 
-- 推断：方向 dark-premium，备选 festive-red、editorial
+- 推断：方向 mag-night，备选 swiss-blue、festive-red
 - 缺：地点、时间、着装要求、联系人、获奖名单和奖项
 - 物料：gala（invitation formal，portrait + a5），honor（certificate classic，batch 列名单，a4-landscape）

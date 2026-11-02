@@ -193,7 +193,8 @@ def space_check(r, texts):
             merged.append([a, b])
     gap = max([merged[i + 1][0] - merged[i][1] for i in range(len(merged) - 1)] or [0])
     tall = cv.get("orient") != "landscape"
-    if gap > H * (0.24 if tall else 0.3):
+    calm = r.get("layout") in ("swiss", "magazine")  # these leave air on purpose; only a real hole counts
+    if gap > H * ((0.3 if calm else 0.24) if tall else 0.33):
         warns.append(f"画面中间空了一大块（约占高度的 {gap / H:.0%}）：放大主图或标题，或者把下半部分的内容往上收")
     bottom = H - merged[-1][1] - cv["safe_px"]
     if tall and bottom > H * 0.17:

@@ -21,7 +21,7 @@ from layouts import LAYOUTS
 
 KEYS = {
     "poster": {"kicker", "headline", "sub", "offer", "details", "cta", "qr", "big_number", "org", "body", "issuer", "date_line",
-               "tags", "note", "art_label", "big_title", "lines", "looks", "credit"},
+               "tags", "note", "art_label", "big_title", "lines", "looks", "credit", "en"},
     "menu": {"title", "subtitle", "sections", "details", "note", "qr"},
     "invitation": {"kicker", "title", "big_number", "guest", "salutation", "body", "details", "rsvp", "closing",
                    "host", "date_line", "qr"},

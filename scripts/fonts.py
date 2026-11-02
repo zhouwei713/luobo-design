@@ -76,7 +76,10 @@ def font_css(font_ids, fetch=True):
     """@font-face CSS for the npm fonts among font_ids. Returns (css, status{id: msg})."""
     fonts = load_ref("fonts.json")
     css, status = [], {}
-    for fid in sorted(set(font_ids)):
+    ids = set(font_ids)
+    for fid in list(ids):  # a Latin face listed with a CJK companion needs both loaded
+        ids |= set((fonts.get(fid) or {}).get("with", []))
+    for fid in sorted(ids):
         spec = fonts.get(fid)
         if not spec:
             status[fid] = "unknown font id, using sans"
@@ -89,7 +92,7 @@ def font_css(font_ids, fetch=True):
             status[fid] = f"fallback ({msg})"
             continue
         base = _pkg_dir(fid, spec)
-        fixed = fix_dir(base)  # first use only: a few glyphs in some fonts print as solid blocks
+        fixed = [] if spec.get("variable") else fix_dir(base)  # first use only: a few glyphs in some fonts print as solid blocks
         if fixed:
             print(f"  repaired {len(set(fixed))} glyphs in {spec['family']}")
         for name in spec["css"]:

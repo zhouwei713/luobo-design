@@ -148,7 +148,8 @@ def board(ctx, fonts_css):
             f'<div>' + T(ctx, "label", "BRAND KIT", c="accent_text", style=f"font-size:{max(ctx.minc, 1.9 * u):.1f}px;letter-spacing:.4em;font-weight:700;")
             + T(ctx, "headline", f"{name} 品牌小卡", cls="d", style=f"font-size:{ctx.px(5.4)};line-height:1.2;margin-top:{ctx.px(0.8)};white-space:nowrap;")
             + "</div>"
-            + T(ctx, "body", f"视觉方向 {d['name']} · {d['mood']}", c="muted", style=f"font-size:{max(ctx.minb, 2 * u):.1f}px;")
+            + T(ctx, "body", f"视觉方向 {d['name']} · {d['mood']}", c="muted",
+                style=f"font-size:{max(ctx.minb, 2 * u):.1f}px;max-width:44%;text-align:right;margin-left:{ctx.px(3)};flex:0 1 auto;")
             + "</div>")
     cards = []
     for k in ("A", "B", "C"):
