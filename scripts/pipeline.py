@@ -21,7 +21,7 @@ from layouts import LAYOUTS
 
 KEYS = {
     "poster": {"kicker", "headline", "sub", "offer", "details", "cta", "qr", "big_number", "org", "body", "issuer", "date_line",
-               "tags", "note", "art_label", "big_title", "lines", "looks"},
+               "tags", "note", "art_label", "big_title", "lines", "looks", "credit"},
     "menu": {"title", "subtitle", "sections", "details", "note", "qr"},
     "invitation": {"kicker", "title", "big_number", "guest", "salutation", "body", "details", "rsvp", "closing",
                    "host", "date_line", "qr"},
@@ -36,7 +36,7 @@ KEYS = {
            "letter_label", "info_label", "schedule_label"},
 }
 KEYS["xhs"] = {"title", "sub", "kicker", "tag", "stickers", "badges", "items", "photos", "labels", "color", "colors", "series",
-               "handle", "date", "app", "title_pos", "align", "font", "split", "cells"}
+               "handle", "date", "app", "title_pos", "align", "font", "split", "cells", "credit"}
 REQUIRED = {"invitation": ["title"], "card": ["name"], "h5": ["title"], "xhs": ["title"]}
 
 
@@ -112,6 +112,16 @@ def validate(spec):
                 errs.append(f"{iid}: size '{s}' unknown ({', '.join(plats)} or WxH)")
         c = it.get("content") or {}
         known = KEYS[typ]
+        sizes = set(it.get("sizes") or ["portrait"])
+        for sk, sv in (it.get("size_copy") or {}).items():
+            if sk not in sizes and sk not in ("portrait", "square", "landscape"):
+                errs.append(f"{iid}: size_copy.{sk} matches no size of this item ({', '.join(sorted(sizes))}) or orientation")
+            if not isinstance(sv, dict):
+                errs.append(f"{iid}: size_copy.{sk} must be an object of content keys")
+                continue
+            for k in sv:
+                if k not in known:
+                    errs.append(f"{iid}: size_copy.{sk}.{k} is not a {typ} content key")
         batch = it.get("batch") or []
         for k in REQUIRED.get(typ, []):
             if not c.get(k) and not (batch and all(isinstance(b, dict) and b.get(k) for b in batch)):

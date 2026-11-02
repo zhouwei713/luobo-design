@@ -179,6 +179,10 @@ def build_state(spec_path, out, live=False):
         for path, val in render_mod.content_fields(raw_c):
             fields.append({"path": path, "value": val, "shown": get_path(shown_c, path) or val,
                            "readonly": path.split(".")[0] in batch_keys})
+        for sel, vals in (it.get("size_copy") or {}).items():  # copy written for one size only
+            shown_s = render_mod.fill_facts(vals, facts)
+            for path, val in render_mod.content_fields(vals):
+                fields.append({"path": f"@{sel}.{path}", "value": val, "shown": get_path(shown_s, path) or val, "readonly": False})
         # fields only a batch entry fills (recipient, guest): shown read-only so a click still lands somewhere
         seen = {f["path"] for f in fields}
         for v in views:
@@ -282,10 +286,18 @@ def apply_changes(spec, changes, base, src_dir=None):
                 notes.append(f"找不到物料 {ch.get('item')}，这一处没改")
                 continue
             try:
-                old = get_path(it.get("content") or {}, ch["path"])
+                path = ch["path"]
+                if path.startswith("@"):  # @square.headline: the copy written for that size
+                    sel, path = path[1:].split(".", 1)
+                    holder = (it.get("size_copy") or {}).get(sel)
+                    if not isinstance(holder, dict):
+                        raise KeyError(ch["path"])
+                else:
+                    holder = it.get("content") or {}
+                old = get_path(holder, path)
                 if not isinstance(old, str):
                     raise KeyError(ch["path"])
-                set_path(it["content"], ch["path"], str(ch.get("value", "")))
+                set_path(holder, path, str(ch.get("value", "")))
                 touched.add(it["id"])
             except KeyError:
                 notes.append(f"{it['id']} 的 {ch.get('path')} 不是能直接改的文字，这一处没改")
@@ -457,6 +469,7 @@ def make_handler(spec_path, out):
                         save_spec_with_history(spec_path, out, spec)
                         print(f"  studio: {len(data.get('changes') or [])} 处改动，重出 {'全部' if items is None else '、'.join(items)}", flush=True)
                         qa = rebuild(spec_path, out, items)
+                    notes += [f"颜色微调：{c}" for c in qa.get("colors") or []]
                     msg = f"已重新出图，{qa['errors']} 个错误，{qa['warnings']} 个提醒" + ("。" + "；".join(notes) if notes else "")
                     return self.send(200, {"ok": True, "message": msg, "state": build_state(spec_path, out, live=True)})
                 if u == "/api/undo":

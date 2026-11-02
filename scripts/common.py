@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-SKILL_VERSION = "0.11.0"
+SKILL_VERSION = "0.12.0"
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 REF_DIR = SKILL_DIR / "references"
@@ -72,6 +72,80 @@ def rgba(h, alpha):
     return f"rgba({r},{g},{b},{alpha})"
 
 
+# OKLCH: lightness, chroma and hue move independently here, so a colour can be calmed or darkened
+# without drifting to another hue (which mixing in sRGB does). Standard OKLab maths.
+def _lin(c):
+    c = c / 255
+    return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
+
+def _gam(c):
+    c = 12.92 * c if c <= 0.0031308 else 1.055 * c ** (1 / 2.4) - 0.055
+    return c * 255
+
+
+def to_oklch(h):
+    import math
+    r, g, b = (_lin(c) for c in hex_rgb(h))
+    l_ = (0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b) ** (1 / 3)
+    m_ = (0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b) ** (1 / 3)
+    s_ = (0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b) ** (1 / 3)
+    L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_
+    A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_
+    B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_
+    return L, math.hypot(A, B), math.degrees(math.atan2(B, A)) % 360
+
+
+def from_oklch(L, C, H):
+    """Back to hex; chroma is lowered until the colour fits in sRGB."""
+    import math
+    for _ in range(40):
+        A, B = C * math.cos(math.radians(H)), C * math.sin(math.radians(H))
+        l_ = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3
+        m_ = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3
+        s_ = (L - 0.0894841775 * A - 1.2914855480 * B) ** 3
+        rgb = (4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_,
+               -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_,
+               -0.0041960863 * l_ - 0.7034186147 * m_ + 1.7076147010 * s_)
+        if all(-0.001 <= c <= 1.001 for c in rgb):
+            return rgb_hex([_gam(max(0, min(1, c))) for c in rgb])
+        C *= 0.94
+    return rgb_hex([_gam(max(0, min(1, c))) for c in rgb])
+
+
+# A brand colour is the client's: it is only touched when it would visibly fail. Fluorescent picks
+# (very light and very saturated, like lime or neon cyan) glare as fills and vanish behind white type,
+# so they are pulled down to a strong but printable version of the same hue. Ordinary brand reds,
+# yellows and blues pass untouched.
+NEON = {"accent": (0.82, 0.14, 0.74, 0.20), "accent2": (0.86, 0.14, 0.78, 0.18)}  # L above, C above -> new L, max C
+
+
+def fit_color(h, role, bg="#FFFFFF"):
+    """(colour, note). Neon brand colours are calmed keeping their hue; ink is darkened or lightened until
+    it reads at 7:1 on bg. note is None when the colour is left as it was."""
+    if not isinstance(h, str) or not re.fullmatch(r"#?[0-9A-Fa-f]{6}", h.strip()):
+        return h, None
+    h = "#" + h.strip().lstrip("#").upper()
+    L, C, H = to_oklch(h)
+    why = []
+    if role in NEON:
+        lmax, cmin, lnew, cnew = NEON[role]
+        if L > lmax and C > cmin and not 70 <= H <= 115:  # yellows are light by nature and fine as they are
+            why.append("荧光色，大面积用着刺眼，白字压在上面也看不清")
+            L, C = lnew, min(C, cnew)
+    elif role == "ink":
+        step = 0
+        while contrast(from_oklch(L, C, H), bg) < 7 and step < 40:
+            L = L - 0.02 if luminance(bg) > 0.4 else L + 0.02
+            step += 1
+        if step:
+            why.append("和底色对比不够，正文会看不清")
+    if not why:
+        return h, None
+    out = from_oklch(L, C, H)
+    return out, (None if out == h else "、".join(why))
+
+
 def readable_on(bg, *cands):
     """Best text colour for background bg among candidates (falls back to black/white)."""
     pool = list(cands) + ["#FFFFFF", "#111111"]
@@ -126,7 +200,16 @@ def resolve_tokens(brand):
         if fest.get("pattern") and fest["pattern"] != "none":
             d["pattern"] = fest["pattern"]
         d["festival"] = {"id": fest["_id"], "name": fest["name"], "mode": fest["_mode"], "motifs": fest.get("motifs", [])}
-    t.update({k: v for k, v in (brand.get("tokens") or {}).items() if v})
+    notes = []
+    for k, v in (brand.get("tokens") or {}).items():
+        if not v:
+            continue
+        if not brand.get("exact_colors") and k in ("accent", "accent2", "ink"):
+            fixed, why = fit_color(v, k, (brand.get("tokens") or {}).get("bg") or t["bg"])
+            if why:
+                notes.append({"role": k, "from": v.upper(), "to": fixed, "why": why})
+                v = fixed
+        t[k] = v
     t["on_accent"] = readable_on(t["accent"], t["ink"], t["surface"], t["bg"])
     light = max((t["surface"], t["bg"], "#FFFFFF"), key=luminance)
     if luminance(t["accent"]) < 0.4 and contrast(light, t["accent"]) >= 3.4:
@@ -162,6 +245,7 @@ def resolve_tokens(brand):
             d[k] = {**d[k], **(over if isinstance(over, dict) else {"font": over})}
     d["tokens"] = t
     d["id"] = did
+    d["color_notes"] = notes
     return d
 
 

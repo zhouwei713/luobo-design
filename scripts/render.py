@@ -37,6 +37,15 @@ def fill_facts(obj, facts):
     return obj
 
 
+def _is_tall(p):
+    try:
+        from PIL import Image
+        with Image.open(p) as im:
+            return im.height > im.width * 1.4
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def to_uri(p, base):
     if not p or re.match(r"^(https?|data|file):", str(p)):
         return p
@@ -109,6 +118,8 @@ def prepare(spec, base):
     fest = festival_of(spec.get("festival"))
     for it in spec.get("items", []):
         it["content"] = fill_facts(it.get("content") or {}, facts)
+        if it.get("size_copy"):
+            it["size_copy"] = fill_facts(it["size_copy"], facts)
         if fest and fest.get("motifs"):
             a = it.setdefault("art", {})
             if not a.get("image") and not a.get("motif"):
@@ -155,7 +166,16 @@ REPORT_JS = """() => {
     t.lines = keys.length; t.last_line = keys.length ? lines[keys[keys.length - 1]].join('') : '';
   }
   const imgs = Array.from(document.querySelectorAll('img')).map(el => ({src: el.getAttribute('src'), ok: el.complete && el.naturalWidth > 0}));
-  return {fit: window.__fit || [], texts, imgs, w: cv.width, h: cv.height};
+  // pictures on the page (photos, illustrations, art), outermost only, for the empty-band and spacing checks
+  const area = cv.width * cv.height;
+  const vis = Array.from(document.querySelectorAll('#canvas img, #canvas .art, #canvas svg, #canvas [data-art]'))
+    .filter(el => !el.closest('.t') && !el.closest('.pattern'));
+  const outer = vis.filter(el => !vis.some(o => o !== el && o.contains(el)));
+  const blocks = outer.map(el => { const r = el.getBoundingClientRect();
+    const x = Math.max(r.left, cv.left), y = Math.max(r.top, cv.top), x2 = Math.min(r.right, cv.right), y2 = Math.min(r.bottom, cv.bottom);
+    return {kind: el.tagName.toLowerCase() === 'img' ? 'img' : 'art', x: x - cv.left, y: y - cv.top, w: Math.max(0, x2 - x), h: Math.max(0, y2 - y)}; })
+    .filter(b => b.w * b.h > area * 0.004);
+  return {fit: window.__fit || [], texts, imgs, blocks, w: cv.width, h: cv.height};
 }"""
 
 
@@ -205,6 +225,19 @@ FIELDS_JS = """(targets) => {
 }"""
 
 
+def for_size(it, size, cv):
+    """Copy written for one size (size_copy) replaces the shared copy on that size only.
+    Keys: a size id ("square") or an orientation ("landscape"); the size id wins. Returns (item, key used)."""
+    sc = it.get("size_copy") or {}
+    sel = size if size in sc else (cv.get("orient") if cv.get("orient") in sc else None)
+    if not sel:
+        return it, None
+    one = copy.deepcopy(it)
+    one["content"] = {**(one.get("content") or {}), **copy.deepcopy(sc[sel])}
+    one["_size_copy"] = sel
+    return one, sel
+
+
 def raw_id(it):
     """The id of the item as written in spec.json (batch copies, card sides and h5 screens point back to it)."""
     if it.get("_batch_of"):
@@ -245,6 +278,20 @@ def render(spec_path, out_dir=None, only=None, hd=False):
     spec = prepare(raw, base)
     out = Path(out_dir or base / "out").resolve()
     (out / "src").mkdir(parents=True, exist_ok=True)
+    for it in spec.get("items", []):  # screenshots get their frame here, once; layouts then treat them as pictures
+        a = it.get("art") or {}
+        if a.get("screenshot") and not a.get("image"):
+            src = Path(a["screenshot"]) if Path(a["screenshot"]).is_absolute() else base / a["screenshot"]
+            if src.exists():
+                import shotframe
+                kind = a.get("frame") or ("phone" if _is_tall(src) else "browser")
+                framed = shotframe.framed_path(src, out / "assets", kind, dark=bool(a.get("frame_dark")))
+                from PIL import Image
+                with Image.open(framed) as fim:
+                    ar = fim.width / fim.height
+                a.update({"image": framed.as_uri(), "image_fit": "contain", "_shot": kind, "_shot_ar": round(ar, 3)})
+            else:
+                print(f"  ! {it['id']}: screenshot not found: {a['screenshot']}", file=sys.stderr)
     direction = resolve_tokens(spec_brand(spec))
     fonts_needed = {direction["display"]["font"], direction["body"]["font"]}
     from layouts_artthemes import FONTS as THEME_FONTS  # art themes bring their own title fonts
@@ -260,7 +307,7 @@ def render(spec_path, out_dir=None, only=None, hd=False):
     except ImportError:
         sys.exit("Playwright is required: pip install playwright && python -m playwright install chromium")
     report = {"spec": str(spec_path), "direction": direction["id"], "tokens": direction["tokens"],
-              "fonts": fstatus, "renders": []}
+              "fonts": fstatus, "color_notes": direction.get("color_notes") or [], "renders": []}
     jobs = []
     for it in spec.get("items", []):
         if only and only not in (it["id"], raw_id(it)):
@@ -269,8 +316,9 @@ def render(spec_path, out_dir=None, only=None, hd=False):
             jobs.append((it, size))
     with sync_playwright() as p:
         browser = p.chromium.launch(args=["--allow-file-access-from-files", "--font-render-hinting=none"])
-        for it, size in jobs:
+        for it0, size in jobs:
             cv = canvas(size)
+            it, sel = for_size(it0, size, cv)
             html = layouts.build(it, spec.get("brand") or {}, direction, cv, spec.get("facts") or {}, css)
             name = f"{it['id']}-{size}"
             src = out / "src" / f"{name}.html"
@@ -289,7 +337,9 @@ def render(spec_path, out_dir=None, only=None, hd=False):
             page.wait_for_timeout(150)
             rep = page.evaluate(REPORT_JS)
             try:
-                rep["fields"] = page.evaluate(FIELDS_JS, [{"path": pth, "text": txt.replace("**", "")}
+                own = set((it0.get("size_copy") or {}).get(sel) or {}) if sel else set()
+                rep["fields"] = page.evaluate(FIELDS_JS, [{"path": (f"@{sel}.{pth}" if pth.split(".")[0] in own else pth),
+                                                           "text": txt.replace("**", "")}
                                                           for pth, txt in content_fields(it.get("content") or {})])
             except Exception:  # noqa: BLE001  the studio page just loses click-to-edit on this one
                 rep["fields"] = []
@@ -298,7 +348,7 @@ def render(spec_path, out_dir=None, only=None, hd=False):
                 (out / "src" / f"{name}.frozen.html").write_text(frozen, encoding="utf-8")
             png = out / f"{name}.png"
             page.screenshot(path=str(png), clip={"x": 0, "y": 0, "width": cv["w"], "height": cv["h"]})
-            entry = {"item": it["id"], "raw_item": raw_id(it), "type": it["type"], "layout": it.get("layout"), "size": size,
+            entry = {"item": it["id"], "raw_item": raw_id(it), "size_copy": sel, "type": it["type"], "layout": it.get("layout"), "size": size,
                      "png": str(png), "html": str(src), "canvas": {k: cv[k] for k in ("w", "h", "kind", "safe_px", "u", "min_px", "orient", "bleed_px")},
                      **rep}
             if cv["kind"] == "print":

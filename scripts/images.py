@@ -31,7 +31,7 @@ def run(spec_path, config=None, force=False):
     made = 0
     for it in spec.get("items", []):
         a = it.setdefault("art", {})
-        if a.get("image") and not (force and a.get("generated")):
+        if (a.get("image") and not (force and a.get("generated"))) or a.get("screenshot"):
             continue
         if it.get("layout") == "notice" and not (a.get("motif") or a.get("subject")):
             continue  # a plain notice has no picture; generating one would be paid for and then shown uninvited

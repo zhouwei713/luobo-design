@@ -24,7 +24,7 @@ from fonts import stack
 from layouts import T, art_block, page
 
 LAYOUT_FONTS = {"photo": ["sans"], "textcard": ["sans"], "memo": ["sans"], "ranking": ["sans"],
-                "grid": ["sans"], "compare": ["sans"], "doodle": ["kuaile", "mashan", "sans"]}
+                "grid": ["sans"], "compare": ["sans"], "doodle": ["kuaile", "mashan", "sans"], "shot": ["sans"]}
 
 CARD_COLORS = {  # background, accent, ink: the app's own text-card palettes are this soft
     "green": ("#DDF6D6", "#9AD48F", "#2D3A2C"), "yellow": ("#FFF4BF", "#F2C53D", "#3A3020"),
@@ -149,8 +149,15 @@ def xhs_photo(ctx, fonts_css):
              + "".join(rows) + sub
              + (f'<div style="display:flex;flex-wrap:wrap;gap:{ctx.px(1)} {ctx.px(3)};margin-top:{ctx.px(1.8)}">{badges}</div>' if badges else "")
              + "</div>")
-    shade = ("linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,0) 46%)" if pos == "top"
-             else "linear-gradient(0deg,rgba(0,0,0,.42),rgba(0,0,0,0) 50%)")
+    # outlined type carries itself; the photo only gets a light tint in its own colour where the title sits
+    import imgtone
+    tn = imgtone.tint(a.get("image"), (0, 0, 1, .46) if pos == "top" else (0, .5, 1, .5), W / H, cols[0], target=3.2, cap=.45)
+    if tn:
+        tone, al, _ = tn
+        shade = f"linear-gradient({'180deg' if pos == 'top' else '0deg'},{rgba(tone, al)},{rgba(tone, 0)} {46 if pos == 'top' else 50}%)"
+    else:
+        shade = ("linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,0) 46%)" if pos == "top"
+                 else "linear-gradient(0deg,rgba(0,0,0,.42),rgba(0,0,0,0) 50%)")
     body = (photo_or_placeholder(ctx, a.get("image"), motif=a.get("motif"))
             + f'<div style="position:absolute;inset:0;background:{shade};z-index:2"></div>' + block + extras(ctx, c))
     return page(ctx, fonts_css, body, ".pattern{display:none}.hz em.hl{color:var(--hl)}")
@@ -377,8 +384,51 @@ def xhs_doodle(ctx, fonts_css):
     return page(ctx, fonts_css, body, css)
 
 
+# ------------------------------------------------------------------ shot (a screenshot is the evidence)
+def xhs_shot(ctx, fonts_css):
+    """Hook title on top, the framed screenshot below it taking most of the page. For tool and app posts."""
+    c, a = ctx.item["content"], ctx.item.get("art") or {}
+    W, H, pad, u = ctx.W, ctx.H, ctx.safe, ctx.u
+    bg, acc, ink = CARD_COLORS.get(c.get("color") or "blue", CARD_COLORS["blue"])
+    lines = title_lines(ctx, c)
+    longest = max((plain_len(x) for x in lines), default=1)
+    cols = c.get("colors") or [ink, ink]
+    rows = []
+    for i, ln in enumerate(lines[:3]):
+        node = T(ctx, "headline", ln, c=cols[i % len(cols)], on=bg, tag="span", style=_f("sans", 900) + "line-height:1.2;")
+        node = node.replace('class="t', f'data-justify="{min(.92, .92 * plain_len(ln) / longest):.3f}" data-cap-px="{11.5 * u:.0f}" class="t', 1)
+        rows.append(f"<div>{node}</div>")
+    tag = (T(ctx, "label", c.get("tag"), c="#FFFFFF", on=ink, tag="span",
+             style=f"background:{ink};padding:{ctx.px(.5)} {ctx.px(1.6)};border-radius:{ctx.px(3)};font-size:{max(ctx.minc, 2.6 * u):.1f}px;font-weight:700;")
+           if c.get("tag") else "")
+    head = (f'<div data-grp="title" style="position:absolute;left:{pad * 1.1:.0f}px;right:{pad * 1.1:.0f}px;top:{pad * 1.1:.0f}px;z-index:5">'
+            + (f'<div style="margin-bottom:{ctx.px(2)}">{tag}</div>' if tag else "")
+            + "".join(rows)
+            + (T(ctx, "sub", c.get("sub"), c=rgba(ink, .72), on=bg, style=f"font-size:{max(ctx.minb, 3.4 * u):.1f}px;margin-top:{ctx.px(1.6)};font-weight:700;") if c.get("sub") else "")
+            + "</div>")
+    n = len(rows) + (1 if c.get("sub") else 0) + (1 if tag else 0)
+    top = pad * 1.1 + n * 11.8 * u + ctx.u * 3
+    ar = a.get("_shot_ar") or 1
+    room_h = H - top - pad * .9
+    if a.get("image") and ar > 1.15 and (W - pad * 1.4) / ar < room_h * .8:
+        # a wide screenshot would float small in the middle: let it run off the right edge, the way people crop them
+        sw = min(room_h * ar, W * 1.45)
+        shot = (f'<div style="position:absolute;left:{pad * 1.1:.0f}px;top:{top + (room_h - sw / ar) / 2:.0f}px;width:{sw:.0f}px;height:{sw / ar:.0f}px;z-index:3">'
+                + art_block(ctx, {**a, "image_fit": "contain"}) + "</div>")
+    else:
+        shot = None
+    shot = shot or (f'<div style="position:absolute;left:{pad * .7:.0f}px;right:{pad * .7:.0f}px;top:{top:.0f}px;bottom:{pad * .9:.0f}px;z-index:3">'
+            + (art_block(ctx, {**a, "image_fit": "contain"}) if a.get("image")
+               else f'<div style="width:100%;height:100%;border-radius:{ctx.px(2)};border:{ctx.px(.4)} dashed {rgba(ink, .35)};display:flex;align-items:center;justify-content:center">'
+                    + T(ctx, "caption", "【放你的截图】", c=rgba(ink, .55), on=bg, tag="span", style=f"font-size:{max(ctx.minc, 3 * u):.1f}px;") + "</div>")
+            + "</div>")
+    glow = f'<div style="position:absolute;left:10%;right:10%;top:{top + H * .05:.0f}px;bottom:4%;border-radius:50%;background:{acc};opacity:.35;filter:blur({ctx.px(8)})"></div>'
+    body = f'<div style="position:absolute;inset:0;background:{bg}"></div>' + glow + head + shot + extras(ctx, c, on_photo=False)
+    return page(ctx, fonts_css, body, ".pattern{display:none}" + f"em.hl{{font-style:normal;color:inherit;background:linear-gradient(transparent 58%,{acc} 58%)}}")
+
+
 def register(builders, layouts):
-    layouts["xhs"] = ["photo", "textcard", "memo", "ranking", "grid", "compare", "doodle"]
+    layouts["xhs"] = ["photo", "textcard", "memo", "ranking", "grid", "compare", "doodle", "shot"]
     for name, fn in (("photo", xhs_photo), ("textcard", xhs_textcard), ("memo", xhs_memo), ("ranking", xhs_ranking),
-                     ("grid", xhs_grid), ("compare", xhs_compare), ("doodle", xhs_doodle)):
+                     ("grid", xhs_grid), ("compare", xhs_compare), ("doodle", xhs_doodle), ("shot", xhs_shot)):
         builders[("xhs", name)] = fn

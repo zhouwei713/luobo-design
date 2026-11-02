@@ -149,6 +149,7 @@ const FACTNAMES = {phone: '电话', address: '地址', date: '日期', time: '�
 const COLORNAMES = {accent: '主色', accent2: '辅色', bg: '底色', surface: '卡片色', ink: '文字色', muted: '次要文字'};
 const SIZENAMES = {portrait: '竖版', square: '方图', story: '手机长图', landscape: '横版', wide: '横幅', screen: '门店屏', a4: 'A4', a3: 'A3', a5: 'A5', h5: '手机页', xhs: '小红书', card: '名片', tent: '桌卡'};
 function pathName(p) {
+  if (p[0] === '@') { const i = p.indexOf('.'); return (SIZENAMES[p.slice(1, i)] || p.slice(1, i)) + '专用 · ' + pathName(p.slice(i + 1)); }
   return p.split('.').map(s => /^\d+$/.test(s) ? '第' + (+s + 1) + '条' : (KEYNAMES[s] || s)).join(' · ');
 }
 function toast(t, ms) { const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => el.classList.remove('on'), ms || 2200); }

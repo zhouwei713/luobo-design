@@ -2,10 +2,10 @@
 name: luobo-design
 display_name: 萝卜设计
 display_name_en: Luobo Design
-description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘七种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报会先想一个画面上的创意概念，配了生图模型时能按概念让模型一步画出整张海报（连图带字），没配时用排版和程序插画实现，并给出可以贴进即梦、GPT 的整图提示词。先出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息，并给出小红书信息流和朋友圈里的发布预览。交付附带编辑页，用户能自己点字改字、调颜色、换照片、在图上圈点提意见；会记住品牌，下次同一家店自动沿用。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
+description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘、截图八种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报会先想一个画面上的创意概念，配了生图模型时能按概念让模型一步画出整张海报（连图带字），没配时用排版和程序插画实现，并给出可以贴进即梦、GPT 的整图提示词。先出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息，并给出小红书信息流和朋友圈里的发布预览。截图会自动加浏览器框或手机框；没有生图模型时能从可商用的免费图库找实拍照片。交付附带编辑页，用户能自己点字改字、调颜色、换照片、在图上圈点提意见；会记住品牌，下次同一家店自动沿用。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
 description_zh: 一句模糊的想法进去，能直接用的设计物料出来。活动海报、小红书封面、通知、菜单价目表、邀请函和电子请柬、奖状、名片、logo 都能做，先想创意再出三个方向让你选，中文由程序排版不会错字，交付前自动检查溢出、对比度和广告法用语，附带能自己改字调色、圈点提意见的编辑页，还会记住品牌下次沿用，也能接生图模型出照片级画面。
 description_en: Turn a vague idea into design materials you can use right away, with copy-ready image prompts. Covers event posters, Xiaohongshu covers, notices, menus and price lists, invitations and H5 e-invites, certificates, business cards and logos. It thinks up a visual concept first, offers three directions, sets Chinese text by code so no character is wrong, and checks overflow, contrast and ad-law wording before delivery. Every delivery comes with an editor page where people retype copy, change colours, swap photos and pin comments on the picture, and the brand is remembered for the next order. An image model can be plugged in for photo-grade results.
-version: 0.11.0
+version: 0.12.0
 author: 萝卜哥
 ---
 
@@ -59,6 +59,8 @@ author: 萝卜哥
 
 需求表把每条信息分成五类，用户说了的、你推断的、用了默认值的、还缺的、前后矛盾的。分完再决定要不要问。
 
+有些需求接不住，比如生成真人出镜照片、复刻别人的海报、画知名 IP、仿公章票据，brief.md 里有一张表，碰到就在这一步说清楚，并给出换个做法。
+
 只在真正缺关键信息时提问，一轮最多 3 题，每题都带一个推荐答案，用户可以直接说"就按你的来"。电话、地址、日期、价格这类事实绝不编，用户没给就在画面上留【电话】这样的占位，交付时列出来。
 
 ## 第二步 想创意概念
@@ -91,7 +93,7 @@ python scripts/directions.py work/spec.json
 
 ## 第四步 冻结成规格文件
 
-按 @references/spec.md 写 spec.json，一份规格可以放多件物料，共用一套品牌和事实。文案在这一步写定，标题按意思手动断行，每行不超过 8 个字最好看，重点词用 `**` 标成强调色。选中的概念写进海报的 concept，再按下一步的表决定每张海报的 mode。
+按 @references/spec.md 写 spec.json，一份规格可以放多件物料，共用一套品牌和事实。文案在这一步写定，标题按意思手动断行，每行不超过 8 个字最好看，重点词用 `**` 标成强调色。同一件物料要出方图或横版时，竖版的长标题往往放不下，在 size_copy 里给这些尺寸写一句四到十个字的短标题，写法见 spec.md 最后一节。选中的概念写进海报的 concept，再按下一步的表决定每张海报的 mode。
 
 ## 第五步 出图
 
@@ -105,18 +107,22 @@ python scripts/pipeline.py work/spec.json
 
 | 情况 | 走哪条路 | 怎么写 |
 |---|---|---|
-| 没配生图模型 | 排版。字由排版程序排，画面用程序插画和画风滤镜 | 不写 mode。概念用来挑版式和插画；prompts.md 里有按概念写的整图提示词，用户可以贴进即梦自己出，出好的图放回 art.image 重出，或者直接当成品 |
+| 没配生图模型 | 排版。字由排版程序排，画面用用户的照片、免费图库的实拍（stock.py）、程序插画或画风滤镜 | 不写 mode。概念用来挑版式和插画；prompts.md 里有按概念写的整图提示词，用户可以贴进即梦自己出，出好的图放回 art.image 重出，或者直接当成品 |
 | 配了模型，海报的创意比信息重要，要写的字只有标题和几处短字，主要发手机 | 整图。模型按概念连图带字画整张 | `"mode": "ai"`，写 concept 和 layout |
 | 配了模型，但信息必须一字不错，或者要印刷、要批量、要多个尺寸完全统一 | 排版。模型只按概念画配图，字由排版程序排 | 不写 mode，写 concept 或 art.subject |
 | 通知、菜单、证书、名片、请柬、桌牌、H5、logo | 永远排版 | 校验会拦住这些物料的 ai 模式 |
 
 整图模式的海报同时也会排一版，叫 `<id>-<尺寸>.png`，整图叫 `<id>-<尺寸>-ai.png`。没模型、调用失败、印刷尺寸时，交付的就是排版版，用户不会拿到空手。
 
+照片的优先顺序是用户自己的、免费图库里可商用的、生图模型画的、程序插画。用户没有照片又想要实拍感时，跑 `python scripts/stock.py search "英文关键词" --orient portrait`，它只搜允许商用的图库（Pexels、Unsplash 要用户自己申请免费 key，Openverse 不用 key），下载候选并出一张编号对比图，你看图挑一张写进 art.image。来源都记在 SOURCES.md 里，交付时告诉用户图从哪来；要求署名的照片，在 content.credit 里写上出处。
+
+用户给的是 App、网页、后台的截图，在 art 里写 screenshot，程序会加圆角、阴影和浏览器框或手机框，小红书封面用 shot 版式。截图里的手机号、订单号、别人的头像要先打码。
+
 生图配置见 @references/imagegen.md，提示词的写法和三个模型的差别见 @references/prompt-guide.md。
 
 ## 第六步 自己看图，打分，返工
 
-检查脚本只能管尺寸、溢出、对比度、文字重叠、末行孤字、极限词这些硬指标。好不好看要你自己看，按 @references/critique.md 打五个维度的分，低于 3 分的改 spec 重出，最多三轮。
+检查脚本管尺寸、溢出（会告诉你大概多删几个字）、对比度、文字重叠、末行孤字、极限词、画面大块留白、标题贴着下一块内容、标题太长、字压照片缩成小图后看不清、品牌色被微调这些硬指标。好不好看要你自己看，按 @references/critique.md 打五个维度的分，低于 3 分的改 spec 重出，最多三轮。
 
 一定要打开 overview.png 和每张成品图看过再交付，脚本全绿不代表好看。有 preview-feed.png（小红书封面放进信息流）和 preview-moments.png（海报放进朋友圈）时也看一眼，这是用户的朋友真正看到的大小，标题在这里读不出来就要改。
 
@@ -170,7 +176,7 @@ python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolv
 | `scripts/aiposter.py` | mode 为 ai 的海报，让模型按概念画整张，放大到平台尺寸，记下 taskId，同提示词不重复扣费 |
 | `scripts/images.py`、`scripts/imagegen.py` | 调用生图模型（OpenAI、Gemini、即梦、HiAPI、兼容接口、本地命令），抠图；`imagegen.py --test` 单独试一张 |
 | `scripts/art.py`、`scripts/art_drinks.py` | 程序化产品插画、可描述的饮品杯和小原料、底纹、质感 |
-| `scripts/layouts_xhs.py` | 小红书封面的七种结构和花字系统 |
+| `scripts/layouts_xhs.py` | 小红书封面的八种结构和花字系统 |
 | `scripts/layouts_trend.py` | 字图穿插、撑满大字堆、拼贴风三种潮流版式，可选数据装饰层 |
 | `scripts/artstyle.py`、`scripts/layouts_art.py`、`scripts/layouts_artthemes.py` | 10 种艺术画风（SVG 滤镜和生成背景），art-hero、art-frame 两种艺术海报版式，竖版时每种画风一套整页主题 |
 | `scripts/fonts.py`、`scripts/fontfix.py` | 首次运行从 npm 拉开源中文字体到缓存，顺手修好个别字体里会印成黑块的字 |
@@ -179,6 +185,10 @@ python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolv
 | `scripts/studio.py`、`scripts/studio.html` | 编辑页。build 出离线的 editor.html，open 开实时页（保存即重出图），comments、reply 读写用户在图上圈点的意见，apply 读入离线修改单 |
 | `scripts/preview.py` | 发布预览，小红书封面放进信息流、海报放进朋友圈，按实际大小看 |
 | `templates/vision-probe.png` | 看图能力探测图 |
+| `scripts/imgtone.py` | 读照片放字的区域，按需生成颜色取自照片的遮罩 |
+| `scripts/shotframe.py` | 截图加圆角、阴影、浏览器框、手机框 |
+| `scripts/stock.py` | 从可商用的免费图库搜图下载，记录来源、许可和是否要署名 |
+| `PRODUCT.md`、`HANDOFF.md` | 产品决策和原因；给接手的人看的结构、测试和发版说明 |
 | `references/poster-craft.md` | 海报的设计精华，想概念和写 concept 之前读 |
 | `references/*.json` | 方向、平台尺寸、字体、文案风险词、节日的数据 |
 | `templates/config.example.json` | 生图配置模板 |

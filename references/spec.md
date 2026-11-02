@@ -56,7 +56,7 @@
 
 **brand**
 - `direction` 必填，directions.json 里的 id
-- `tokens` 可选，覆盖方向里的颜色（用户有自己的品牌色时）。只填要改的，比如 `{"accent": "#E60012"}`
+- `tokens` 可选，覆盖方向里的颜色（用户有自己的品牌色时）。只填要改的，比如 `{"accent": "#E60012"}`。荧光色（很亮又很艳的绿、青这类）做主色和辅色会被收成同色相里稳一点的颜色，文字色和底色对比不到 7:1 会被加深，qa 里会写明从什么调成了什么。用户坚持用原色，加 `"exact_colors": true`
 - `fonts` 可选，覆盖字体，`{"display": "wenkai"}`
 - `logo` 图片路径（相对 spec 所在目录），没有就用店名做文字标
 - 有 brand.json 时，把里面的 direction、tokens、fonts、voice 抄进来
@@ -74,6 +74,7 @@
 - `batch` 批量，一项出一张。邀请函是宾客、证书是获奖人、桌号牌是桌号、席位卡是名字，可以写字符串列表或对象列表
 - `sizes` platforms.json 里的 id，或者 `1242x1660` 这样的自定义像素
 - `content` 文案，各物料的字段见物料说明
+- `size_copy` 可选，某个尺寸专用的文案，覆盖 content 里同名的字段，比如 `{"square": {"headline": "难啃的书\n一起读完"}, "landscape": {"headline": "难啃的书，一起读完"}}`。键写尺寸 id，也可以写 portrait、square、landscape 按方向套用，两种都写时尺寸 id 优先。只写要换的字段，其余照用 content
 - `art`
   - `motif` 程序画的插画，共 61 个
     - 餐饮：milk-tea、iced-coffee、hot-coffee、latte、gaiwan（盖碗茶）、bread、noodle-bowl、gift
@@ -91,6 +92,8 @@
   - `image` 已有的图片路径（用户给的产品照，或生图后自动填上）
   - `image_fit` contain（抠图）或 cover（照片铺满）
   - `generate` 设为 false 时即使配了模型也不生图
+  - `screenshot` 截图路径（App、网页、后台界面），会自动加圆角、阴影和外框后放进版式，内容不拉伸不重画。配 `frame`：browser（浏览器窗口，宽截图默认）、phone（手机，竖截图默认）、window（只有窗口三个点）、plain（只加圆角描边）；`frame_dark` 为 true 时用深色外框
+  - 照片来自免费图库时，用 `python scripts/stock.py search "英文关键词"` 下载，路径写进 image。许可要求署名的照片，在 content.credit 里写上出处，会排成右下角一行小字
 
 - `mode` 海报才有，layout（默认）或 ai。ai 表示配了生图模型时由模型按 concept 一步画出整张海报，连字一起画，见下面
 - `concept` 创意概念，写法见 poster-craft.md。layout 和 ai 两种 mode 都可以写，layout 时它决定配图画什么，ai 时它决定整张海报
@@ -137,3 +140,12 @@
 - `**重点**` 显示成强调色
 - `{fact}` 替换成 facts 里的值
 - 【xxx】 显示为待补占位
+
+
+## 一份文案，几种尺寸
+
+竖版能放下的标题，放到方图和横版上常常太长，挤成小字或者三行。别指望程序把字缩小硬塞，给这些尺寸单独写一句短的，放进 size_copy。
+
+短标题这样写。先找出整句里那个动作和它作用的东西，比如“给孩子讲了三年睡前故事，我把它们攒成了一本绘本”，动作是攒成，东西是绘本，三年是钩子，压成“三年睡前故事，攒成一本书”。方图标题控制在四到十个字，最多两行，每行不超过六个字；横版门店屏一行能放十二三个字。问句改成陈述句，“怎样三个月减十斤”写成“三个月瘦十斤”。数字本身就是新闻时，把数字放在最前面。副标题能删就删，方图上一句标题就够了。
+
+检查时，标题有一行超过 9 个字，或者某个尺寸的标题比主尺寸小了三成以上，qa 会提醒你写短标题。

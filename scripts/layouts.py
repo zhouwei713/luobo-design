@@ -9,7 +9,7 @@ Boxes marked data-fit shrink their font-size (data-max -> data-min px) until the
 import re
 
 import art
-from common import esc, placeholder, rgba, mix
+from common import contrast, esc, placeholder, rgba, mix
 from fonts import stack
 
 LAYOUTS = {
@@ -196,7 +196,8 @@ async function fitAll(){
     box.style.paddingBottom = pb; g.dataset.grown = k.toFixed(2);
   }
   window.__fit = els.map(el => ({id: el.id, fs: parseFloat(el.style.fontSize), min: parseFloat(el.dataset.min),
-                                  max: parseFloat(el.dataset.max), overflow: over(el), cols: el.style.columnCount || null}));
+                                  max: parseFloat(el.dataset.max), overflow: over(el), cols: el.style.columnCount || null,
+                                  ovpx: Math.max(0, el.scrollHeight - el.clientHeight), cw: el.clientWidth}));
   window.__fitDone = true;
 }
 window.addEventListener('load', fitAll);
@@ -206,6 +207,12 @@ window.addEventListener('load', fitAll);
 
 def page(ctx, fonts_css, body, css):
     tex = '<div class="texture"></div>' if ctx.d.get("texture") in ("paper", "grain") else ""
+    credit = (ctx.item.get("content") or {}).get("credit")
+    if credit:  # a photo credit the licence asks for: small, along the right edge, out of the way
+        body += (f'<div style="position:absolute;right:{ctx.safe * .45:.0f}px;bottom:{ctx.safe * .35:.0f}px;z-index:20;max-width:60%;text-align:right">'
+                 + T(ctx, "credit", credit, c="#FFFFFF", on="image", tag="span",
+                     style=f"font-size:{max(ctx.minc * .8, 1.5 * ctx.u):.1f}px;opacity:.88;text-shadow:0 0 .3em rgba(0,0,0,.6)")
+                 + "</div>")
     pg = (f"@page{{size:{ctx.cv['mm'][0]}mm {ctx.cv['mm'][1]}mm;margin:0}}" if ctx.cv["kind"] == "print" else "")
     return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <style>{pg}{base_css(ctx, fonts_css)}
@@ -344,6 +351,10 @@ def product_stage(ctx, offer, bsize_u):
     t = ctx.t
     a = ctx.item.get("art") or {}
     cover = bool(a.get("image")) and a.get("image_fit") == "cover"
+    if a.get("_shot"):  # a framed screenshot brings its own shadow: no plate, no rays, as big as the box allows
+        return (f'<div class="stage" style="position:relative;flex:1 1 auto;min-height:0;min-width:0">'
+                f'<div style="position:absolute;inset:0;z-index:2">{art_block(ctx, {**a, "image_fit": "contain"})}</div>'
+                f'<div style="position:absolute;right:0;top:0;z-index:6">{badge(ctx, offer, bsize_u)}</div></div>')
     rays = ("" if cover else
             f'<div style="position:absolute;inset:-18%;border-radius:50%;'
             f'background:repeating-conic-gradient(from 0deg, {rgba(t["surface"], .5)} 0deg 7deg, transparent 7deg 14deg);'
@@ -395,14 +406,14 @@ def poster_product_hero(ctx, fonts_css):
     if not (c.get("details") or c.get("cta") or c.get("qr")):
         info = ""  # nothing to say: an empty card reads as a broken input box
     if o == "landscape":
-        body = (f'<div style="position:absolute;inset:{pad:.1f}px;display:grid;grid-template-columns:1.08fr 1fr;gap:{ctx.px(4)}">'
+        body = (f'<div style="position:absolute;inset:{pad:.1f}px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:{ctx.px(4)}">'
                 f'<div style="display:flex;flex-direction:column;min-height:0;gap:{ctx.px(2.4)}">{top}'
                 f'<div style="flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center">'
                 f'<div style="height:{ctx.px(34)}">{headline}</div>{sub}</div>{info}</div>'
                 f'<div style="display:flex;flex-direction:column;min-height:0">{stage}</div></div>')
     elif o == "square":
         body = (f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;gap:{ctx.px(2.4)}">{top}'
-                f'<div style="flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:{ctx.px(2)}">'
+                f'<div style="flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:{ctx.px(2)}">'
                 f'<div style="display:flex;flex-direction:column;justify-content:center;min-height:0">'
                 f'<div style="height:{ctx.px(30)}">{headline}</div>{sub}</div>'
                 f'<div style="display:flex;flex-direction:column;min-height:0">{stage}</div></div>{info}</div>')
@@ -452,7 +463,7 @@ def poster_type_hero(ctx, fonts_css):
     top = (f'<div style="display:flex;justify-content:space-between;align-items:center;gap:{ctx.px(2)}">'
            f'{brand_mark(ctx, 3.2)}{kicker}</div>')
     if o == "landscape":
-        body = (f'<div style="position:absolute;inset:{pad:.1f}px;display:grid;grid-template-columns:1.3fr 1fr;gap:{ctx.px(5)}">'
+        body = (f'<div style="position:absolute;inset:{pad:.1f}px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:{ctx.px(5)}">'
                 f'<div style="display:flex;flex-direction:column;gap:{ctx.px(2.2)};min-height:0;justify-content:center">'
                 f'{top}<div style="height:{ctx.px(2)}"></div>{headline}{sub}<div style="height:{ctx.px(1)}"></div>{offer_band}</div>'
                 f'<div style="display:flex;flex-direction:column;min-height:0">{motif}{info}</div></div>')
@@ -512,7 +523,7 @@ def poster_editorial(ctx, fonts_css):
     inset = pad + 1.8 * u
     col = "display:flex;flex-direction:column;align-items:center;"
     if o == "landscape" and has_art:
-        body = (f'{frame}<div style="position:absolute;inset:{inset:.1f}px;display:grid;grid-template-columns:1fr 1.5fr;gap:{ctx.px(4)}">'
+        body = (f'{frame}<div style="position:absolute;inset:{inset:.1f}px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:{ctx.px(4)}">'
                 f'<div style="position:relative">{art_block(ctx, a)}</div>'
                 f'<div style="{col}justify-content:center">{head_parts}<div style="height:{ctx.px(3)}"></div>{text_parts}{foot}</div></div>')
     else:
@@ -530,13 +541,31 @@ def poster_photo_full(ctx, fonts_css):
     scrim_c = mix(t["ink"], "#000000", .35) if not luminance_dark(t["ink"]) else t["ink"]
     if luminance_dark(t["bg"]):
         scrim_c = t["bg"]
+    # the words sit in the lower half: tint only as much as they need, in a colour taken from the photo there
+    import imgtone
+    box = (0, .45, .66, .55) if o == "landscape" else (0, .5, 1, .5)
+    tn = imgtone.tint(a["image"], box, ctx.W / ctx.H, "#FFFFFF")
+    acc, css = t["accent"], ""
+    if tn:
+        tone, al, st = tn
+        shade = (f'linear-gradient(to top, {rgba(tone, al)} 0%, {rgba(tone, al * .82)} 34%, {rgba(tone, 0)} 64%)'
+                 + (f', linear-gradient(to right, {rgba(tone, al * .5)} 0%, {rgba(tone, 0)} 70%)' if o == "landscape" else ""))
+        under = mix(st["mean"], tone, al)
+        if contrast(acc, under) < 4.5:  # the brand colour gets lost on this photo: small labels go light instead
+            acc = mix(acc, "#FFFFFF", .7) if contrast(mix(acc, "#FFFFFF", .7), under) >= 4.5 else "#FFFFFF"
+        if st["detail"] > .1:  # a busy photo: a soft halo in the photo's own dark tone keeps small type legible
+            css = f'.t[data-on="image"]{{text-shadow:0 0 .4em {rgba(tone, .7)},0 .05em .12em {rgba(tone, .5)}}}'
+        top_tn = imgtone.tint(a["image"], (0, 0, .55, .14), ctx.W / ctx.H, "#FFFFFF", cap=.5)
+        if top_tn and top_tn[1] > 0:  # the brand name in the corner needs a little help too
+            shade += f', radial-gradient(70% 22% at 0% 0%, {rgba(top_tn[0], top_tn[1])} 0%, {rgba(top_tn[0], 0)} 100%)'
+    else:  # a photo we cannot read here (remote URL): the old wash
+        shade = f'linear-gradient(to top, {rgba(scrim_c, .92)} 0%, {rgba(scrim_c, .75)} 32%, {rgba(scrim_c, 0)} 62%)'
     photo = (f'<img src="{a["image"]}" data-role="image" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1">'
-             f'<div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to top, {rgba(scrim_c, .92)} 0%, '
-             f'{rgba(scrim_c, .75)} 32%, {rgba(scrim_c, 0)} 62%)"></div>')
+             f'<div style="position:absolute;inset:0;z-index:2;background:{shade}"></div>')
     light = "#FFFFFF"
     head_max = {"portrait": 11, "square": 9.5, "landscape": 10}[o] * u
     block = (f'<div style="position:absolute;left:{pad:.0f}px;right:{pad:.0f}px;bottom:{pad:.0f}px;z-index:5;display:flex;flex-direction:column;gap:{ctx.px(1.6)}">'
-             + T(ctx, "label", c.get("kicker"), c=t["accent"], on="image", style=f"font-size:{max(ctx.minc, 2.2 * u):.1f}px;letter-spacing:.18em;font-weight:700;")
+             + T(ctx, "label", c.get("kicker"), c=acc, on="image", style=f"font-size:{max(ctx.minc, 2.2 * u):.1f}px;letter-spacing:.18em;font-weight:700;")
              + f'<div style="height:{ctx.px(24 if o != "landscape" else 22)};width:{"100%" if o != "landscape" else "62%"}">'
              + T(ctx, "headline", c.get("headline"), c=light, on="image", cls="d", fit=(head_max, 5 * u), style="height:100%;display:flex;align-items:flex-end;")
              + "</div>"
@@ -544,17 +573,17 @@ def poster_photo_full(ctx, fonts_css):
              + f'<div style="display:flex;gap:{ctx.px(3)};align-items:flex-end;margin-top:{ctx.px(1)}">'
              + f'<div style="flex:1 1 auto">' + "".join(
                  f'<div style="display:flex;gap:{ctx.px(1.2)}">'
-                 + T(ctx, "caption", d.get("k"), c=t["accent"], on="image", style=f"font-size:{max(ctx.minc, 2.1 * u):.1f}px;font-weight:700;")
+                 + T(ctx, "caption", d.get("k"), c=acc, on="image", style=f"font-size:{max(ctx.minc, 2.1 * u):.1f}px;font-weight:700;")
                  + T(ctx, "body", d.get("v"), c=light, on="image", style=f"font-size:{max(ctx.minb, 2.5 * u):.1f}px;")
                  + "</div>" for d in (c.get("details") or []))
-             + T(ctx, "body", c.get("cta"), c=t["accent"], on="image",
+             + T(ctx, "body", c.get("cta"), c=acc, on="image",
                  style=f"font-size:{max(ctx.minb, 2.6 * u):.1f}px;font-weight:700;margin-top:{ctx.px(0.8)};")
              + "</div>" + qr_block(ctx, c.get("qr"), 11, on="image") + "</div></div>")
     top = (f'<div style="position:absolute;left:{pad:.0f}px;top:{pad:.0f}px;z-index:5">'
            + brand_mark(ctx, 3.2, on="image").replace(f'color:{t["ink"]}', "color:#FFFFFF") + "</div>"
            + f'<div style="position:absolute;right:{pad:.0f}px;top:{pad * 1.2:.0f}px;z-index:6">'
            + badge(ctx, c.get("offer"), 22) + "</div>")
-    return page(ctx, fonts_css, photo + top + block, "")
+    return page(ctx, fonts_css, photo + top + block, css)
 
 
 # ------------------------------------------------------------------ poster: notice

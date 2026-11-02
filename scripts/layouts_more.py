@@ -112,7 +112,7 @@ def invitation_formal(ctx, fonts_css):
     foot = _invite_foot(ctx, c)
     ins = inset + 5 * u
     if o == "landscape":
-        html = (f'{frame}<div style="position:absolute;inset:{ins:.1f}px;display:grid;grid-template-columns:1fr 1.25fr;gap:{ctx.px(5)};align-items:center">'
+        html = (f'{frame}<div style="position:absolute;inset:{ins:.1f}px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:{ctx.px(5)};align-items:center">'
                 f'<div style="border-right:{ctx.px(0.15)} solid {t["line"]};padding-right:{ctx.px(4)}">{head}</div>'
                 f'<div style="display:flex;flex-direction:column;justify-content:center;min-width:0">{body}{foot}</div></div>')
     else:
