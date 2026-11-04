@@ -117,6 +117,8 @@ def invitation(ctx, fonts_css):
     foot = (f'<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:{ctx.px(3)};flex:none">'
             f'<div style="min-width:0">{closing}{rsvp}</div>{qr_block(ctx, c.get("qr"), 10, on="bg")}<div style="flex:none">{sign}</div></div>')
     reading = f'<div style="display:flex;flex-direction:column;gap:{ctx.px(1.4)};flex:none">{sal_html}{body}</div>'
+    if s == "jing":
+        return invitation_jing(ctx, fonts_css, c, a, has_img, pad, k, sal_html, body, rows, foot)
     if o == "landscape":
         left = (f'<div style="display:flex;flex-direction:column;justify-content:center;gap:{ctx.px(2.4)};min-width:0">'
                 + (photo(ctx, a) if has_img else "") + num + title + en + "</div>")
@@ -140,6 +142,48 @@ def invitation(ctx, fonts_css):
             + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{ctx.px(.8)};z-index:2">{inner}</div>')
     css = "em.hl{font-style:normal;color:" + t["accent_text"] + "}.pattern{display:none}"
     return page(ctx, fonts_css, html, css)
+
+
+def invitation_jing(ctx, fonts_css, c, a, has_img, pad, k, sal_html, body, rows, foot):
+    """The card's cover is one solid block of the accent colour with the names and the date on it;
+    the letter and the details sit on paper below, set a size larger than a notice."""
+    from layouts_refined import soft_on_accent
+    t, u, o = ctx.t, ctx.u, ctx.o
+    soft = soft_on_accent(ctx)
+    kick = T(ctx, "label", plain(c.get("kicker") or "邀请"), c=soft, on="accent",
+             style=f"{bfont(ctx)}font-size:{max(ctx.minc, 2.6 * u * k):.1f}px;letter-spacing:.5em;font-weight:600;padding-left:.5em;")
+    tsize = min(title_px(ctx, c.get("title"), roomy=True), 14 * u * k)
+    title = (T(ctx, "headline", c.get("title"), c="on_accent", on="accent", fit=(tsize, tsize * .55),
+               style=f"{dfont(ctx)}line-height:1.2;max-height:{tsize * 2.6:.0f}px;text-align:center;width:100%;")
+             if c.get("title") else "")
+    num = (T(ctx, "headline", c.get("big_number"), c="on_accent", on="accent",
+             style=f"{nfont(ctx)}font-size:{12 * u * k:.0f}px;line-height:1;white-space:nowrap;text-align:center;width:100%;")
+           if c.get("big_number") else "")
+    bar = f'<div style="width:{ctx.px(6)};height:{ctx.px(.5)};background:{soft};margin:0 auto"></div>'
+    fs = max(ctx.minb, 3.0 * u * k)
+    body = (T(ctx, "body", c.get("body"), fit=(fs, ctx.minb),
+              style=f"{bfont(ctx)}text-indent:2em;line-height:1.85;text-align:justify;max-height:{ctx.px(30 * k)};flex:none;")
+            if c.get("body") else "")
+    sal = c.get("salutation") or (f"尊敬的 {c.get('guest')}：" if c.get("guest") else "")
+    sal_html = T(ctx, "body", sal, style=f"{bfont(ctx)}font-size:{fs * 1.06:.1f}px;font-weight:600;flex:none;")
+    reading = (f'<div style="display:flex;flex-direction:column;gap:{ctx.px(1.6)};flex:none;width:{"88%" if o != "landscape" else "100%"};'
+               f'margin:0 auto">{sal_html}{body}</div>')
+    if o == "landscape":
+        cover = (f'<div class="on-accent" style="position:absolute;left:0;top:0;bottom:0;width:{ctx.W * .44:.1f}px;background:{t["accent"]};'
+                 f'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:{ctx.px(2.4)};padding:{pad:.1f}px">'
+                 f'{kick}{title}{bar}{num}</div>')
+        right = (f'<div style="position:absolute;left:{ctx.W * .44 + pad:.1f}px;right:{pad:.1f}px;top:{pad:.1f}px;bottom:{pad:.1f}px;'
+                 f'display:flex;flex-direction:column;justify-content:center;gap:{ctx.px(2.6)};z-index:2">{reading}{rows}{gap(ctx, 1)}{foot}</div>')
+        return page(ctx, fonts_css, cover + right, "em.hl{font-style:normal;color:" + t["accent_text"] + "}.pattern{display:none}")
+    tall = ctx.cv["ar"] < 0.6
+    cover = (f'<div class="on-accent" style="flex:none;background:{t["accent"]};margin:{-pad:.1f}px {-pad:.1f}px 0;'
+             f'padding:{pad * 1.2:.1f}px {pad:.1f}px {pad:.1f}px;min-height:{ctx.H * (.46 if tall else .42):.0f}px;'
+             f'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:{ctx.px(2.6)}">'
+             + (photo(ctx, a, grow=False, ratio="16/9") if has_img else "")
+             + f'{kick}{title}{bar}{num}</div>')
+    inner = cover + spacer(ctx, .8, 3) + reading + gap(ctx, 2.6) + rows + spacer(ctx, 1, 2.4) + foot
+    html = f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;z-index:2">{inner}</div>'
+    return page(ctx, fonts_css, html, "em.hl{font-style:normal;color:" + t["accent_text"] + "}.pattern{display:none}")
 
 
 # ------------------------------------------------------------------ certificate

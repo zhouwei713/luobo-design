@@ -360,6 +360,12 @@ def run(spec_path, out_dir=None):
           "todo": sorted({x for f in files for x in f["todo"]}),
           "colors": [f"{ROLE_ZH.get(n['role'], n['role'])} {n['from']} 调成了 {n['to']}：{n['why']}" for n in rep.get("color_notes") or []]}
     qa["next"] = next_steps(qa, out)
+    bare = [it["id"] for it in spec.get("items", []) if it.get("type") == "poster" and it.get("layout") not in ("concept", "notice")
+            and it.get("mode") != "ai" and not (it.get("art") or {}).get("image") and not (it.get("art") or {}).get("screenshot")]
+    if bare:  # a poster with a real photo looks a class better than one held up by type alone
+        qa["next"].insert(max(0, len(qa["next"]) - 1),
+                          f"海报还没有照片（{'、'.join(bare)}）：用户手上没有的话，跑 stock.py search 找一张可商用的实拍写进 art.image 重出；"
+                          "想法能用字和图形画出来的，也可以改用概念版式")
     save_json(out / "qa.json", qa)
     return qa
 

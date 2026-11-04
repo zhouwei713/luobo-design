@@ -5,23 +5,23 @@
   "name_en": "ink wash",
   "mood": "米白纸配墨色宋体，朱砂只点一处，干净有书卷气",
   "tokens": {
-   "bg": "#F3F1EC",
-   "surface": "#E7E4DC",
-   "ink": "#17171A",
-   "muted": "#5E5C58",
-   "accent": "#C2402F",
-   "accent2": "#D9D4C8"
+   "bg": "#F7F5F0",
+   "surface": "#ECE8DF",
+   "ink": "#141416",
+   "muted": "#5C5A55",
+   "accent": "#D63A27",
+   "accent2": "#E9E2D3"
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
    "weight": 400
   },
-  "texture": "paper",
+  "texture": "none",
   "image_style": "documentary photograph, soft natural light, muted colour, calm composition with open space",
   "image_style_zh": "纪实摄影，柔和自然光，低饱和色，构图安静留有空白",
   "fits": [
@@ -47,17 +47,17 @@
   "name_en": "slate indigo",
   "mood": "灰白底黛蓝色，粗黑体标题，稳重可信",
   "tokens": {
-   "bg": "#EFF0EE",
-   "surface": "#E1E4E3",
-   "ink": "#18202C",
-   "muted": "#59616C",
-   "accent": "#3F5170",
-   "accent2": "#CCD3DA"
+   "bg": "#F4F6F7",
+   "surface": "#E4EAEF",
+   "ink": "#121A26",
+   "muted": "#55606D",
+   "accent": "#2C4F8F",
+   "accent2": "#D5E0EC"
   },
   "display": {
    "font": "hei",
-   "weight": 700,
-   "tracking": 0
+   "weight": 800,
+   "tracking": -0.01
   },
   "body": {
    "font": "hei",
@@ -90,23 +90,23 @@
   "name_en": "bamboo green",
   "mood": "米色底竹青，宋体标题，慢生活和户外",
   "tokens": {
-   "bg": "#F0EFE6",
-   "surface": "#E3E3D5",
-   "ink": "#1C241C",
-   "muted": "#5A6356",
-   "accent": "#557A46",
-   "accent2": "#CFD6C0"
+   "bg": "#F5F5EE",
+   "surface": "#E6EADA",
+   "ink": "#17221A",
+   "muted": "#56614E",
+   "accent": "#3D7B49",
+   "accent2": "#D3E1C5"
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
    "weight": 400
   },
-  "texture": "paper",
+  "texture": "none",
   "image_style": "natural light outdoor or plant photo, soft greens, calm and airy",
   "image_style_zh": "自然光的户外或植物照片，柔和的绿色，安静通透",
   "fits": [
@@ -131,25 +131,25 @@
  "jing-zheshi": {
   "name": "赭石",
   "name_en": "red ochre",
-  "mood": "暖白底赭石色，粗黑体，醒目但不吵",
+  "mood": "暖白底赭石色，得意黑标题，醒目但不吵",
   "tokens": {
-   "bg": "#F4EFE7",
-   "surface": "#E9E0D2",
-   "ink": "#231A14",
-   "muted": "#6A5D52",
-   "accent": "#B4532A",
-   "accent2": "#E3CDB8"
+   "bg": "#FAF5EE",
+   "surface": "#F0E5D6",
+   "ink": "#22170F",
+   "muted": "#6A5A4D",
+   "accent": "#C9552A",
+   "accent2": "#F0D9C2"
   },
   "display": {
-   "font": "hei",
-   "weight": 700,
+   "font": "dyh",
+   "weight": 400,
    "tracking": 0
   },
   "body": {
    "font": "hei",
    "weight": 400
   },
-  "texture": "grain",
+  "texture": "none",
   "image_style": "warm natural light product photo, earthy tones, simple background",
   "image_style_zh": "暖色自然光产品照，大地色调，背景简单",
   "fits": [
@@ -173,18 +173,18 @@
  "jing-jianghuang": {
   "name": "姜黄",
   "name_en": "turmeric",
-  "mood": "浅米底一块姜黄色，黑字，明快年轻",
+  "mood": "浅米底一块姜黄色，得意黑，明快年轻",
   "tokens": {
-   "bg": "#F5F2EA",
-   "surface": "#ECE5D3",
-   "ink": "#1E1B14",
-   "muted": "#66604F",
-   "accent": "#D9A21B",
-   "accent2": "#EEDFB0"
+   "bg": "#FAF7EE",
+   "surface": "#F1E9D2",
+   "ink": "#1A1710",
+   "muted": "#605946",
+   "accent": "#E8A713",
+   "accent2": "#F6E6B4"
   },
   "display": {
-   "font": "hei",
-   "weight": 700,
+   "font": "dyh",
+   "weight": 400,
    "tracking": 0
   },
   "body": {
@@ -216,23 +216,23 @@
   "name_en": "lotus mauve",
   "mood": "浅藕色底配藕荷紫，宋体，温柔安静",
   "tokens": {
-   "bg": "#F5F0EF",
-   "surface": "#EBE1E1",
-   "ink": "#2A1F24",
-   "muted": "#6E5F66",
-   "accent": "#93607F",
-   "accent2": "#E2D0D8"
+   "bg": "#FAF4F4",
+   "surface": "#F1E4E6",
+   "ink": "#2A1C24",
+   "muted": "#6C5C65",
+   "accent": "#A35A88",
+   "accent2": "#EAD3DF"
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
    "weight": 400
   },
-  "texture": "paper",
+  "texture": "none",
   "image_style": "soft window light portrait or still life, muted pinks, gentle",
   "image_style_zh": "柔和窗光的人像或静物，低饱和粉色，温柔",
   "fits": [
@@ -258,23 +258,23 @@
   "name_en": "rouge",
   "mood": "米白纸配一点胭脂红，喜事的安静版本",
   "tokens": {
-   "bg": "#F6F0E8",
-   "surface": "#EDE2D5",
-   "ink": "#24171A",
-   "muted": "#6E5A5A",
-   "accent": "#A82E3C",
-   "accent2": "#E6CFC4"
+   "bg": "#FBF5EE",
+   "surface": "#F2E5D9",
+   "ink": "#23151A",
+   "muted": "#6C5757",
+   "accent": "#B5263A",
+   "accent2": "#F0D6CF"
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
    "weight": 400
   },
-  "texture": "paper",
+  "texture": "none",
   "image_style": "warm soft light, elegant still life of flowers or table setting",
   "image_style_zh": "温暖柔光，花或餐桌的雅致静物",
   "fits": [
@@ -299,17 +299,17 @@
   "name_en": "night slate and copper",
   "mood": "深青灰底配铜色，宋体，夜晚和高级",
   "tokens": {
-   "bg": "#1A1C20",
-   "surface": "#24272D",
-   "ink": "#ECE7DC",
-   "muted": "#A6A29A",
-   "accent": "#B97E55",
-   "accent2": "#3A3E46"
+   "bg": "#16181C",
+   "surface": "#22252B",
+   "ink": "#F1ECE2",
+   "muted": "#A9A49B",
+   "accent": "#D08A55",
+   "accent2": "#33373F"
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
@@ -420,17 +420,17 @@
   "name_en": "clean minimal",
   "mood": "干净、克制，靠留白和一块色块",
   "tokens": {
-   "bg": "#F5F4EF",
-   "surface": "#E8E7E0",
-   "ink": "#18181A",
-   "muted": "#61615C",
-   "accent": "#2F6B4F",
-   "accent2": "#D5D9CF"
+   "bg": "#F8F7F3",
+   "surface": "#ECEBE4",
+   "ink": "#161618",
+   "muted": "#5F5F5A",
+   "accent": "#2E7352",
+   "accent2": "#D5DDD2"
   },
   "display": {
    "font": "hei",
-   "weight": 700,
-   "tracking": 0
+   "weight": 800,
+   "tracking": -0.01
   },
   "body": {
    "font": "hei",
@@ -461,8 +461,8 @@
   "name_en": "editorial",
   "mood": "宋体大标题有观点，一块朱红点题",
   "tokens": {
-   "bg": "#F1EEE8",
-   "surface": "#FFFFFF",
+   "bg": "#F6F3EE",
+   "surface": "#ECE6DC",
    "ink": "#121212",
    "muted": "#58544E",
    "accent": "#D23A1E",
@@ -470,8 +470,8 @@
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
@@ -483,7 +483,7 @@
    "deco": "block"
   },
   "pattern": "none",
-  "texture": "paper",
+  "texture": "none",
   "image_style": "editorial photography, strong single subject, dramatic natural light, magazine cover composition",
   "image_style_zh": "画报摄影，单一强主体，戏剧性的自然光，封面式构图",
   "fits": [
@@ -511,8 +511,8 @@
   },
   "display": {
    "font": "song",
-   "weight": 600,
-   "tracking": 0.02
+   "weight": 700,
+   "tracking": 0.01
   },
   "body": {
    "font": "hei",
