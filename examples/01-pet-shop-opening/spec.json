@@ -21,16 +21,16 @@
    "新客券金额"
   ],
   "direction_candidates": [
-   "swiss-orange",
+   "jing-zheshi",
    "soft-pastel",
-   "mag-ink"
+   "jing-shuimo"
   ],
   "direction_choice": "用户回复“A”，按概念 A（毛孩子先验货）加方向 A（柔和治愈）来做",
   "concept_choice": "A 毛孩子先验货"
  },
  "brand": {
   "name": "萝卜萌宠",
-  "direction": "swiss-orange",
+  "direction": "jing-zheshi",
   "voice": "像养宠物的朋友在聊天，俏皮一点，不端着"
  },
  "facts": {

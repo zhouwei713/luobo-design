@@ -93,8 +93,12 @@ def validate(spec):
     errs, warns = [], []
     dirs, plats = load_ref("directions.json"), load_ref("platforms.json")
     b = spec.get("brand") or {}
-    if b.get("direction") not in dirs:
-        errs.append(f"brand.direction '{b.get('direction')}' unknown; pick one of {', '.join(dirs)}")
+    if b.get("direction") not in dirs or str(b.get("direction")).startswith("_"):
+        errs.append(f"brand.direction '{b.get('direction')}' unknown; pick one of "
+                    f"{', '.join(k for k, v in dirs.items() if not k.startswith('_') and not v.get('alias'))}")
+    elif dirs[b["direction"]].get("alias"):
+        warns.append(f"brand.direction '{b['direction']}' was folded into '{dirs[b['direction']]['alias']}'; "
+                     f"it still works, write the new id next time")
     ids = set()
     for it in spec.get("items") or []:
         iid = it.get("id")
@@ -128,8 +132,9 @@ def validate(spec):
                 errs.append(f"{iid}: content.{k} is required for {typ}")
         if typ == "certificate" and not (c.get("recipient") or c.get("recipients") or it.get("batch")):
             errs.append(f"{iid}: certificate needs content.recipient, content.recipients or batch")
+        concept_page = typ == "poster" and it.get("layout") == "concept"
         for k in c:
-            if k not in known:
+            if k not in known and not concept_page:  # a concept page may carry any copy it binds with data-field
                 warns.append(f"{iid}: content.{k} is not used by {typ} layouts")
         a = it.get("art") or {}
         if a.get("style"):
@@ -178,6 +183,38 @@ def validate(spec):
     return errs, warns
 
 
+def check_pages(spec, base):
+    """Concept posters: every fragment exists, named fonts are known, sizes without one say what replaces them."""
+    errs, warns = [], []
+    fonts = load_ref("fonts.json")
+    for it in spec.get("items") or []:
+        iid = it.get("id")
+        if it.get("html") and it.get("layout") != "concept":
+            warns.append(f"{iid}: item.html is only used by layout concept")
+        if it.get("layout") != "concept":
+            continue
+        h = it.get("html")
+        if not h:
+            errs.append(f"{iid}: layout concept needs item.html, one fragment path or {{size or orientation: path}} (item-concept.md)")
+            continue
+        paths = h.values() if isinstance(h, dict) else [h]
+        for pth in paths:
+            if not (base / pth).exists() and not Path(pth).exists():
+                errs.append(f"{iid}: concept fragment not found: {pth}")
+        if isinstance(h, dict):
+            from common import canvas
+            for sz in it.get("sizes") or ["portrait"]:
+                cv = canvas(sz)
+                if not (h.get(sz) or h.get(cv["orient"]) or h.get("default")):
+                    warns.append(f"{iid}: no concept fragment for {sz}; layout {it.get('fallback') or 'jing / type-hero'} is used for that size")
+        for f in it.get("fonts") or []:
+            if f not in fonts or f.startswith("_"):
+                errs.append(f"{iid}: font '{f}' unknown ({', '.join(k for k in fonts if not k.startswith('_'))})")
+        if it.get("fallback") and it["fallback"] not in LAYOUTS["poster"]:
+            errs.append(f"{iid}: fallback '{it['fallback']}' is not a poster layout")
+    return errs, warns
+
+
 def brand_hint(spec):
     """A saved brand whose look this spec quietly drifts from: say so before rendering."""
     import brands
@@ -186,7 +223,9 @@ def brand_hint(spec):
     if not prof or spec.get("festival"):
         return None
     pb = prof.get("brand") or {}
-    diff = [k for k in ("direction", "tokens", "fonts") if pb.get(k) and b.get(k) != pb.get(k)]
+    from common import real_direction
+    same = lambda k: (real_direction(b.get(k)) == real_direction(pb.get(k))) if k == "direction" else b.get(k) == pb.get(k)  # noqa: E731
+    diff = [k for k in ("direction", "tokens", "fonts") if pb.get(k) and not same(k)]
     if diff:
         return (f"“{prof['name']}”有品牌档案，这份规格的 {'、'.join(diff)} 和档案不一样。是用户要换风格就不用管，"
                 f"否则运行 brands.py apply spec.json --force 换回档案里的")
@@ -203,6 +242,8 @@ def main():
     a = ap.parse_args()
     spec_path = Path(a.spec).resolve()
     errs, warns = validate(load_json(spec_path))
+    e2, w2 = check_pages(load_json(spec_path), spec_path.parent)
+    errs, warns = errs + e2, warns + w2
     for w in warns:
         print("spec warn ", w)
     if errs:

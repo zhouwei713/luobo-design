@@ -1,5 +1,340 @@
 {
- "_note": "Visual directions. tokens are the only colours a design may use (lint flags others). radius is in canvas units (1u = short side / 100). pattern: dots | grid | stripes | rays | waves | clouds | none. texture: grain | paper | none. deco: sticker | line | soft | seal | none decides badges and frames. image_style feeds the image prompt.",
+ "_note": "Visual directions. tokens are the only colours a design may use (lint flags others). radius is in canvas units (1u = short side / 100). pattern: dots | grid | stripes | rays | waves | clouds | none. texture: grain | paper | none. deco: sticker | line | soft | seal | none decides badges and frames. image_style feeds the image prompt. alias: an old id that now points at another direction (kept so saved specs and brand files still work).",
+ "jing-shuimo": {
+  "name": "水墨",
+  "name_en": "ink wash",
+  "mood": "米白纸配墨色宋体，朱砂只点一处，干净有书卷气",
+  "tokens": {
+   "bg": "#F3F1EC",
+   "surface": "#E7E4DC",
+   "ink": "#17171A",
+   "muted": "#5E5C58",
+   "accent": "#C2402F",
+   "accent2": "#D9D4C8"
+  },
+  "display": {
+   "font": "song",
+   "weight": 600,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "paper",
+  "image_style": "documentary photograph, soft natural light, muted colour, calm composition with open space",
+  "image_style_zh": "纪实摄影，柔和自然光，低饱和色，构图安静留有空白",
+  "fits": [
+   "咖啡",
+   "书店",
+   "讲座",
+   "手作",
+   "个人品牌",
+   "自媒体"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-dailan": {
+  "name": "黛蓝",
+  "name_en": "slate indigo",
+  "mood": "灰白底黛蓝色，粗黑体标题，稳重可信",
+  "tokens": {
+   "bg": "#EFF0EE",
+   "surface": "#E1E4E3",
+   "ink": "#18202C",
+   "muted": "#59616C",
+   "accent": "#3F5170",
+   "accent2": "#CCD3DA"
+  },
+  "display": {
+   "font": "hei",
+   "weight": 700,
+   "tracking": 0
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "none",
+  "image_style": "clean documentary photo, neutral light, straight-on framing, plain background",
+  "image_style_zh": "干净的纪实照片，中性光，正面构图，背景简单",
+  "fits": [
+   "科技",
+   "课程",
+   "通知",
+   "会议",
+   "律所财税",
+   "医疗",
+   "企业"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-zhuqing": {
+  "name": "竹青",
+  "name_en": "bamboo green",
+  "mood": "米色底竹青，宋体标题，慢生活和户外",
+  "tokens": {
+   "bg": "#F0EFE6",
+   "surface": "#E3E3D5",
+   "ink": "#1C241C",
+   "muted": "#5A6356",
+   "accent": "#557A46",
+   "accent2": "#CFD6C0"
+  },
+  "display": {
+   "font": "song",
+   "weight": 600,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "paper",
+  "image_style": "natural light outdoor or plant photo, soft greens, calm and airy",
+  "image_style_zh": "自然光的户外或植物照片，柔和的绿色，安静通透",
+  "fits": [
+   "茶",
+   "花店",
+   "瑜伽",
+   "露营户外",
+   "轻食",
+   "社区",
+   "医疗健康"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-zheshi": {
+  "name": "赭石",
+  "name_en": "red ochre",
+  "mood": "暖白底赭石色，粗黑体，醒目但不吵",
+  "tokens": {
+   "bg": "#F4EFE7",
+   "surface": "#E9E0D2",
+   "ink": "#231A14",
+   "muted": "#6A5D52",
+   "accent": "#B4532A",
+   "accent2": "#E3CDB8"
+  },
+  "display": {
+   "font": "hei",
+   "weight": 700,
+   "tracking": 0
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "grain",
+  "image_style": "warm natural light product photo, earthy tones, simple background",
+  "image_style_zh": "暖色自然光产品照，大地色调，背景简单",
+  "fits": [
+   "开业",
+   "新品",
+   "零售",
+   "餐饮",
+   "烘焙",
+   "健身"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-jianghuang": {
+  "name": "姜黄",
+  "name_en": "turmeric",
+  "mood": "浅米底一块姜黄色，黑字，明快年轻",
+  "tokens": {
+   "bg": "#F5F2EA",
+   "surface": "#ECE5D3",
+   "ink": "#1E1B14",
+   "muted": "#66604F",
+   "accent": "#D9A21B",
+   "accent2": "#EEDFB0"
+  },
+  "display": {
+   "font": "hei",
+   "weight": 700,
+   "tracking": 0
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "none",
+  "image_style": "bright daylight photo, clean background, cheerful but not loud",
+  "image_style_zh": "明亮日光照片，背景干净，开朗但不吵",
+  "fits": [
+   "新品",
+   "展览",
+   "校园活动",
+   "自媒体",
+   "市集"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-ouhe": {
+  "name": "藕荷",
+  "name_en": "lotus mauve",
+  "mood": "浅藕色底配藕荷紫，宋体，温柔安静",
+  "tokens": {
+   "bg": "#F5F0EF",
+   "surface": "#EBE1E1",
+   "ink": "#2A1F24",
+   "muted": "#6E5F66",
+   "accent": "#93607F",
+   "accent2": "#E2D0D8"
+  },
+  "display": {
+   "font": "song",
+   "weight": 600,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "paper",
+  "image_style": "soft window light portrait or still life, muted pinks, gentle",
+  "image_style_zh": "柔和窗光的人像或静物，低饱和粉色，温柔",
+  "fits": [
+   "美业",
+   "皮肤管理",
+   "花艺",
+   "甜品",
+   "母婴",
+   "婚礼"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-yanzhi": {
+  "name": "胭脂",
+  "name_en": "rouge",
+  "mood": "米白纸配一点胭脂红，喜事的安静版本",
+  "tokens": {
+   "bg": "#F6F0E8",
+   "surface": "#EDE2D5",
+   "ink": "#24171A",
+   "muted": "#6E5A5A",
+   "accent": "#A82E3C",
+   "accent2": "#E6CFC4"
+  },
+  "display": {
+   "font": "song",
+   "weight": 600,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "paper",
+  "image_style": "warm soft light, elegant still life of flowers or table setting",
+  "image_style_zh": "温暖柔光，花或餐桌的雅致静物",
+  "fits": [
+   "婚礼",
+   "订婚",
+   "满月",
+   "寿宴",
+   "乔迁"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
+ "jing-xuanqing": {
+  "name": "玄青",
+  "name_en": "night slate and copper",
+  "mood": "深青灰底配铜色，宋体，夜晚和高级",
+  "tokens": {
+   "bg": "#1A1C20",
+   "surface": "#24272D",
+   "ink": "#ECE7DC",
+   "muted": "#A6A29A",
+   "accent": "#B97E55",
+   "accent2": "#3A3E46"
+  },
+  "display": {
+   "font": "song",
+   "weight": 600,
+   "tracking": 0.02
+  },
+  "body": {
+   "font": "hei",
+   "weight": 400
+  },
+  "texture": "grain",
+  "image_style": "low-key lighting, dark background, warm rim light, refined materials",
+  "image_style_zh": "低调布光，深色背景，暖色轮廓光，精致材质",
+  "fits": [
+   "酒吧",
+   "高端餐饮",
+   "年会",
+   "发布会",
+   "会员活动"
+  ],
+  "system": "jing",
+  "ornament": false,
+  "shape": {
+   "radius": 0,
+   "border": 0.15,
+   "deco": "block"
+  },
+  "pattern": "none",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题"
+ },
  "pop-fresh": {
   "name": "元气撞色",
   "name_en": "bold pop colour-block",
@@ -83,19 +418,19 @@
  "clean-minimal": {
   "name": "清爽极简",
   "name_en": "clean minimal",
-  "mood": "干净、克制、质感靠留白",
+  "mood": "干净、克制，靠留白和一块色块",
   "tokens": {
-   "bg": "#F6F5F1",
-   "surface": "#FFFFFF",
-   "ink": "#161616",
-   "muted": "#6A6A66",
+   "bg": "#F5F4EF",
+   "surface": "#E8E7E0",
+   "ink": "#18181A",
+   "muted": "#61615C",
    "accent": "#2F6B4F",
-   "accent2": "#D8D2C4"
+   "accent2": "#D5D9CF"
   },
   "display": {
-   "font": "inter",
-   "weight": 250,
-   "tracking": -0.01
+   "font": "hei",
+   "weight": 700,
+   "tracking": 0
   },
   "body": {
    "font": "hei",
@@ -117,14 +452,14 @@
    "专业服务",
    "个人品牌"
   ],
-  "avoid": "满屏装饰、多种强调色、贴纸感",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题",
   "ornament": false,
-  "system": "swiss"
+  "system": "jing"
  },
  "editorial": {
   "name": "刊物感",
   "name_en": "editorial",
-  "mood": "有观点、有格调，像一本刊物的版面",
+  "mood": "宋体大标题有观点，一块朱红点题",
   "tokens": {
    "bg": "#F1EEE8",
    "surface": "#FFFFFF",
@@ -135,17 +470,17 @@
   },
   "display": {
    "font": "song",
-   "weight": 500,
-   "tracking": 0.06
+   "weight": 600,
+   "tracking": 0.02
   },
   "body": {
-   "font": "song",
+   "font": "hei",
    "weight": 400
   },
   "shape": {
    "radius": 0,
-   "border": 0.25,
-   "deco": "line"
+   "border": 0.15,
+   "deco": "block"
   },
   "pattern": "none",
   "texture": "paper",
@@ -158,29 +493,29 @@
    "咖啡",
    "品牌发布"
   ],
-  "avoid": "圆角卡片、卡通插画、渐变",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题",
   "ornament": false,
-  "system": "magazine"
+  "system": "jing"
  },
  "dark-premium": {
-  "name": "黑金质感",
-  "name_en": "dark premium black-and-gold",
-  "mood": "高级、沉稳、晚上的氛围",
+  "name": "深灰香槟",
+  "name_en": "charcoal champagne",
+  "mood": "深炭灰配香槟色，沉稳，晚上的氛围",
   "tokens": {
-   "bg": "#15130F",
-   "surface": "#221E18",
-   "ink": "#F2EADB",
-   "muted": "#B3A68E",
-   "accent": "#C9A45C",
-   "accent2": "#6E5C3B"
+   "bg": "#121417",
+   "surface": "#1D2025",
+   "ink": "#EEE8DE",
+   "muted": "#ABA59A",
+   "accent": "#B89B6E",
+   "accent2": "#3A3D44"
   },
   "display": {
    "font": "song",
-   "weight": 500,
-   "tracking": 0.08
+   "weight": 600,
+   "tracking": 0.02
   },
   "body": {
-   "font": "song",
+   "font": "hei",
    "weight": 400
   },
   "shape": {
@@ -199,9 +534,9 @@
    "会员活动",
    "珠宝"
   ],
-  "avoid": "亮底、卡通、多彩撞色",
+  "avoid": "渐变铺底、毛玻璃、圆角卡片、阴影、贴纸、程序画的插图、两种以上强调色、Inter 当中文标题",
   "ornament": false,
-  "system": "magazine"
+  "system": "jing"
  },
  "guochao": {
   "name": "新中式",
@@ -525,382 +860,39 @@
   "ornament": false
  },
  "mag-ink": {
-  "name": "纸墨",
-  "name_en": "paper ink",
-  "mood": "纸和墨，像一本安静的刊物，朱砂只点一处",
-  "system": "magazine",
-  "ornament": false,
-  "tokens": {
-   "bg": "#EFEBE3",
-   "surface": "#F6F3ED",
-   "ink": "#16130F",
-   "muted": "#5F584F",
-   "accent": "#A23E28",
-   "accent2": "#C8B79B"
-  },
-  "display": {
-   "font": "song",
-   "weight": 500,
-   "tracking": 0.06
-  },
-  "body": {
-   "font": "song",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "line"
-  },
-  "pattern": "none",
-  "texture": "paper",
-  "image_style": "documentary photograph, soft natural light, muted film colour, calm composition with open space, magazine feature",
-  "image_style_zh": "纪实摄影，柔和自然光，低饱和胶片色，构图安静留有空白，专题纪实照",
-  "fits": [
-   "咖啡",
-   "书店",
-   "民宿",
-   "手作",
-   "茶",
-   "个人品牌",
-   "讲座"
-  ],
-  "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
+  "alias": "jing-shuimo",
+  "name": "纸墨（已并入水墨）"
  },
  "mag-indigo": {
-  "name": "青瓷",
-  "name_en": "celadon blue",
-  "mood": "青花瓷的蓝配白瓷底，清冷、有书卷气",
-  "system": "magazine",
-  "ornament": false,
-  "tokens": {
-   "bg": "#ECEFF1",
-   "surface": "#F5F7F8",
-   "ink": "#0E1D31",
-   "muted": "#4E5B6A",
-   "accent": "#2F5B8E",
-   "accent2": "#B9C6D3"
-  },
-  "display": {
-   "font": "song",
-   "weight": 500,
-   "tracking": 0.06
-  },
-  "body": {
-   "font": "song",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "line"
-  },
-  "pattern": "none",
-  "texture": "paper",
-  "image_style": "documentary photograph, overcast or dawn light, cool muted tones, calm water or sky with open space",
-  "image_style_zh": "纪实摄影，阴天或清晨的光，冷调低饱和，有安静的水面或天空留白",
-  "fits": [
-   "旅行",
-   "文旅",
-   "教育",
-   "讲座",
-   "律所财税",
-   "医疗健康"
-  ],
-  "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
+  "alias": "jing-dailan",
+  "name": "青瓷（已并入黛蓝）"
  },
  "mag-forest": {
-  "name": "松烟",
-  "name_en": "pine green",
-  "mood": "松绿配米纸，户外、植物、慢生活",
-  "system": "magazine",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F1EDE3",
-   "surface": "#F7F4EC",
-   "ink": "#17271C",
-   "muted": "#55604F",
-   "accent": "#2C6A49",
-   "accent2": "#BFC9A8"
-  },
-  "display": {
-   "font": "song",
-   "weight": 500,
-   "tracking": 0.06
-  },
-  "body": {
-   "font": "song",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "line"
-  },
-  "pattern": "none",
-  "texture": "paper",
-  "image_style": "documentary photograph in nature, forest shade or golden hour, earthy muted colour, quiet open space",
-  "image_style_zh": "户外纪实摄影，林荫或傍晚的光，大地色低饱和，安静留白",
-  "fits": [
-   "户外",
-   "露营",
-   "花店",
-   "茶",
-   "瑜伽",
-   "有机食品",
-   "社区活动"
-  ],
-  "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
+  "alias": "jing-zhuqing",
+  "name": "松烟（已并入竹青）"
  },
  "mag-night": {
-  "name": "夜金",
-  "name_en": "night gold",
-  "mood": "深墨底配金色，夜晚、电影感、高端",
-  "system": "magazine",
-  "ornament": false,
-  "tokens": {
-   "bg": "#11100E",
-   "surface": "#1A1916",
-   "ink": "#ECE3D1",
-   "muted": "#A89C86",
-   "accent": "#C99A44",
-   "accent2": "#5A4E3A"
-  },
-  "display": {
-   "font": "song",
-   "weight": 500,
-   "tracking": 0.06
-  },
-  "body": {
-   "font": "song",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "line"
-  },
-  "pattern": "none",
-  "texture": "paper",
-  "image_style": "cinematic night photograph, low key light, warm practical lights, deep shadows",
-  "image_style_zh": "电影感夜景，低调光，暖色灯光点缀，深阴影",
-  "fits": [
-   "酒吧",
-   "高端餐厅",
-   "发布会",
-   "年会",
-   "珠宝",
-   "影展"
-  ],
-  "avoid": "粗体大标题、卡片和圆角、贴纸、程序画的插图、满版图案、两种以上强调色"
+  "alias": "jing-xuanqing",
+  "name": "夜金（已并入玄青）"
  },
  "mag-xi": {
-  "name": "喜帖",
-  "name_en": "quiet celebration",
-  "mood": "米白纸配一点正红，婚礼和喜事的安静版本",
-  "system": "magazine",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F4EEE6",
-   "surface": "#F9F5EF",
-   "ink": "#1E1515",
-   "muted": "#6B5B55",
-   "accent": "#B4232C",
-   "accent2": "#D8C2A6"
-  },
-  "display": {
-   "font": "song",
-   "weight": 500,
-   "tracking": 0.08
-  },
-  "body": {
-   "font": "song",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "line"
-  },
-  "pattern": "none",
-  "texture": "paper",
-  "image_style": "quiet documentary wedding photograph, soft window light, warm muted film colour, lots of open space",
-  "image_style_zh": "安静的纪实婚礼照片，柔和窗光，暖调低饱和胶片色，留大片空白",
-  "fits": [
-   "婚礼",
-   "订婚",
-   "满月",
-   "寿宴",
-   "乔迁",
-   "喜事"
-  ],
-  "avoid": "大面积红底、金色描边花框、双喜剪贴画、烫金渐变、三种以上颜色"
+  "alias": "jing-yanzhi",
+  "name": "喜帖（已并入胭脂）"
  },
  "swiss-blue": {
-  "name": "细线蓝",
-  "name_en": "fine line blue",
-  "mood": "网格、细线、细体大字，一种克莱因蓝",
-  "system": "swiss",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F7F7F5",
-   "surface": "#EDEDEA",
-   "ink": "#0C0C0C",
-   "muted": "#5C5C58",
-   "accent": "#1F45CF",
-   "accent2": "#DCE3F7"
-  },
-  "display": {
-   "font": "inter",
-   "weight": 250,
-   "tracking": -0.01
-  },
-  "body": {
-   "font": "hei",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "block"
-  },
-  "pattern": "none",
-  "texture": "none",
-  "image_style": "clean product or documentary photo, neutral light, straight-on framing, plain background, no props",
-  "image_style_zh": "干净的产品照或纪实照片，中性光，正面构图，背景简单，不加道具",
-  "fits": [
-   "科技",
-   "工具",
-   "课程",
-   "通知",
-   "会议",
-   "企业",
-   "专业服务"
-  ],
-  "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
+  "alias": "jing-dailan",
+  "name": "细线蓝（已并入黛蓝）"
  },
  "swiss-orange": {
-  "name": "细线橙",
-  "name_en": "fine line orange",
-  "mood": "网格和安全橙，醒目但不吵",
-  "system": "swiss",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F7F7F5",
-   "surface": "#EDEDEA",
-   "ink": "#0C0C0C",
-   "muted": "#5C5C58",
-   "accent": "#EE5A25",
-   "accent2": "#F6DDD0"
-  },
-  "display": {
-   "font": "inter",
-   "weight": 250,
-   "tracking": -0.01
-  },
-  "body": {
-   "font": "hei",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "block"
-  },
-  "pattern": "none",
-  "texture": "none",
-  "image_style": "clean product or documentary photo, neutral light, straight-on framing, plain background, no props",
-  "image_style_zh": "干净的产品照或纪实照片，中性光，正面构图，背景简单，不加道具",
-  "fits": [
-   "开业",
-   "新品",
-   "活动",
-   "零售",
-   "健身",
-   "餐饮"
-  ],
-  "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
+  "alias": "jing-zheshi",
+  "name": "细线橙（已并入赭石）"
  },
  "swiss-yellow": {
-  "name": "细线黄",
-  "name_en": "fine line yellow",
-  "mood": "柠檬黄色块配黑字，明快、年轻",
-  "system": "swiss",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F7F7F5",
-   "surface": "#EDEDEA",
-   "ink": "#0C0C0C",
-   "muted": "#5C5C58",
-   "accent": "#F3CF00",
-   "accent2": "#F7EDB8"
-  },
-  "display": {
-   "font": "inter",
-   "weight": 250,
-   "tracking": -0.01
-  },
-  "body": {
-   "font": "hei",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "block"
-  },
-  "pattern": "none",
-  "texture": "none",
-  "image_style": "clean product or documentary photo, neutral light, straight-on framing, plain background, no props",
-  "image_style_zh": "干净的产品照或纪实照片，中性光，正面构图，背景简单，不加道具",
-  "fits": [
-   "新品",
-   "校园",
-   "展览",
-   "活动",
-   "自媒体"
-  ],
-  "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
+  "alias": "jing-jianghuang",
+  "name": "细线黄（已并入姜黄）"
  },
  "swiss-green": {
-  "name": "细线绿",
-  "name_en": "fine line green",
-  "mood": "深绿配白，干净、可信、健康",
-  "system": "swiss",
-  "ornament": false,
-  "tokens": {
-   "bg": "#F7F7F5",
-   "surface": "#EDEDEA",
-   "ink": "#0C0C0C",
-   "muted": "#5C5C58",
-   "accent": "#178A55",
-   "accent2": "#D5EBDD"
-  },
-  "display": {
-   "font": "inter",
-   "weight": 250,
-   "tracking": -0.01
-  },
-  "body": {
-   "font": "hei",
-   "weight": 400
-  },
-  "shape": {
-   "radius": 0,
-   "border": 0.15,
-   "deco": "block"
-  },
-  "pattern": "none",
-  "texture": "none",
-  "image_style": "clean product or documentary photo, neutral light, straight-on framing, plain background, no props",
-  "image_style_zh": "干净的产品照或纪实照片，中性光，正面构图，背景简单，不加道具",
-  "fits": [
-   "医疗健康",
-   "社区",
-   "环保",
-   "教育",
-   "轻食"
-  ],
-  "avoid": "渐变、阴影、圆角卡片、粗体大标题、第二种强调色、程序画的插图"
+  "alias": "jing-zhuqing",
+  "name": "细线绿（已并入竹青）"
  }
 }

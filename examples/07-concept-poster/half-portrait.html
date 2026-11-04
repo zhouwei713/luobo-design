@@ -1,0 +1,27 @@
+<!-- 概念：巨大的二分之一。1080 x 1440。颜色只用方向里的变量，字号用 var(--u)（短边的 1%） -->
+<style>
+ .half{position:absolute;inset:0;background:var(--accent)}
+ .half .big{position:absolute;font-size:calc(var(--u) * 66);line-height:1;color:var(--bg)}
+ .half .slash{position:absolute;left:calc(var(--u)*11);top:calc(var(--u)*64);width:calc(var(--u)*92);height:calc(var(--u)*4.2);background:var(--ink);transform:rotate(-38deg);transform-origin:left center}
+</style>
+<div class="half">
+ <div class="f-dyh" data-field="kicker" data-role="label" data-c="ink" data-on="accent"
+      style="position:absolute;left:var(--safe);top:var(--safe);font-size:calc(var(--u)*5.4)"></div>
+ <div class="f-dyh" data-field="date_line" data-role="label" data-c="on_accent" data-on="accent"
+      style="position:absolute;right:var(--safe);top:calc(var(--safe) + var(--u)*1);font-size:calc(var(--u)*3.4);color:var(--on-accent)"></div>
+ <div class="big f-dyh" data-art="1" style="left:calc(var(--u)*3);top:calc(var(--u)*11)">1</div>
+ <div class="slash"></div>
+ <div class="big f-dyh" data-art="1" style="right:calc(var(--u)*4);top:calc(var(--u)*52)">2</div>
+ <div class="f-dyh" data-field="headline" data-c="ink" data-on="accent"
+      style="position:absolute;left:var(--safe);top:calc(var(--u)*76);font-size:calc(var(--u)*17);line-height:1.02;white-space:pre-line"></div>
+ <div data-field="sub" data-c="ink" data-on="accent"
+      style="position:absolute;left:var(--safe);top:calc(var(--u)*114);font-size:calc(var(--u)*3.6);font-weight:700"></div>
+ <div style="position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*20);background:var(--ink);display:grid;grid-template-columns:1.3fr 1fr 1fr;align-items:end;padding:0 var(--safe) var(--safe);gap:calc(var(--u)*3)">
+  <div><div data-role="label" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2);color:var(--bg);opacity:.75">日期</div>
+       <div data-field="details.0.v" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2.9);font-weight:700;color:var(--bg)"></div></div>
+  <div><div data-role="label" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2);color:var(--bg);opacity:.75">地址</div>
+       <div data-field="details.1.v" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2.9);font-weight:700;color:var(--bg)"></div></div>
+  <div><div data-role="label" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2);color:var(--bg);opacity:.75">电话</div>
+       <div data-field="details.2.v" data-c="bg" data-on="ink" style="font-size:calc(var(--u)*2.9);font-weight:700;color:var(--bg)"></div></div>
+ </div>
+</div>

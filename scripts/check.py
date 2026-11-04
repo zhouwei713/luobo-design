@@ -26,6 +26,13 @@ def color_of(name, tokens):
     return tokens.get(name)
 
 
+def rgb_hex(css):
+    m = re.match(r"rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?", css or "")
+    if not m or (m.group(4) is not None and float(m.group(4)) < .5):
+        return None
+    return "#%02X%02X%02X" % tuple(int(m.group(i)) for i in (1, 2, 3))
+
+
 def boxes_overlap(a, b):
     x = max(0, min(a["x"] + a["w"], b["x"] + b["w"]) - max(a["x"], b["x"]))
     y = max(0, min(a["y"] + a["h"], b["y"] + b["h"]) - max(a["y"], b["y"]))
@@ -72,6 +79,10 @@ def check_render(r, tokens):
                 need = 3.0 if t["fs"] >= 3.0 * u else 4.5
                 if cr < need:
                     (errs if cr < need - 1 else warns).append(f"对比度 {cr:.1f} 低于 {need}：{name}")
+                for em in set(t.get("em") or []):  # a **highlighted** word in a colour close to what it sits on vanishes
+                    hx = rgb_hex(em)
+                    if hx and contrast(hx, bg) < 2.0:
+                        errs.append(f"强调色的字几乎看不见（对比度 {contrast(hx, bg):.1f}）：{name}")
         # lonely last character
         last = (t.get("last_line") or "").strip()
         if t.get("lines", 0) > 1 and len([c for c in last if c not in PUNCT]) <= 1:
@@ -193,7 +204,7 @@ def space_check(r, texts):
             merged.append([a, b])
     gap = max([merged[i + 1][0] - merged[i][1] for i in range(len(merged) - 1)] or [0])
     tall = cv.get("orient") != "landscape"
-    calm = r.get("layout") in ("swiss", "magazine")  # these leave air on purpose; only a real hole counts
+    calm = r.get("layout") in ("jing", "swiss", "magazine", "concept")  # these leave air on purpose; only a real hole counts
     if gap > H * ((0.3 if calm else 0.24) if tall else 0.33):
         warns.append(f"画面中间空了一大块（约占高度的 {gap / H:.0%}）：放大主图或标题，或者把下半部分的内容往上收")
     bottom = H - merged[-1][1] - cv["safe_px"]
@@ -274,6 +285,54 @@ def copy_check(spec):
     return hits
 
 
+EMOJI = re.compile("[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F000-\U0001F2FF\u2B50\u2B55\u203C\u2049]")
+SLOP = [  # what makes a page read as machine-made, in the agent's own HTML
+    (re.compile(r"(linear|radial|conic)-gradient\(", re.I), "大面积渐变铺底",
+     "渐变当背景是最常见的 AI 味。换成平涂的底色，要层次就用一块色块或一张真照片"),
+    (re.compile(r"backdrop-filter", re.I), "毛玻璃面板", "毛玻璃一用就像 AI 产品页。去掉，信息放进平涂色块里"),
+    (re.compile(r"border-left\s*:[^;]*\d+px[^;]*;[^}]*border-radius|border-radius[^}]*border-left\s*:[^;]*\d+px", re.I | re.S),
+     "左边一条色条的圆角卡片", "这种卡片是模板味最重的写法。用整块色块，或直接靠字号和留白分组"),
+    (re.compile(r"font-family\s*:\s*['\"]?(Inter|Roboto|Arial)\b", re.I), "Inter、Roboto、Arial 这类烂大街的字体",
+     "中文标题用 fonts.json 里有性格的字（得意黑、庆科黄油、小薇、宋体），英文和数字跟着标题字走"),
+]
+
+
+def style_check(spec, base, renders):
+    """AI-flavour warnings: emoji in copy, gradients and glass in concept pages, Latin UI faces on Chinese titles."""
+    hits = []
+    for it in spec.get("items", []):
+        for path, txt in walk_strings(it.get("content") or {}):
+            if EMOJI.search(txt):
+                hits.append({"level": "warn", "item": it["id"], "field": path, "text": txt, "hit": EMOJI.search(txt).group(0),
+                             "why": "emoji 放进设计稿里就像模板，换成文字，或者用一个画出来的图形"})
+        if it.get("layout") != "concept" or not it.get("html"):
+            continue
+        h = it["html"]
+        for pth in (h.values() if isinstance(h, dict) else [h]):
+            f = (base / pth) if not Path(pth).is_absolute() else Path(pth)
+            if not f.exists():
+                continue
+            src = f.read_text(encoding="utf-8")
+            if EMOJI.search(re.sub(r"<[^>]+>", "", src)):
+                hits.append({"level": "warn", "item": it["id"], "field": f.name, "text": "emoji", "hit": EMOJI.search(re.sub(r"<[^>]+>", "", src)).group(0),
+                             "why": "emoji 放进设计稿里就像模板，换成文字，或者用一个画出来的图形"})
+            for pat, name, why in SLOP:
+                if pat.search(src):
+                    hits.append({"level": "warn", "item": it["id"], "field": f.name, "text": name, "hit": name, "why": why})
+            if re.search(r"#[0-9A-Fa-f]{6}\b", re.sub(r"<!--.*?-->", "", src, flags=re.S)):
+                hits.append({"level": "warn", "item": it["id"], "field": f.name, "text": "写死的颜色", "hit": "#RRGGBB",
+                             "why": "概念页的颜色用 var(--bg) var(--accent) 这些变量，换方向和品牌色时才会跟着变"})
+    seen = set()
+    for r in renders:
+        for t in r.get("texts", []):
+            if t.get("role") == "headline" and re.search(r"[\u4e00-\u9fff]", t.get("text") or "") \
+                    and re.match(r"\s*['\"]?(Inter|Roboto|Arial)", t.get("family") or "", re.I) and r["item"] not in seen:
+                seen.add(r["item"])
+                hits.append({"level": "warn", "item": r["item"], "field": "headline", "text": t["text"][:12], "hit": "Inter",
+                             "why": "中文标题用了 Inter 一类的西文字体，中文其实落在系统黑体上，换一个有性格的中文标题字"})
+    return hits
+
+
 def run(spec_path, out_dir=None):
     spec_path = Path(spec_path).resolve()
     spec = load_json(spec_path)
@@ -293,7 +352,7 @@ def run(spec_path, out_dir=None):
         files += [f for f in load_json(h5q).get("files", []) if f["name"].split(":", 1)[-1] in names]
     import aiposter
     files += aiposter.qa_files(out)  # whole posters drawn by the model: their words need a human read
-    hits = copy_check(spec) + credit_check(spec, spec_path.parent)
+    hits = copy_check(spec) + credit_check(spec, spec_path.parent) + style_check(spec, spec_path.parent, rep["renders"])
     font_notes = [f"{k}: {v}" for k, v in rep.get("fonts", {}).items() if v.startswith("fallback")]
     n_err = sum(len(f["errors"]) for f in files) + sum(1 for h in hits if h["level"] == "error")
     qa = {"files": files, "copy": hits, "fonts": font_notes, "errors": n_err,

@@ -16,6 +16,7 @@ python scripts/pipeline.py examples/01-pet-shop-opening/spec.json
 | 04-wedding-set | 请柬、桌号牌、席位卡 | 喜事默认大红，席位卡对折两面都是正的 |
 | 05-wedding-h5 | 电子请柬 H5 | 一屏一屏滑动、导航、加日历、倒计时、宾客专属链接 |
 | 06-community-notice | 停水通知、志愿者证书 | 信息优先的正式物料 |
+| 07-concept-poster | 开业概念海报（巨大的二分之一），竖版、方图、横版 | 概念版式怎么写：构图片段、方向变量、data-field 绑文案；横版没写构图，自动换成素净版式；跑 directions.py 看稳妥、概念、大胆三个方向 |
 
 每份样例跑完都有 `editor.html`，双击打开就能点字改字、调颜色、在图上圈点提意见。想改完立刻看到新图，运行 `python scripts/studio.py open examples/01-pet-shop-opening/spec.json`。
 

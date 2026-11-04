@@ -71,8 +71,10 @@
 
 ## 视觉方向：挑三个给用户看
 
-先看行业包里的推荐，再看用户的形容词。"高级""有格调"往书卷组、细线组、clean-minimal、editorial、dark-premium 走；"热闹""喜庆"往 pop-fresh、festive-red 走，婚礼寿宴这类喜事往 xi-red 走；"国风""茶""节气"往 guochao 走；"温暖""手作"往 warm-hand 走。
+海报的三个候选按档次出：稳妥、概念、大胆（SKILL.md 第三步）。稳妥那个从素净组挑颜色，或者用行业包的首选；概念那个是第二步想出来的创意，用 concept 版式构图；大胆那个换一种完全不同的处理。
 
-三个候选要拉开差距，最好分别来自三个温度组，热闹组（pop-fresh、festive-red、sport-bold）、中间组（warm-hand、soft-pastel、campus-fresh、guochao、trust-blue、garden-romance、xi-red）、讲究组（书卷组 mag-ink、mag-indigo、mag-forest、mag-night，细线组 swiss-blue、swiss-orange、swiss-yellow、swiss-green，还有 clean-minimal、editorial、dark-premium）。第一个放你最推荐的，大部分情况下讲究组里挑一个当第一个，它最不容易土；行业包表格里的首选方向放第二、第三个。婚宴寿宴这类喜事和节日物料例外，第一个仍然是喜庆的方向。directions.py 会自动给每个方向配不同的版式。
+挑颜色时先看行业包里的推荐，再看用户的形容词。"高级""有格调""简约"往素净组（jing-shuimo、jing-dailan、jing-zhuqing、jing-zheshi、jing-jianghuang、jing-ouhe、jing-yanzhi、jing-xuanqing，还有 clean-minimal、editorial、dark-premium）走；"热闹""喜庆"往 pop-fresh、festive-red 走，婚礼寿宴这类喜事往 xi-red 或 jing-yanzhi 走；"国风""茶""节气"往 guochao 走；"温暖""手作"往 warm-hand 走。
+
+只想比颜色时（通知、菜单、证书这类信息物料），三个候选最好分别来自三个温度组，热闹组（pop-fresh、festive-red、sport-bold）、中间组（warm-hand、soft-pastel、campus-fresh、guochao、trust-blue、garden-romance、xi-red）、素净组。directions.py 会自动给每个方向配不同的版式。
 
 不要用文字描述让用户选风格，也不要连问"喜欢什么颜色""要什么感觉"。把三张图摆出来，用户一眼就知道要哪个。用户有 brand.json 时直接沿用，不再出三版。

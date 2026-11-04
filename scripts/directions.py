@@ -9,6 +9,10 @@ picks, set brand.direction (and the item's layout) to the chosen pair and run pi
 
 Direction choice when --dirs is not given: spec.profile.direction_candidates, else the current
 brand.direction plus one direction from each of the other two temperature groups.
+
+A candidate is a direction id, or an option that also fixes how the main item is built:
+  {"label": "概念", "direction": "jing-zheshi", "layout": "concept", "html": {...}, "fonts": ["dyh"], "note": "一句话"}
+That is how the three usual options are shown: a stable one, a concept one, a bold one (SKILL.md step 3).
 """
 import argparse
 import copy
@@ -26,8 +30,8 @@ from sheet import font
 TEMPERATURE = {
     "bold": ["pop-fresh", "festive-red", "sport-bold"],
     "middle": ["warm-hand", "soft-pastel", "campus-fresh", "guochao", "trust-blue", "garden-romance", "xi-red"],
-    "quiet": ["mag-ink", "swiss-blue", "mag-indigo", "mag-forest", "mag-night", "swiss-orange", "swiss-yellow", "swiss-green",
-              "clean-minimal", "editorial", "dark-premium"],
+    "quiet": ["jing-shuimo", "jing-dailan", "jing-zhuqing", "jing-zheshi", "jing-jianghuang", "jing-ouhe", "jing-yanzhi",
+              "jing-xuanqing", "clean-minimal", "editorial", "dark-premium"],
 }
 # which layout shows a direction at its best, in order of preference
 LAYOUT_PREF = {
@@ -37,9 +41,9 @@ LAYOUT_PREF = {
         "warm-hand": ["product-hero", "editorial"], "soft-pastel": ["product-hero", "editorial"],
         "campus-fresh": ["product-hero", "type-hero"], "guochao": ["editorial", "product-hero"],
         "clean-minimal": ["editorial", "product-hero"], "editorial": ["editorial", "type-hero"],
-        "dark-premium": ["magazine", "editorial"], "garden-romance": ["editorial", "product-hero"], "xi-red": ["editorial", "type-hero"],
-        **{k: ["magazine", "editorial"] for k in ("mag-ink", "mag-indigo", "mag-forest", "mag-night", "editorial")},
-        **{k: ["swiss", "type-hero"] for k in ("swiss-blue", "swiss-orange", "swiss-yellow", "swiss-green", "clean-minimal")},
+        "garden-romance": ["editorial", "product-hero"], "xi-red": ["editorial", "type-hero"],
+        **{k: ["jing", "type-hero"] for k in ("jing-shuimo", "jing-dailan", "jing-zhuqing", "jing-zheshi", "jing-jianghuang",
+                                              "jing-ouhe", "jing-yanzhi", "jing-xuanqing", "clean-minimal", "editorial", "dark-premium")},
     },
     "invitation": {k: (["split", "formal"] if k in TEMPERATURE["bold"] else ["formal", "split"])
                    for k in TEMPERATURE["bold"] + TEMPERATURE["middle"] + TEMPERATURE["quiet"]},
@@ -72,11 +76,13 @@ def assign_layouts(item_type, dirs, photo=False, current=None):
     """One layout per direction, all different when the type has enough layouts."""
     if current in KEEP:
         return [current] * len(dirs)
+    from common import real_direction
     used, out = set(), []
     for d in dirs:
+        d = real_direction(d)
         prefs = list(LAYOUT_PREF.get(item_type, {}).get(d, []))
-        if photo and item_type == "poster" and not (prefs and prefs[0] in ("magazine", "swiss")):
-            prefs = ["photo-full"] + prefs  # the magazine and swiss layouts frame a photo themselves
+        if photo and item_type == "poster" and not (prefs and prefs[0] == "jing"):
+            prefs = ["photo-full"] + prefs  # the jing layout frames a photo itself
         rest = [l for l in LAYOUTS.get(item_type, []) if (l != "photo-full" or photo) and l not in KEEP]
         choice = next((l for l in prefs + rest if l not in used), (prefs + rest)[0])
         used.add(choice)
@@ -137,6 +143,8 @@ def run(spec_path, dirs=None, item_id=None, size=None, out_dir=None):
         dirs, modes = [cur, cur, other], ["full", "accent", "accent"]
     else:
         dirs = pick_dirs(spec, dirs)
+    opts = [c if isinstance(c, dict) else {"direction": c} for c in dirs]
+    dirs = [o.get("direction") or (spec.get("brand") or {}).get("direction") or "clean-minimal" for o in opts]
     for dname in dirs:
         if dname not in known:
             raise SystemExit(f"unknown direction {dname}")
@@ -145,7 +153,8 @@ def run(spec_path, dirs=None, item_id=None, size=None, out_dir=None):
     if not item:
         raise SystemExit("spec has no items")
     photo = bool((item.get("art") or {}).get("image")) and (item.get("art") or {}).get("image_fit") == "cover"
-    layouts = assign_layouts(item["type"], dirs, photo, item.get("layout"))
+    layouts = assign_layouts(item["type"], dirs, photo, item.get("layout") if item.get("layout") != "concept" else None)
+    layouts = [o.get("layout") or lay for o, lay in zip(opts, layouts)]
     if modes[0] and item.get("layout"):
         layouts[0] = layouts[1] = item["layout"]  # A and B differ only in colour, so they share the layout
     size = size or ("square" if item["type"] == "poster" else ("h5" if item["type"] == "h5" else (item.get("sizes") or ["a4"])[0]))
@@ -160,7 +169,7 @@ def run(spec_path, dirs=None, item_id=None, size=None, out_dir=None):
     out = Path(out_dir or spec_path.parent / "out") / "directions"
     out.mkdir(parents=True, exist_ok=True)
     tiles, meta = [], []
-    for letter, dname, layout, mode in zip("ABCDEFGHIJKL", dirs, layouts, modes):
+    for letter, dname, layout, mode, opt in zip("ABCDEFGHIJKL", dirs, layouts, modes, opts):
         s = copy.deepcopy(spec)
         s["brand"] = {**(s.get("brand") or {}), "direction": dname}
         if mode:
@@ -169,6 +178,9 @@ def run(spec_path, dirs=None, item_id=None, size=None, out_dir=None):
             s["brand"].pop("tokens", None)  # show the direction as designed; brand colours come back after the pick
         it = copy.deepcopy(item)
         it.update({"id": f"{letter}-{dname}", "layout": layout, "sizes": [size]})
+        for k in ("html", "fonts", "fallback", "content"):  # an option can bring its own composition and copy
+            if opt.get(k):
+                it[k] = {**(it.get(k) or {}), **opt[k]} if k == "content" else opt[k]
         if it["type"] == "h5":
             it["_h5_pages"] = ["cover"]  # the cover is enough to judge a direction
         s["items"] = [it]
@@ -190,8 +202,13 @@ def run(spec_path, dirs=None, item_id=None, size=None, out_dir=None):
             dd["name"] += f" · {fest['name']}配色" if mode == "full" else (" · 保留品牌色" if own else f" · {fest['name']}点缀")
             if mode == "accent" and own:
                 dd["mood"] = f"平时的颜色不变，只加{fest['name']}的点缀和插画"
+        if opt.get("label"):
+            dd["name"] = f"{opt['label']} · {dd['name']}"
+        if opt.get("note"):
+            dd["mood"] = opt["note"]
         tiles.append((final, letter, dd, layout))
-        meta.append({"option": letter, "direction": dname, "festival_mode": mode, "layout": layout, "png": str(final), "errors": errs})
+        meta.append({"option": letter, "label": opt.get("label"), "direction": dname, "festival_mode": mode, "layout": layout,
+                     "png": str(final), "errors": errs})
     b = board(tiles, out / "board.png")
     save_json(out / "options.json", {"item": item["id"], "size": size, "options": meta})
     return b, meta

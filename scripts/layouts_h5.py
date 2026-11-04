@@ -47,7 +47,7 @@ def _frame(ctx):
     from layouts_more import ornate_frame
     t = ctx.t
     if ctx.d.get("system"):  # restrained systems: one fine rule on paper, nothing in swiss
-        if ctx.d["system"] != "magazine":
+        if ctx.d["system"] != "magazine":  # jing: no frame, no wash
             return ""
         from layouts_refined import wash
         return wash(ctx) + (f'<div style="position:absolute;inset:{2.6 * ctx.u:.1f}px;border:1px solid {rgba(t["ink"], .4)};'

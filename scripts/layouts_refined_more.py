@@ -1,7 +1,7 @@
-"""Invitations, certificates, business cards, table cards and menus in the magazine and swiss systems.
+"""Invitations, certificates, business cards, table cards and menus in the jing (素净) system.
 
-Same rules as layouts_refined.py: light display type, a mono metadata line, hairlines instead of
-frames with corner ornaments, one accent, no drawn motifs. A real photo (art.image) is used in a
+Same rules as layouts_refined.py: a real display face, the brand line down the right edge, facts in one
+flat tinted block, one accent, no frames with corner ornaments, no gradients, no drawn motifs. A real photo (art.image) is used in a
 straight-edged frame; a motif (art.motif) is ignored here because these systems never draw clip art.
 
 build() in layouts.py sends these five item types here whenever the direction has a "system".
@@ -11,27 +11,25 @@ from common import rgba
 from fonts import stack
 from layouts import T, page, plain, qr_block, rich
 from layouts_more import CERT_CSS, seal_spot
-from layouts_refined import hair, meta, photo, title_px, wash
+from layouts_refined import box, fact_block, hair, meta, photo, side_strip, title_px
 
 
 def sysof(ctx):
-    return ctx.d.get("system") or "swiss"
+    return "jing"
 
 
 def dfont(ctx, weight=None, track=None):
-    """The direction's display face, light."""
-    s = sysof(ctx)
+    """The direction's display face."""
     d = ctx.d["display"]
-    w = weight or d.get("weight", 250 if s == "swiss" else 500)
-    tr = d.get("tracking", -0.01 if s == "swiss" else .06) if track is None else track
+    w = weight or d.get("weight", 600)
+    tr = d.get("tracking", .02) if track is None else track
     return f"font-family:{stack(d['font'])};font-weight:{w};letter-spacing:{tr}em;"
 
 
 def nfont(ctx):
-    """Numerals: thin Inter in swiss, Playfair italic in magazine."""
-    if sysof(ctx) == "swiss":
-        return f"font-family:{stack('inter')};font-weight:200;letter-spacing:-.03em;"
-    return f"font-family:{stack('playfair')};font-style:italic;font-weight:400;letter-spacing:0;"
+    """Numerals in the display face, tabular."""
+    d = ctx.d["display"]
+    return f"font-family:{stack(d['font'])};font-weight:{d.get('weight', 600)};letter-spacing:0;font-variant-numeric:tabular-nums;"
 
 
 def bfont(ctx):
@@ -40,37 +38,25 @@ def bfont(ctx):
 
 def line_c(ctx, strong=False):
     t = ctx.t
-    if sysof(ctx) == "swiss":
-        return t["ink"] if strong else rgba(t["ink"], .22)
-    return rgba(t["ink"], .45 if strong else .2)
+    return rgba(t["ink"], .35 if strong else .16)
 
 
 def lw(ctx):
-    return "1.5px" if sysof(ctx) == "swiss" else "1px"
+    return "1px"
 
 
 def meta_row(ctx, left, right, center=False):
-    """Two quiet mono labels and a hairline: the top of every page in these systems."""
-    if not (left or right):
-        return ""
-    if center:
-        row = f'<div style="display:flex;justify-content:center">{meta(ctx, left or right)}</div>'
-    else:
-        row = (f'<div style="display:flex;justify-content:space-between;align-items:baseline;gap:{ctx.px(2)}">'
-               f'{meta(ctx, left) if left else "<span></span>"}{meta(ctx, right) if right else ""}</div>')
-    return (f'<div style="flex:none">{row}<div style="height:{ctx.px(1.6)}"></div>'
-            f'{hair(ctx, sysof(ctx) == "swiss", None if sysof(ctx) == "swiss" else line_c(ctx, True))}</div>')
+    """Brand and date: one vertical line down the right edge (see layouts_refined.side_strip)."""
+    return side_strip(ctx, left, right)
 
 
 def hairframe(ctx, inset):
-    """Magazine pages get one fine rule round the edge, nothing at the corners."""
-    if sysof(ctx) != "magazine":
-        return ""
-    return (f'<div style="position:absolute;inset:{inset:.1f}px;border:1px solid {line_c(ctx, True)};z-index:1;pointer-events:none"></div>')
+    """No frames in this system."""
+    return ""
 
 
 def bg_wash(ctx):
-    return wash(ctx) if sysof(ctx) == "magazine" else ""
+    return ""
 
 
 def spacer(ctx, grow=1, minu=1):
@@ -82,18 +68,8 @@ def gap(ctx, n):
 
 
 def kv_rows(ctx, rows, fs, center=False, kw="24%"):
-    """k/v rows between hairlines. rows = [(k, v)]."""
-    if not rows:
-        return ""
-    w, lc = lw(ctx), line_c(ctx, True)
-    out = []
-    for k, v in rows:
-        out.append(f'<div style="display:grid;grid-template-columns:minmax(0,{kw}) minmax(0,1fr);gap:{ctx.px(2)};align-items:baseline;'
-                   f'border-top:{w} solid {lc};padding:{fs * .55:.1f}px 0;{"text-align:left;" if center else ""}">'
-                   + meta(ctx, k, c="accent_text", upper=False)
-                   + T(ctx, "body", v, style=f"{bfont(ctx)}font-size:{fs:.1f}px;line-height:1.4;")
-                   + "</div>")
-    return f'<div style="flex:none;border-bottom:{w} solid {lc};width:100%">{"".join(out)}</div>'
+    """Facts as one flat tinted block, label above value."""
+    return fact_block(ctx, rows, fs / ctx.u)
 
 
 def _details(c):
@@ -106,12 +82,12 @@ def invitation(ctx, fonts_css):
     s = sysof(ctx)
     a = ctx.item.get("art") or {}
     has_img = bool(a.get("image"))
-    pad = ctx.safe * (1.25 if s == "magazine" else 1.05)
+    pad = ctx.safe * 1.15
     tall = ctx.cv["ar"] < 0.6
     k = 1.2 if tall else 1.0
-    center = s == "magazine"
+    center = s in ("magazine", "jing")
     host = c.get("host") or ctx.brand.get("name")
-    top = meta_row(ctx, c.get("kicker") or "INVITATION", c.get("date_line") or (host if s == "swiss" else ""), center=center)
+    top = meta_row(ctx, c.get("kicker") or "邀请", c.get("date_line") or (host if s == "swiss" else ""), center=center)
     title_size = min(title_px(ctx, c.get("title"), s, roomy=not has_img), (13 if s == "swiss" else 11) * u * k)
     title = (T(ctx, "headline", c.get("title"), fit=(title_size, title_size * .55),
                style=f"{dfont(ctx)}line-height:{1.08 if s == 'swiss' else 1.2};flex:none;max-height:{title_size * 2.5:.0f}px;"
@@ -125,7 +101,7 @@ def invitation(ctx, fonts_css):
     en = (T(ctx, "sub", c.get("en"), c="muted",
             style=f"font-family:{stack('playfair')};font-style:italic;font-size:{max(ctx.minb, 3.2 * u * k):.1f}px;line-height:1.3;flex:none;"
                   f"{'text-align:center;width:100%;' if center else ''}")
-          if c.get("en") and s == "magazine" else "")
+          if c.get("en") and s == "magazine" else "")  # no italic Latin line in jing
     fs = max(ctx.minb, 2.7 * u * k)
     sal = c.get("salutation") or (f"尊敬的 {c.get('guest')}：" if c.get("guest") else "")
     sal_html = T(ctx, "body", sal, style=f"{bfont(ctx)}font-size:{fs * 1.08:.1f}px;font-weight:{600 if s == 'swiss' else 500};flex:none;")
@@ -161,7 +137,7 @@ def invitation(ctx, fonts_css):
                  + f'<div style="width:{ctx.px(8)};margin:0 auto;flex:none">{hair(ctx, False, line_c(ctx, True))}</div>'
                  + spacer(ctx, .8, 2) + reading + gap(ctx, 2.4) + rows + spacer(ctx, 1, 2) + foot)
     html = (bg_wash(ctx) + hairframe(ctx, ctx.safe * .5)
-            + f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;gap:{ctx.px(.8)};z-index:2">{inner}</div>')
+            + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{ctx.px(.8)};z-index:2">{inner}</div>')
     css = "em.hl{font-style:normal;color:" + t["accent_text"] + "}.pattern{display:none}"
     return page(ctx, fonts_css, html, css)
 
@@ -181,10 +157,10 @@ def _cert_text(c):
 def certificate(ctx, fonts_css):
     c, t, u, o = ctx.item["content"], ctx.t, ctx.u, ctx.o
     s = sysof(ctx)
-    center = s == "magazine"
-    pad = ctx.safe * (1.6 if s == "magazine" else 1.2)
+    center = s in ("magazine", "jing")
+    pad = ctx.safe * 1.3
     title_txt = c.get("title") or "荣誉证书"
-    top = meta_row(ctx, c.get("subtitle") or "CERTIFICATE", c.get("number") or "", center=False)
+    top = meta_row(ctx, c.get("subtitle") or "证书", c.get("number") or "", center=False)
     title = T(ctx, "headline", plain(title_txt), c="ink",
               style=f"{dfont(ctx)}font-size:{(8.4 if s == 'magazine' else 7) * u:.0f}px;line-height:1.1;white-space:nowrap;flex:none;"
                     f"{'text-align:center;letter-spacing:.42em;padding-left:.42em;' if center else ''}")
@@ -225,8 +201,8 @@ def certificate(ctx, fonts_css):
         inner = (top + spacer(ctx, .9, 2) + title + spacer(ctx, 1, 2) + name_line + gap(ctx, 2.6) + para + after
                  + spacer(ctx, 1.2, 2) + sign)
     html = (bg_wash(ctx) + hairframe(ctx, ctx.safe * .55)
-            + (hairframe(ctx, ctx.safe * .55 + 1.1 * u) if s == "magazine" else "")
-            + f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;gap:{ctx.px(.6)};z-index:2">{inner}</div>')
+            + ""
+            + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{ctx.px(.6)};z-index:2">{inner}</div>')
     css = CERT_CSS + ".cert-body em.hl{font-style:normal;color:" + t["accent_text"] + "}.pattern{display:none}"
     return page(ctx, fonts_css, html, css)
 
@@ -253,8 +229,7 @@ def card(ctx, fonts_css):
              style=f"{dfont(ctx, weight=300 if s == 'swiss' else 500, track=.04 if s == 'swiss' else .14)}"
                    f"font-size:{ctx.px(8.6 if o == 'landscape' else 9)};line-height:1.1;white-space:nowrap;")
     en = (T(ctx, "caption", c.get("name_en"), c="muted",
-            style=(f"font-family:{stack('playfair')};font-style:italic;font-size:{max(ctx.minc, 2.4 * u):.1f}px;" if s == "magazine"
-                   else f"font-family:{stack('inter')};font-size:{max(ctx.minc, 2 * u):.1f}px;letter-spacing:.02em;")
+            style=f"{bfont(ctx)}font-size:{max(ctx.minc, 2 * u):.1f}px;letter-spacing:.04em;"
                   + f"margin-top:{ctx.px(.6)};white-space:nowrap;")
           if c.get("name_en") else "")
     title = T(ctx, "body", c.get("title"), c="accent_text",
@@ -288,20 +263,20 @@ def card_back(ctx, fonts_css):
     s = sysof(ctx)
     pad = ctx.safe
     brand = ctx.brand.get("name") or c.get("org") or ""
-    if s == "swiss":  # the one place the accent fills a whole face
+    if s in ("swiss", "jing"):  # the one place the accent fills a whole face
         mark = (f'<img class="logo" src="{ctx.brand["logo"]}" style="height:{ctx.px(9)};width:auto" data-role="logo">' if ctx.brand.get("logo") else
                 T(ctx, "headline", brand, c="on_accent", on="accent",
                   style=f"{dfont(ctx, weight=300, track=0)}font-size:{ctx.px(8)};line-height:1.05;"))
         html = (f'<div style="position:absolute;inset:0;background:{t["accent"]};z-index:1"></div>'
-                f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;justify-content:space-between;z-index:3">'
+                f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;justify-content:space-between;z-index:3">'
                 + meta(ctx, c.get("slogan") or "", c="on_accent", on="accent", upper=False)
                 + f'<div>{mark}</div></div>')
         return page(ctx, fonts_css, html, ".pattern{display:none}")
     mark = (f'<img class="logo" src="{ctx.brand["logo"]}" style="height:{ctx.px(9)};width:auto" data-role="logo">' if ctx.brand.get("logo") else
             T(ctx, "headline", brand, style=f"{dfont(ctx, track=.2)}font-size:{ctx.px(6.4)};line-height:1.1;text-align:center;white-space:nowrap;"))
     slogan = (f'<div style="margin-top:{ctx.px(2)}">{meta(ctx, c.get("slogan"), upper=False)}</div>' if c.get("slogan") else "")
-    html = (wash(ctx) + hairframe(ctx, ctx.safe * .6)
-            + f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3">'
+    html = (hairframe(ctx, ctx.safe * .6)
+            + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3">'
             f'{mark}<div style="width:{ctx.px(6)};margin-top:{ctx.px(2)}">{hair(ctx, False, line_c(ctx, True))}</div>{slogan}</div>')
     return page(ctx, fonts_css, html, ".pattern{display:none}")
 
@@ -312,7 +287,7 @@ def tablecard(ctx, fonts_css):
         return tent(ctx, fonts_css)
     c, t, u = ctx.item["content"], ctx.t, ctx.u
     s = sysof(ctx)
-    center = s == "magazine"
+    center = s in ("magazine", "jing")
     pad = ctx.safe * 1.3
     num = str(c.get("number") or "1")
     big = T(ctx, "headline", num, c="accent_text" if s == "swiss" else "ink",
@@ -337,7 +312,7 @@ def tablecard(ctx, fonts_css):
             if center and c.get("date") else "")
     inner = top + spacer(ctx, .7, 2) + big + lab + spacer(ctx, .7, 2.4) + glist + spacer(ctx, .6, 1.6) + foot
     html = (bg_wash(ctx) + hairframe(ctx, ctx.safe * .7)
-            + f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;z-index:2">{inner}</div>')
+            + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;z-index:2">{inner}</div>')
     return page(ctx, fonts_css, html, ".pattern{display:none}")
 
 
@@ -372,10 +347,10 @@ def tent(ctx, fonts_css):
 def _menu_item(ctx, it, on="bg"):
     t, s = ctx.t, sysof(ctx)
     tag = (f'<span class="t label" data-role="label" data-c="accent_text" data-on="{on}" '
-           f'style="color:{t["accent_text"]};font-family:{stack("mono")};font-size:.62em;letter-spacing:.14em;margin-right:.7em;'
+           f'style="color:{t["accent_text"]};font-family:{stack(ctx.d["body"]["font"])};font-size:.62em;letter-spacing:.1em;margin-right:.7em;'
            f'vertical-align:.18em;white-space:nowrap;font-weight:500">{rich(it.get("tag"))}</span>' if it.get("tag") else "")
     price = it.get("price")
-    pfam = stack("inter") if s == "swiss" else stack(ctx.d["display"]["font"])
+    pfam = stack(ctx.d["display"]["font"])
     price_html = (f'<span class="t price" data-role="price" data-c="ink" data-on="{on}" '
                   f'style="color:{t["ink"]};font-family:{pfam};font-variant-numeric:tabular-nums;white-space:nowrap;font-size:1.02em;'
                   f'font-weight:{400 if s == "swiss" else 500}"><span style="font-size:.66em;margin-right:.12em;color:{t["muted"]}">¥</span>{rich(price)}</span>' if price not in (None, "") else "")
@@ -404,7 +379,7 @@ def menu(ctx, fonts_css):
         head = (f'<div style="display:flex;align-items:baseline;justify-content:space-between;gap:.8em;padding-bottom:.45em;'
                 f'border-bottom:{lw(ctx)} solid {line_c(ctx, True)};break-after:avoid;break-inside:avoid">'
                 f'<div style="display:flex;align-items:baseline;gap:.7em">'
-                f'<span class="t label" data-role="label" data-c="accent_text" data-on="bg" style="color:{t["accent_text"]};font-family:{stack("mono")};'
+                f'<span class="t label" data-role="label" data-c="accent_text" data-on="bg" style="color:{t["accent_text"]};font-family:{stack(ctx.d["body"]["font"])};font-weight:600;'
                 f'font-size:.62em;letter-spacing:.16em">{i:02d}</span>'
                 f'<span class="t sub" data-role="sub" data-c="ink" data-on="bg" style="color:{t["ink"]};{dfont(ctx, weight=400 if s == "swiss" else 500, track=.1)}'
                 f'font-size:1.3em;line-height:1.2">{rich(x.get("name"))}</span></div>'
@@ -435,7 +410,7 @@ def menu(ctx, fonts_css):
                 f'border-top:{lw(ctx)} solid {line_c(ctx, True)};padding-top:{ctx.px(1.8)}">'
                 f'<div style="display:flex;flex-direction:column;gap:{ctx.px(.7)};min-width:0">{drows}{note}</div>'
                 f'{qr_block(ctx, c.get("qr"), 10, on="bg")}</div>')
-    top = meta_row(ctx, ctx.brand.get("name") or "", c.get("date_line") or c.get("kicker") or "MENU")
+    top = meta_row(ctx, ctx.brand.get("name") or "", c.get("date_line") or c.get("kicker") or "菜单")
     img = photo(ctx, a, grow=True) if a.get("image") else ""
     if o == "landscape":
         side = (f'<div style="display:flex;flex-direction:column;gap:{ctx.px(1.6)};min-height:0;min-width:0">'
@@ -449,7 +424,7 @@ def menu(ctx, fonts_css):
                 + (f'<div style="width:28%;aspect-ratio:4/5;display:flex;flex:none">{img}</div>' if img else "")
                 + "</div>")
         inner = top + gap(ctx, 3) + head + gap(ctx, 3.4) + body_box + gap(ctx, 1.4) + info
-    html = (bg_wash(ctx) + f'<div style="position:absolute;inset:{pad:.1f}px;display:flex;flex-direction:column;gap:{ctx.px(.6)};z-index:2">{inner}</div>')
+    html = (bg_wash(ctx) + f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{ctx.px(.6)};z-index:2">{inner}</div>')
     css = (".pattern{display:none}#menubody section.ms > .mi:nth-child(2){border-top:0}"
            "em.hl{font-style:normal;color:" + t["accent_text"] + "}")
     return page(ctx, fonts_css, html, css)
