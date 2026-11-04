@@ -211,6 +211,6 @@ python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolv
 | `references/*.json` | 方向、平台尺寸、字体、文案风险词、节日的数据 |
 | `templates/config.example.json` | 生图配置模板 |
 | `scripts/setup_check.py` | 检查和补装依赖，`--selftest` 渲染两张小样自测 |
-| `examples/` | 六份样例规格 |
+| `examples/` | 七份样例规格 |
 
 依赖 Python 3.9+、Pillow、Playwright（`pip install playwright pillow` 后 `python -m playwright install chromium`），logo 转矢量还需要 `pip install fonttools brotli`。`scripts/setup_check.py --install` 会一次装好，安装方法见 INSTALL.md。字体首次需要联网下载，不能联网时自动退回系统字体并在报告里注明。
