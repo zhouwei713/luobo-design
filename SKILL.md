@@ -2,10 +2,10 @@
 name: luobo-design
 display_name: 萝卜设计
 display_name_en: Luobo Design
-description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘、截图八种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报会先想一个画面上的创意概念，配了生图模型时能按概念让模型一步画出整张海报（连图带字），没配时用排版和程序插画实现，并给出可以贴进即梦、GPT 的整图提示词。默认风格克制（细字重大标题、细线、单一强调色、不放程序插画），先出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息，并给出小红书信息流和朋友圈里的发布预览。截图会自动加浏览器框或手机框；没有生图模型时能从可商用的免费图库找实拍照片。交付附带编辑页，用户能自己点字改字、调颜色、换照片、在图上圈点提意见；会记住品牌，下次同一家店自动沿用。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
-description_zh: 一句模糊的想法进去，能直接用的设计物料出来。活动海报、小红书封面、通知、菜单价目表、邀请函和电子请柬、奖状、名片、logo 都能做，先想创意再出三个方向让你选，中文由程序排版不会错字，交付前自动检查溢出、对比度和广告法用语，附带能自己改字调色、圈点提意见的编辑页，还会记住品牌下次沿用，也能接生图模型出照片级画面。
-description_en: Turn a vague idea into design materials you can use right away, with copy-ready image prompts. Covers event posters, Xiaohongshu covers, notices, menus and price lists, invitations and H5 e-invites, certificates, business cards and logos. It thinks up a visual concept first, offers three directions, sets Chinese text by code so no character is wrong, and checks overflow, contrast and ad-law wording before delivery. Every delivery comes with an editor page where people retype copy, change colours, swap photos and pin comments on the picture, and the brand is remembered for the next order. An image model can be plugged in for photo-grade results.
-version: 0.14.0
+description: 把一句模糊的想法变成能直接用的设计物料，同时给出可复制的生图提示词。面向商家、老板、个体户、老师、自媒体，覆盖餐饮、美业、健身瑜伽、教育培训、中小学老师、自媒体个人品牌、企业行政 HR、律所财税等专业服务、社区物业居委会、婚宴庆典、旅游文旅。能做活动海报、小红书封面（实拍花字、文字卡、备忘录、榜单、拼图、对比、手绘、截图八种结构）、停水放假这类正式通知、价目表菜单、课程表、邀请函和请柬（按宾客批量）、可以点击的电子请柬 H5（一键导航、加入日历、倒计时、每位宾客一条专属链接）、奖状证书和感谢信（支持整班批量）、桌号牌和席位卡、名片（带出血可直接印刷）、logo 和品牌套件（矢量文件），内置春节、中秋、圣诞、双十一等 23 个节日的节日包，配图有水彩、剪纸、孔版印刷、3D 黏土、线描、蜡笔、波普、霓虹、弥散光、水墨 10 种艺术画风（没有生图模型也能画），还有字图穿插、撑满大字堆、拼贴风这类潮流版式。海报先从内容里想一个画面上的创意概念（比如把第二杯半价画成一个巨大的二分之一），由你按概念直接写出这张图的构图，脚本负责字体、排字和检查；配了生图模型时也能按概念让模型一步画出整张海报（连图带字），并给出可以贴进即梦、GPT 的整图提示词。信息类物料默认走素净风格（有性格的标题字、竖排品牌线、平涂色块、单一强调色、不放程序插画）。每次按稳妥、概念、大胆出三个方向的对比图让用户看着选，再一次出朋友圈、小红书、手机长图、门店屏幕、A4 印刷等多个尺寸。中文由排版程序排字，交付前自动检查溢出、对比度、广告法和行业禁用说法、缺失信息，并给出小红书信息流和朋友圈里的发布预览。截图会自动加浏览器框或手机框；没有生图模型时能从可商用的免费图库找实拍照片。交付附带编辑页，用户能自己点字改字、调颜色、换照片、在图上圈点提意见；会记住品牌，下次同一家店自动沿用。用户说"帮我做张海报""开业海报""春节海报""出个停水通知""做个菜单/价目表/课表""做个邀请函""婚礼请柬""电子请柬""H5邀请函""桌号牌""帮我做奖状""设计个名片""做个 logo""做成水彩风/剪纸风""拼贴风""大字报""帮我设计一下""做个小红书封面""出个生图提示词"，或者只描述了店铺、活动、想法时使用。文章封面和配图交给 article-visual-director，PPT 交给 luobo-ppt。
+description_zh: 一句模糊的想法进去，能直接用的设计物料出来。活动海报、小红书封面、通知、菜单价目表、邀请函和电子请柬、奖状、名片、logo 都能做，先从内容里想创意，再按稳妥、概念、大胆出三个方向让你选，中文由程序排版不会错字，交付前自动检查溢出、对比度和广告法用语，附带能自己改字调色、圈点提意见的编辑页，还会记住品牌下次沿用，也能接生图模型出照片级画面。
+description_en: Turn a vague idea into design materials you can use right away, with copy-ready image prompts. Covers event posters, Xiaohongshu covers, notices, menus and price lists, invitations and H5 e-invites, certificates, business cards and logos. It finds a visual idea in the brief first and composes the poster around it, offers three directions (safe, concept, bold), sets Chinese text by code so no character is wrong, and checks overflow, contrast and ad-law wording before delivery. Every delivery comes with an editor page where people retype copy, change colours, swap photos and pin comments on the picture, and the brand is remembered for the next order. An image model can be plugged in for photo-grade results.
+version: 0.15.0
 author: 萝卜哥
 ---
 
@@ -65,31 +65,41 @@ author: 萝卜哥
 
 ## 第二步 想创意概念
 
-海报要先想清楚让人记住哪一点，再给这一点找一个画面。先读 @references/poster-craft.md，按里面的顺序做决定，想法、字和图怎么咬、层级、小字、颜色、质感。
+好海报和普通海报差在第一步。普通海报把产品摆中间、字放上去；好海报先想清楚让人记住哪一点，再给这一点找一个画面。先读 @references/poster-craft.md，按里面的顺序做决定。
+
+概念要从这一单的内容里长出来，别从风格库里挑。店名、节气、日期、数字、卖点、受众的担心，都是材料。比如小满茶铺，小满是节气，意思是满而不溢，画面就是一杯刚好满到杯口的奶茶；第二杯半价，就是一个巨大的二分之一；每天省一小时的五个工具，就是一个由五块拼成的六十分钟表盘；婚礼在十二月十二日，就是他的十二和她的十二。想不出来时至少要有一个动作或一个反差，"一杯奶茶放中间"不算想法。
 
 给每张主海报想两三个概念，每个用一句话说想法、一句话说画面，和方向一起拿给用户挑。用户说"你定"，就选你觉得最好的那个直接做。
 
-通知、菜单、证书、名片、请柬这类信息优先的物料不用想概念，排得清楚就是好设计。
+概念选定后，用概念版式（layout 写 concept）把这张图亲手构图：按 @references/item-concept.md 为每个尺寸写一段 HTML，颜色只用方向的变量，文案用 data-field 绑回 spec，脚本负责字体、自适应和全部检查。没写的尺寸会自动换成普通版式，所以先把最重要的竖版和方图写好。
+
+通知、菜单、证书、名片、请柬这类信息优先的物料不用想概念，排得清楚就是好设计，默认走素净组的方向。
 
 小红书封面也不走这一步和下面的三个方向。它的气质由结构决定，按 item-xhs.md 选结构、写钩子标题；用户有照片就看图填好 art.focus。
 
 ## 第三步 出三个方向，让用户看着选
 
-用户只看文字描述没法判断风格，所以方向要用看得见的图来选。先按 @references/directions.md 和行业包挑三个方向，一个最稳妥、一个大胆一点、一个安静一点，写进 profile.direction_candidates。最稳妥的那个，大部分情况下从书卷组（mag-*）或细线组（swiss-*）里挑，它们按 poster-craft.md 的“高级感”一节做，最不容易土；喜事和节日物料例外。主物料的文案写好以后（第三步的 spec 先写一份草稿），跑：
+用户只看文字描述没法判断，所以方向要用看得见的图来选。三个方向按三个档次出，彼此拉开：
+
+- **稳妥**：素净组的一个方向加 jing 版式，或者行业包推荐的方向。不出错，信息清楚
+- **概念**：第二步选出的概念，用 concept 版式亲手构图
+- **大胆**：换一种完全不同的处理，比如满屏大字（type-stack）、字图穿插、一张票据或一张登机牌这类借来的形式，或者热闹组的方向
+
+写进 profile.direction_candidates，每个候选写成 `{"label": "稳妥", "direction": "jing-zheshi", "layout": "jing", "note": "一句话"}`，概念那个再带上 html 和 fonts。主物料的文案写好以后（spec 先写一份草稿），跑：
 
 ```bash
 python scripts/directions.py work/spec.json
 ```
 
-它会把主物料用三个方向各渲染一张方图，每个方向配不同的版式，三张图的区别在构图上，不只是换个颜色，最后拼成 out/directions/board.png，下面标着方向名、气质和色板。把这张图发给用户，问一句选 A、B 还是 C，也可以混搭（"A 的颜色配 C 的版式"）。发完就停下等回复，不要替用户选。
+它会把主物料按三个候选各渲染一张，拼成 out/directions/board.png，下面标着档次、方向名、一句话和色板。把这张图发给用户，问一句选哪个，也可以混搭（"A 的颜色配 B 的构图"）。发完就停下等回复，不要替用户选。
 
 用户选好后，把选择写进 profile.direction_choice（记下用户原话），改 brand.direction 和对应的 layout，再进入下一步。
 
-以下情况跳过这一步，直接用一个方向，用一句话说明并给两个备选名字：
+以下情况跳过这一步，直接用一个方向，用一句话说明并给两个备选：
 - 用户说了"直接做""你定就行""不用给我选"
-- 用户的品牌已经有档案（brands.py 里有），或者给了品牌小卡 brand.json，沿用里面的方向。节日物料例外，照样出三个选项，比的是节日配色还是保留品牌色
+- 用户的品牌已经有档案（brands.py 里有），或者给了品牌小卡 brand.json。有品牌就严格按品牌的颜色和字体做，概念照样可以想，但不换风格。节日物料例外，照样出选项，比的是节日配色还是保留品牌色
 - 同一单里已经选过方向，现在只是改稿、加物料、换尺寸
-- 无人值守的任务，没人能回答。用最稳妥的那个方向，交付时附上 board.png，说明可以换
+- 无人值守的任务，没人能回答。用稳妥那个方向，交付时附上 board.png，说明可以换
 
 ## 第四步 冻结成规格文件
 
@@ -107,7 +117,8 @@ python scripts/pipeline.py work/spec.json
 
 | 情况 | 走哪条路 | 怎么写 |
 |---|---|---|
-| 没配生图模型 | 排版。字由排版程序排，画面用用户的照片、免费图库的实拍（stock.py）、程序插画或画风滤镜 | 不写 mode。概念用来挑版式和插画；prompts.md 里有按概念写的整图提示词，用户可以贴进即梦自己出，出好的图放回 art.image 重出，或者直接当成品 |
+| 没配生图模型，概念能用字、色块、简单图形画出来（大数字、票据、表盘、登机牌、对半分的画面） | 概念版式。你写构图，脚本排字和检查 | `"layout": "concept"`，写 html、fonts，见 item-concept.md |
+| 没配生图模型，概念要靠照片或插画 | 排版。字由排版程序排，画面用用户的照片、免费图库的实拍（stock.py）、程序插画或画风滤镜 | 不写 mode。概念用来挑版式和插画；prompts.md 里有按概念写的整图提示词，用户可以贴进即梦自己出，出好的图放回 art.image 重出，或者直接当成品 |
 | 配了模型，海报的创意比信息重要，要写的字只有标题和几处短字，主要发手机 | 整图。模型按概念连图带字画整张 | `"mode": "ai"`，写 concept 和 layout |
 | 配了模型，但信息必须一字不错，或者要印刷、要批量、要多个尺寸完全统一 | 排版。模型只按概念画配图，字由排版程序排 | 不写 mode，写 concept 或 art.subject |
 | 通知、菜单、证书、名片、请柬、桌牌、H5、logo | 永远排版 | 校验会拦住这些物料的 ai 模式 |
@@ -152,7 +163,9 @@ python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolv
 - 事实不编，缺了就占位并告诉用户
 - 一张图只用方向里的颜色，强调色一屏最多两处
 - 没有照片时不硬塞插画，让标题和版式撑画面；程序插画只用在亲子、校园、节日这类需要童趣的物料。星星、波点、光芒、贴纸这类装饰只在热闹方向里出现
-- 大标题用细字重（细线组 200 到 300，书卷组宋体 500），别把大标题加粗
+- 标题用有性格的中文字（宋体、得意黑、庆科黄油、小薇、文楷等，见 fonts.json），不用 Inter、Roboto、Arial 这类西文界面字体排中文标题
+- 不用 AI 味最重的几样东西：渐变铺底、毛玻璃面板、左边一条色条的圆角卡片、emoji、凑数的数据和图标。检查脚本会提醒
+- 概念页的颜色只用方向变量（var(--accent) 这类），不写死色值；装饰用的巨大字形标 data-art，带信息的字永远不标
 - 中文不压字距，标题行距约 1.2，正文约 1.5，最多两种字体
 - 换尺寸要重新排版，不能等比缩放；pipeline 已经按横、竖、方三种重排
 - 广告法极限词（最、第一、国家级等）、疗效承诺、教育培训的保过承诺，检查报错就必须改
@@ -179,8 +192,9 @@ python scripts/studio.py reply work/spec.json 3 "标题换成两行了" --resolv
 | `scripts/images.py`、`scripts/imagegen.py` | 调用生图模型（OpenAI、Gemini、即梦、HiAPI、兼容接口、本地命令），抠图；`imagegen.py --test` 单独试一张 |
 | `scripts/art.py`、`scripts/art_drinks.py` | 程序化产品插画、可描述的饮品杯和小原料、底纹、质感 |
 | `scripts/layouts_xhs.py` | 小红书封面的八种结构和花字系统 |
-| `scripts/layouts_refined.py` | 书卷版式和细线版式，以及这两组方向下的精修通知 |
-| `scripts/layouts_refined_more.py` | 这两组方向下的请柬、证书、名片、桌号牌、菜单 |
+| `scripts/layouts_concept.py` | 概念版式：你按尺寸写的构图片段，绑上文案、方向变量和检查 |
+| `scripts/layouts_refined.py` | 素净组的海报版式（jing）和精修通知 |
+| `scripts/layouts_refined_more.py` | 素净组下的请柬、证书、名片、桌号牌、菜单 |
 | `scripts/layouts_trend.py` | 字图穿插、撑满大字堆、拼贴风三种潮流版式，可选数据装饰层 |
 | `scripts/artstyle.py`、`scripts/layouts_art.py`、`scripts/layouts_artthemes.py` | 10 种艺术画风（SVG 滤镜和生成背景），art-hero、art-frame 两种艺术海报版式，竖版时每种画风一套整页主题 |
 | `scripts/fonts.py`、`scripts/fontfix.py` | 首次运行从 npm 拉开源中文字体到缓存，顺手修好个别字体里会印成黑块的字 |

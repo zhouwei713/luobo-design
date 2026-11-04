@@ -1,0 +1,36 @@
+{
+ "project": "小满茶铺开张 概念海报",
+ "profile": {
+  "industry": "food",
+  "goal": "让路过的人记住一件事：开业三天第二杯半价",
+  "confirmed": ["新中式奶茶店，店名小满茶铺", "11月18日开张", "开业三天第二杯半价"],
+  "missing": ["地址", "电话"],
+  "direction_candidates": [
+   {"label": "稳妥", "direction": "jing-zheshi", "layout": "jing", "note": "一个大标题，信息收在一块"},
+   {"label": "概念", "direction": "jing-zheshi", "layout": "concept", "note": "巨大的二分之一，第二杯半价"},
+   {"label": "大胆", "direction": "pop-fresh", "layout": "type-stack", "note": "满屏大字"}
+  ],
+  "concept_choice": "概念：巨大的二分之一"
+ },
+ "brand": {"name": "小满茶铺", "direction": "jing-zheshi", "remember": false},
+ "facts": {"address": "", "phone": ""},
+ "items": [
+  {
+   "id": "half",
+   "type": "poster",
+   "layout": "concept",
+   "sizes": ["portrait", "square", "landscape"],
+   "html": {"portrait": "half-portrait.html", "square": "half-square.html"},
+   "fallback": "jing",
+   "fonts": ["dyh"],
+   "concept": {"idea": "第二杯半价，直接画成一个巨大的二分之一", "interlock": "斜杠从 1 的右下切到 2 的左上，“第二杯半价”压在斜杠下方的空当里"},
+   "content": {
+    "kicker": "小满茶铺开张啦",
+    "headline": "第二杯\n**半价**",
+    "sub": "开业三天",
+    "date_line": "11.18 至 11.20",
+    "details": [{"k": "日期", "v": "11月18日至20日"}, {"k": "地址", "v": "{address}"}, {"k": "电话", "v": "{phone}"}]
+   }
+  }
+ ]
+}

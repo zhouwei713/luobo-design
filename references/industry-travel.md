@@ -63,6 +63,6 @@ id 是 `travel`。覆盖旅行社和定制游、民宿和酒店、景区和乐�
 
 用户：“做张海南岛冬季旅游的宣传海报。”
 
-- 推断：受众是北方怕冷的人，卖点是暖和，方向 mag-indigo，备选 swiss-blue、warm-hand
+- 推断：受众是北方怕冷的人，卖点是暖和，方向 jing-dailan，备选 jing-dailan、warm-hand
 - 概念：冬天留在登机口，羽绒服脱到一半露出花衬衫
 - 物料：poster，mode ai，尺寸 portrait、square、story；没模型时退回 art-hero 加 papercut 的 palm-beach

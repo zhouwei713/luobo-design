@@ -25,8 +25,9 @@
 | `layouts.py` | 海报和菜单的版式，Ctx、T（一个文字节点）、page（页面骨架和自适应脚本 FIT_JS），也是所有版式的注册入口 |
 | `layouts_more.py`、`layouts_trend.py`、`layouts_art.py`、`layouts_artthemes.py`、`layouts_xhs.py`、`layouts_h5.py` | 其余版式，按物料和风格分文件，各自在 layouts.py 里注册 |
 | `art.py`、`art_drinks.py`、`artstyle.py` | 程序插画、饮品杯、十种画风滤镜 |
-| `layouts_refined.py` | 书卷和细线两套克制版式和精修通知；方向带 `system` 字段时自动启用，装饰开关看方向的 `ornament` |
-| `layouts_refined_more.py` | 同样两组方向下的请柬、证书、名片、桌号牌、菜单；layouts.build 遇到带 `system` 的方向自动转到这里，电子请柬和品牌小卡在原文件里按 `system` 收掉装饰 |
+| `layouts_concept.py` | 概念版式：Agent 按尺寸写的 HTML 片段，填上 data-field 文案、方向变量和字体类，把每段字变成能检查的文字节点；没写片段的尺寸转给 fallback 版式 |
+| `layouts_refined.py` | 素净组（system 为 jing）的海报版式和精修通知：竖排品牌线、信息色块、整块优惠色；旧名 magazine、swiss 指向同一个函数 |
+| `layouts_refined_more.py` | 素净组下的请柬、证书、名片、桌号牌、菜单；layouts.build 遇到带 `system` 的方向自动转到这里，电子请柬和品牌小卡在原文件里按 `system` 收掉装饰 |
 | `imgtone.py` | 读照片放字的区域，算出按需的同色调遮罩 |
 | `shotframe.py` | 截图加圆角、阴影、浏览器框、手机框 |
 | `stock.py` | 免费图库搜图下载，记来源和许可 |
@@ -46,25 +47,29 @@
 
 **加一条检查。** check.py 里 check_render 管单张图，run 管整份规格。新问题要在 FIXES 里配一句怎么改，这样“下一步”会带上它。
 
+**改方向。** directions.json 里一个 id 被并掉时别删，写成 `{"alias": "新 id", "name": "..."}`，common.real_direction 会跟过去，老规格和品牌档案照样能用，校验会提醒换新 id。
+
+**加一条 AI 味检查。** check.py 的 SLOP 表是对概念片段源码的正则，style_check 还查文案里的 emoji 和中文标题用了西文字体。新规则配一句为什么、怎么改。
+
 **改编辑页。** 页面是 studio.html 一个文件，服务端在 studio.py。改动一律通过 apply_changes 写回 spec.json，别在页面上直接改图。
 
 ## 怎么测
 
-没有单元测试框架，靠样例回归。每次改完跑一遍六个样例，期望都是 0 个错误：
+没有单元测试框架，靠样例回归。每次改完跑一遍七个样例，期望都是 0 个错误：
 
 ```bash
 export LUOBO_DESIGN_HOME=/tmp/lb-test   # 品牌档案写到临时目录，别弄脏自己的
 for e in examples/*/; do python scripts/pipeline.py $e/spec.json --no-images --out /tmp/reg/$(basename $e); done
 ```
 
-05-wedding-h5 固定有一条回执相关的提醒，属于正常。改了版式要打开 overview.png 看。改了编辑页，用 Playwright 打开 `out/editor.html` 点一遍，实时模式用 `studio.py open` 起服务再测保存和评论。`setup_check.py --selftest` 是安装后的冒烟测试。
+05-wedding-h5 固定有一条回执相关的提醒，01 的品牌套件可能有一条贴边提醒，属于正常。07-concept-poster 横版没写构图，校验会提示改用 jing 版式，也属于正常。改了版式要打开 overview.png 看。改了编辑页，用 Playwright 打开 `out/editor.html` 点一遍，实时模式用 `studio.py open` 起服务再测保存和评论。`setup_check.py --selftest` 是安装后的冒烟测试。
 
 ## 发版
 
 1. 改 `scripts/common.py` 的 SKILL_VERSION 和 SKILL.md 头部的 version，两处一致
 2. 跑完回归
 3. GitHub 包就是整个目录去掉 `.git`、`__pycache__`、`out`
-4. WorkBuddy 包只允许“根目录/二级目录/文件”两级，所以要把 `examples/*/spec.json` 拍平成 `examples/*.json`，去掉 docs、安装脚本和 INSTALL.md，并改掉文档里对应的路径。SKILL.md 头部必须有 version、display_name、display_name_en、description_zh、description_en
+4. WorkBuddy 包只允许“根目录/二级目录/文件”两级，所以要把 `examples/*/spec.json` 拍平成 `examples/*.json`（07 的构图片段一起拍平成 `examples/07-half-portrait.html` 这样，并改掉 spec 里的 html 路径），去掉 docs、安装脚本和 INSTALL.md，并改掉文档里对应的路径。SKILL.md 头部必须有 version、display_name、display_name_en、description_zh、description_en
 5. 打包前搜一遍有没有 API key
 
 ## 约定

@@ -97,6 +97,9 @@
 
 - `mode` 海报才有，layout（默认）或 ai。ai 表示配了生图模型时由模型按 concept 一步画出整张海报，连字一起画，见下面
 - `concept` 创意概念，写法见 poster-craft.md。layout 和 ai 两种 mode 都可以写，layout 时它决定配图画什么，ai 时它决定整张海报
+- `html` 只给 concept 版式，你写的构图片段，一个路径或 `{"portrait": "x.html", "square": "y.html"}`，见 item-concept.md
+- `fonts` concept 版式用到的字体 id 列表，比如 `["dyh", "song"]`
+- `fallback` concept 版式里没写构图的尺寸改用哪个版式，不写时素净组用 jing，其他用 type-hero
 
 ## concept 创意概念
 

@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-SKILL_VERSION = "0.14.0"
+SKILL_VERSION = "0.15.0"
 SCRIPT_DIR = Path(__file__).resolve().parent
 SKILL_DIR = SCRIPT_DIR.parent
 REF_DIR = SKILL_DIR / "references"
@@ -183,12 +183,21 @@ def spec_brand(spec):
     return b
 
 
+def real_direction(did, dirs=None):
+    """Old direction ids (mag-*, swiss-*) were folded into the jing group: follow the alias."""
+    dirs = dirs or load_ref("directions.json")
+    seen = 0
+    while did in dirs and (dirs[did] or {}).get("alias") and seen < 4:
+        did, seen = dirs[did]["alias"], seen + 1
+    return did
+
+
 def resolve_tokens(brand):
     """Direction tokens + brand overrides + derived roles."""
     dirs = load_ref("directions.json")
-    did = brand.get("direction") or "clean-minimal"
+    did = real_direction(brand.get("direction") or "clean-minimal", dirs)
     if did not in dirs:
-        raise SystemExit(f"unknown direction '{did}'. Known: {', '.join(dirs)}")
+        raise SystemExit(f"unknown direction '{did}'. Known: {', '.join(k for k in dirs if not k.startswith('_'))}")
     d = json.loads(json.dumps(dirs[did]))
     t = dict(d["tokens"])
     fest = festival_of(brand.get("_festival"))

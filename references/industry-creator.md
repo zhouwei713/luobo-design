@@ -46,5 +46,5 @@ id 是 `creator`。覆盖博主、知识付费讲师、个人工作室、自由�
 用户："我想做一个讲 AI 工具的账号，叫小林说AI，帮我弄个 logo 和名片。"
 
 - 定位：每天一个能用上的 AI 小技巧
-- 三个方向：mag-ink、swiss-yellow、pop-fresh
+- 三个方向：jing-shuimo、jing-jianghuang、pop-fresh
 - 物料：kit（brandkit board，landscape），card（card band，正反面）

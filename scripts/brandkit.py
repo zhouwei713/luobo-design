@@ -153,7 +153,7 @@ def board(ctx, fonts_css):
     else:
         _lab = lambda s: T(ctx, "label", s, c="accent_text", style=f"font-size:{max(ctx.minc, 1.8 * u):.1f}px;letter-spacing:.3em;font-weight:700;")  # noqa: E731
     head = (f'<div style="display:flex;justify-content:space-between;align-items:flex-end;flex:none">'
-            f'<div>' + (_lab("BRAND KIT") if sysd else T(ctx, "label", "BRAND KIT", c="accent_text", style=f"font-size:{max(ctx.minc, 1.9 * u):.1f}px;letter-spacing:.4em;font-weight:700;"))
+            f'<div>' + (_lab("品牌套件") if sysd else T(ctx, "label", "BRAND KIT", c="accent_text", style=f"font-size:{max(ctx.minc, 1.9 * u):.1f}px;letter-spacing:.4em;font-weight:700;"))
             + T(ctx, "headline", f"{name} 品牌小卡", cls="d", style=f"font-size:{ctx.px(5.4)};line-height:1.2;margin-top:{ctx.px(0.8)};white-space:nowrap;")
             + "</div>"
             + T(ctx, "body", f"视觉方向 {d['name']} · {d['mood']}", c="muted",

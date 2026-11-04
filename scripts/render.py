@@ -131,6 +131,10 @@ def prepare(spec, base):
         if isinstance(ph, list):  # note covers: the user's own photos for grids and comparisons
             it["content"]["photos"] = [(dict(x, src=to_uri(x["src"], base)) if isinstance(x, dict) and x.get("src")
                                         else (to_uri(x, base) if isinstance(x, str) and x else x)) for x in ph]
+        if it.get("html"):  # concept fragments: paths are relative to the spec
+            h = it["html"]
+            absol = lambda x: str((base / x).resolve()) if x and not Path(x).is_absolute() else x  # noqa: E731
+            it["html"] = {k: absol(v) for k, v in h.items()} if isinstance(h, dict) else absol(h)
         q = it["content"].get("qr")
         if isinstance(q, dict) and q.get("src"):
             q["src"] = to_uri(q["src"], base)
@@ -146,7 +150,8 @@ REPORT_JS = """() => {
     return {id: el.id, role: el.dataset.role, c: el.dataset.c, on: el.dataset.on, text: el.innerText,
             fs: parseFloat(cs.fontSize), weight: cs.fontWeight, family: cs.fontFamily,
             x: r.left - cv.left, y: r.top - cv.top, w: r.width, h: r.height,
-            placeholder: !!el.dataset.placeholder, grp: (el.closest('[data-grp]') || {dataset: {}}).dataset.grp || null};
+            placeholder: !!el.dataset.placeholder, grp: (el.closest('[data-grp]') || {dataset: {}}).dataset.grp || null,
+            em: Array.from(el.querySelectorAll('em.hl')).map(e => getComputedStyle(e).color)};
   });
   // characters on the last line of wrapped text: one lonely character reads as a mistake in Chinese
   for (const t of texts) {
@@ -298,13 +303,14 @@ def render(spec_path, out_dir=None, only=None, hd=False):
     fonts_needed |= {THEME_FONTS[a["style"]] for a in ((it.get("art") or {}) for it in spec.get("items", [])) if a.get("style") in THEME_FONTS}
     from layouts_trend import LAYOUT_FONTS  # trend layouts mix several display faces
     from layouts_xhs import LAYOUT_FONTS as XHS_FONTS  # note covers: chunky outlined type, hand lettering
-    from layouts_refined import LAYOUT_FONTS as REFINED_FONTS  # magazine / swiss bring their metadata and italic faces
+    from layouts_refined import LAYOUT_FONTS as REFINED_FONTS  # the jing system's faces
     if direction.get("system"):
-        fonts_needed |= set(REFINED_FONTS[direction["system"]])
+        fonts_needed |= set(REFINED_FONTS.get(direction["system"], ()))
     for it in spec.get("items", []):
         table = XHS_FONTS if it.get("type") == "xhs" else LAYOUT_FONTS
         fonts_needed |= set(table.get(it.get("layout") or ("photo" if it.get("type") == "xhs" else ""), ()))
         fonts_needed |= set(REFINED_FONTS.get(it.get("layout") or "", ()))
+        fonts_needed |= set(it.get("fonts") or [])  # a concept page names the faces it uses
     css, fstatus = font_css(fonts_needed)
     try:
         from playwright.sync_api import sync_playwright

@@ -47,6 +47,6 @@ id 是 `professional`。覆盖律师事务所、会计和财税服务、管理�
 
 用户："我是律师，刚升合伙人，帮我重新做一下名片。"
 
-- 推断：方向 swiss-blue，备选 mag-indigo、trust-blue
+- 推断：方向 jing-dailan，备选 jing-dailan、trust-blue
 - 缺：律所名称、手机、邮箱、地址、是否要二维码
 - 物料：card（card classic，正反面，card 尺寸带出血）

@@ -100,7 +100,8 @@ def font_css(font_ids, fetch=True):
             if not p.exists():
                 continue
             text = p.read_text(encoding="utf-8")
-            text = re.sub(r"url\((['\"]?)\./", lambda m: f"url({m.group(1)}{base.as_uri()}/", text)
+            here = p.parent.as_uri()  # relative font files sit next to their css file
+            text = re.sub(r"url\((['\"]?)\./", lambda m: f"url({m.group(1)}{here}/", text)
             text = re.sub(r",\s*url\([^)]*\.woff\)\s*format\('woff'\)", "", text)
             css.append(text)
         status[fid] = "ok"
