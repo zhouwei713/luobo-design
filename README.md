@@ -105,7 +105,7 @@ python scripts/pipeline.py examples/02-xiaohongshu-covers/spec.json
 python scripts/studio.py open examples/02-xiaohongshu-covers/spec.json   # 打开实时编辑页
 ```
 
-`examples/` 里有六份样例规格，宠物店开业、小红书封面、海南旅游、婚礼一套、电子请柬、社区通知，改改文字就能出你自己的。
+`examples/` 里有七份样例规格，宠物店开业、小红书封面、海南旅游、婚礼一套、电子请柬、社区通知、概念海报，改改文字就能出你自己的。
 
 ## 生图模型配置
 
@@ -132,7 +132,7 @@ OpenAI、Gemini、即梦、兼容 OpenAI 接口的服务和本地命令也都支
 | `references/` | 行业包、物料说明、设计精华、方向和平台数据 |
 | `scripts/` | 渲染、检查、生图、提示词、编辑页，`pipeline.py` 一条命令跑完 |
 | `templates/` | 生图配置模板 |
-| `examples/` | 六份样例规格 |
+| `examples/` | 七份样例规格 |
 | `install.*` | 一键安装 |
 
 ## 许可
