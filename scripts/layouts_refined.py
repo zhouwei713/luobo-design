@@ -33,7 +33,7 @@ def lines_of(s):
 
 def strip_w(ctx):
     """Room the vertical brand line takes on the right of the content box."""
-    return max(ctx.minc, 2.0 * ctx.u) * 1.25 + 2.6 * ctx.u
+    return max(ctx.minc, 2.4 * ctx.u) * 1.25 + 2.8 * ctx.u
 
 
 def box(ctx, pad):
@@ -53,7 +53,7 @@ def title_px(ctx, text, system=None, roomy=False):
     fit = avail / (em * 1.02) * 0.97
     n = max(len(plain(x).replace(" ", "")) for x in lines)
     short = min(ctx.W, ctx.H)
-    cap = short * (0.2 if n <= 3 else 0.17 if n <= 4 else 0.14 if n <= 6 else 0.11 if n <= 8 else 0.09)
+    cap = short * (0.26 if n <= 3 else 0.22 if n <= 4 else 0.17 if n <= 6 else 0.13 if n <= 8 else 0.1)
     if len(lines) >= 3:
         cap *= 0.86
     if roomy:
@@ -78,20 +78,22 @@ def hair(ctx, strong=True, color=None):
     return f'<div style="height:1px;background:{c};flex:none"></div>'
 
 
+LATIN_WORD = re.compile(r"[A-Za-z]{3,}")
+
+
 def side_strip(ctx, left, right):
-    """Brand and date as one vertical line down the right edge of the content box."""
-    if not (left or right):
+    """Brand and date as one vertical line down the right edge of the content box.
+    Latin words never run sideways down the edge: a part made only of Latin words is left out."""
+    keep = [(x, c) for x, c in ((left, "ink"), (right, "muted"))
+            if x and not (LATIN_WORD.search(plain(x)) and not CJK.search(plain(x)))]
+    if not keep:
         return ""
     ctx._strip = True
-    fs = max(ctx.minc, 2.0 * ctx.u)
-    parts = []
-    if left:
-        parts.append(T(ctx, "label", plain(left), c="ink", tag="span",
-                       style=f"font-family:{stack(ctx.d['body']['font'])};font-size:{fs:.1f}px;font-weight:600;letter-spacing:.2em;"))
-    if right:
-        parts.append(T(ctx, "label", plain(right), c="muted", tag="span",
-                       style=f"font-family:{stack(ctx.d['body']['font'])};font-size:{fs:.1f}px;font-weight:400;letter-spacing:.16em;"))
-    dot = f'<span style="display:block;width:{fs * .32:.1f}px;height:{fs * .32:.1f}px;background:{ctx.t["accent"]};margin:{fs * .7:.1f}px auto"></span>'
+    fs = max(ctx.minc, 2.4 * ctx.u)
+    parts = [T(ctx, "label", plain(x), c=c, tag="span",
+               style=f"font-family:{stack(ctx.d['body']['font'])};font-size:{fs:.1f}px;font-weight:{600 if c == 'ink' else 500};letter-spacing:.18em;")
+             for x, c in keep]
+    dot = f'<span style="display:block;width:{fs * .34:.1f}px;height:{fs * .34:.1f}px;background:{ctx.t["accent"]};margin:{fs * .7:.1f}px auto"></span>'
     return (f'<div style="position:absolute;right:0;top:0;writing-mode:vertical-rl;display:flex;align-items:center;'
             f'white-space:nowrap;z-index:3">{dot.join(parts)}</div>')
 
@@ -131,7 +133,7 @@ def kicker_tag(ctx, text):
     t = ctx.t
     return (f'<div class="on-accent" style="align-self:flex-start;background:{t["accent"]};padding:{ctx.px(.7)} {ctx.px(1.4)};flex:none">'
             + T(ctx, "label", text, c="on_accent", on="accent", tag="span",
-                style=f"font-size:{max(ctx.minc, 2.3 * ctx.u):.1f}px;font-weight:600;letter-spacing:.12em;white-space:nowrap;")
+                style=f"font-size:{max(ctx.minc, 2.6 * ctx.u):.1f}px;font-weight:700;letter-spacing:.12em;white-space:nowrap;")
             + "</div>")
 
 
@@ -158,12 +160,78 @@ def fact_block(ctx, rows, size_u=3.2, cols=None):
     cells = "".join(
         f'<div style="min-width:0;display:flex;flex-direction:column;gap:{ctx.px(.5)}">'
         + (T(ctx, "label", k, c=on_surface_accent(ctx), on="surface", tag="span",
-             style=f"font-family:{fam};font-size:{max(ctx.minc, fs * .62):.1f}px;font-weight:600;letter-spacing:.12em;white-space:nowrap;")
+             style=f"font-family:{fam};font-size:{max(ctx.minc, fs * .74):.1f}px;font-weight:700;letter-spacing:.1em;white-space:nowrap;")
            if k else "")
-        + T(ctx, "body", v, on="surface", style=f"font-family:{fam};font-size:{fs:.1f}px;line-height:1.4;font-weight:500;")
+        + T(ctx, "body", v, on="surface", style=f"font-family:{fam};font-size:{fs:.1f}px;line-height:1.4;font-weight:600;")
         + "</div>" for k, v in rows)
-    return (f'<div style="flex:none;background:{t["surface"]};padding:{ctx.px(2.4)} {ctx.px(2.8)};display:grid;'
-            f'grid-template-columns:repeat({cols},minmax(0,1fr));gap:{ctx.px(2.2)} {ctx.px(3.2)}">{cells}</div>')
+    return (f'<div style="flex:none;background:{t["surface"]};padding:{ctx.px(3)} {ctx.px(3.4)};display:grid;'
+            f'grid-template-columns:repeat({cols},minmax(0,1fr));gap:{ctx.px(2.6)} {ctx.px(3.6)}">{cells}</div>')
+
+
+def soft_on_accent(ctx):
+    """Secondary text on the accent fill: the on-accent colour pulled toward the fill, still readable."""
+    t = ctx.t
+    for k in (.3, .22, .14, .06, 0):
+        c = mix(t["on_accent"], t["accent"], k)
+        if contrast(c, t["accent"]) >= 4.6:
+            return c
+    return t["on_accent"]
+
+
+def px_or(ctx, v, default_u):
+    return f"{v:.1f}px" if v else ctx.px(default_u)
+
+
+def fact_panel(ctx, c, rows, bleed=(0, 0, 0), min_h=0, lead_text=None, top_label=None):
+    """The bottom of a poster as one solid block of the accent colour: the offer large, the facts and the CTA
+    under it in the fill's own text colour. bleed=(left, right, bottom) pushes the block out to the paper edge."""
+    t, u = ctx.t, ctx.u
+    fam = stack(ctx.d["body"]["font"])
+    disp = ctx.d["display"]
+    soft = soft_on_accent(ctx)
+    offer = c.get("offer") or {}
+    big = (T(ctx, "badge", offer.get("big"), c="on_accent", on="accent",
+             style=f"font-family:{stack(disp['font'])};font-weight:{disp.get('weight', 700)};font-size:{ctx.px(7.4 if ctx.o != 'square' else 6.2)};"
+                   "line-height:1.08;white-space:nowrap;", nowrap=True) if offer.get("big") else "")
+    small = (T(ctx, "caption", offer.get("small"), c=soft, on="accent",
+               style=f"font-size:{max(ctx.minc, 2.6 * u):.1f}px;font-weight:600;letter-spacing:.06em;white-space:nowrap;")
+             if offer.get("small") and big else "")
+    head = f'<div style="display:flex;align-items:baseline;gap:{ctx.px(2.2)};flex-wrap:wrap">{big}{small}</div>' if big else ""
+    fs = max(ctx.minb, (3.3 if ctx.o != "square" else 2.9) * u)
+    longest = max([len(plain(v)) for _, v in rows] or [0])
+    cols = 1 if longest > 16 else (3 if len(rows) >= 3 and ctx.o == "landscape" and longest <= 8 else 2)
+    cells = "".join(
+        f'<div style="min-width:0;display:flex;flex-direction:column;gap:{ctx.px(.4)}">'
+        + (T(ctx, "label", k, c=soft, on="accent", tag="span",
+             style=f"font-family:{fam};font-size:{max(ctx.minc, fs * .7):.1f}px;font-weight:600;letter-spacing:.1em;white-space:nowrap;") if k else "")
+        + T(ctx, "body", v, c="on_accent", on="accent", style=f"font-family:{fam};font-size:{fs:.1f}px;line-height:1.35;font-weight:700;")
+        + "</div>" for k, v in rows)
+    grid = (f'<div style="display:grid;grid-template-columns:repeat({cols},minmax(0,1fr));gap:{ctx.px(2.2)} {ctx.px(3.6)}">{cells}</div>'
+            if rows else "")
+    cta = T(ctx, "body", c.get("cta"), c="on_accent", on="accent",
+            style=f"font-family:{fam};font-size:{max(ctx.minb, 3.0 * u):.1f}px;font-weight:600;line-height:1.35;")
+    qr = qr_block(ctx, c.get("qr"), 10, on="bg")
+    if qr:  # a code reads best on paper: it sits on a small tile of the page colour
+        qr = f'<div style="background:{t["bg"]};padding:{ctx.px(1)};flex:none">{qr}</div>'
+    foot = (f'<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:{ctx.px(3)}">'
+            f'<div style="min-width:0">{cta}</div>{qr}</div>') if (cta or qr) else ""
+    top = ""
+    if top_label:
+        top += T(ctx, "label", top_label, c=soft, on="accent", tag="div",
+                 style=f"font-family:{fam};font-size:{max(ctx.minc, 2.4 * u):.1f}px;font-weight:600;letter-spacing:.16em;")
+    if lead_text:  # a block with little to carry takes the lead copy, large, so the colour is never an empty slab
+        top += T(ctx, "sub", lead_text, c="on_accent", on="accent",
+                 style=f"font-family:{fam};font-size:{max(ctx.minb, (3.6 if ctx.o == 'square' else 5.6 if ctx.H / ctx.W > 1.7 else 4.4) * u):.1f}px;line-height:1.45;"
+                       f"font-weight:600;max-width:92%;text-wrap:pretty;")
+    if not (head or grid or foot or top):
+        return ""
+    lft, rgt, btm = bleed
+    return (f'<div class="on-accent" data-grp="panel" style="flex:none;background:{t["accent"]};'
+            f'margin:0 {-rgt:.1f}px {-btm:.1f}px {-lft:.1f}px;'
+            f'padding:{ctx.px(4.2)} {px_or(ctx, rgt, 3.4)} {px_or(ctx, btm, 3.4)} {px_or(ctx, lft, 3.4)};min-height:{min_h:.0f}px;'
+            f'display:flex;flex-direction:column;justify-content:space-between;gap:{ctx.px(3)}">'
+            + (f'<div style="display:flex;flex-direction:column;gap:{ctx.px(2)}">{top}</div>' if top else "")
+            + f'<div style="display:flex;flex-direction:column;gap:{ctx.px(3)}">{head}{grid}{foot}</div></div>')
 
 
 def ledger(ctx, c, system=None, size_u=3.4):
@@ -224,41 +292,77 @@ def foot_row(ctx, c, system=None):
 
 # ------------------------------------------------------------------ poster
 def poster_jing(ctx, fonts_css):
+    """Type on paper above, one solid block of the accent colour below carrying the offer and the facts.
+    The block reaches the paper edge, so a tall page without a photo has weight at the bottom and no hole
+    in the middle."""
     c, t, u, o = ctx.item["content"], ctx.t, ctx.u, ctx.o
     a = ctx.item.get("art") or {}
     pad = ctx.safe * 1.05
     has_img = bool(a.get("image"))
     strip = side_strip(ctx, ctx.brand.get("name"), c.get("date_line"))
+    sw = strip_w(ctx) if getattr(ctx, "_strip", False) else 0
     kicker = kicker_tag(ctx, c.get("kicker"))
-    # a square has room for the title and one more block: the offer wins over the facts
-    led = "" if (o == "square" and (c.get("offer") or c.get("qr") or c.get("cta"))) else ledger(ctx, c, size_u=3.4 if o != "square" else 3.0)
+    rows = []
+    det = c.get("details") or []
+    if det:
+        rows = [(d.get("k") or d.get("label") or "", d.get("v") or d.get("value") or "") for d in det]
+    elif c.get("tags"):
+        rows = [("", " · ".join(c["tags"][:5]))]
+    if o == "square":
+        rows = rows[:2] if (c.get("offer") or c.get("cta")) else rows[:4]
+        if has_img:  # title, photo and one block are all a square holds: the offer wins, the facts wait for the other sizes
+            rows = [] if (c.get("offer") or {}).get("big") else rows[:2]
     big = c.get("big_title") if c.get("big_title") and plain(c.get("big_title")) != plain(c.get("headline")) else None
     head = headline(ctx, big or c.get("headline"), roomy=not has_img)
-    sub = lead(ctx, c.get("sub"), size_u=(3.1 if has_img else 3.5) if o != "square" else 2.8)
+    sub = "" if (o == "square" and has_img) else lead(ctx, c.get("sub"), size_u=(3.2 if has_img else 3.6) if o != "square" else 3.0)
     num = (T(ctx, "headline", c.get("big_number"), c="accent_text", cls="d",
-             style=f"font-weight:{ctx.d['display'].get('weight', 600)};font-size:{min(ctx.W, ctx.H) * .19:.0f}px;line-height:.95;flex:none;")
+             style=f"font-size:{min(ctx.W, ctx.H) * .19:.0f}px;line-height:.95;flex:none;")
            if c.get("big_number") else "")
-    foot = foot_row(ctx, c)
     gap = ctx.px(3)
+    thin = not (c.get("offer") or {}).get("big") and len([r for r in rows if r[0]]) <= 1
     if o == "landscape":
-        leftcol = (f'<div style="display:flex;flex-direction:column;gap:{gap};min-width:0;justify-content:center">'
-                   f'{kicker}{head}{sub}</div>')
-        rightcol = (f'<div style="display:flex;flex-direction:column;gap:{gap};min-width:0;min-height:0">'
-                    + (photo(ctx, a) if has_img else num + '<div style="flex:1 1 auto"></div>' + led) + foot + "</div>")
-        body = (f'<div style="{box(ctx, pad)}display:flex;flex-direction:column">{strip}'
-                f'<div style="flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:{ctx.px(6)}">'
-                + leftcol + rightcol + "</div></div>")
+        if has_img:
+            # photo bleeds off the right half; the facts sit under the type as an inset block
+            panel = fact_panel(ctx, c, rows)
+            left = (f'<div style="position:absolute;left:{pad:.1f}px;top:{pad:.1f}px;bottom:{pad:.1f}px;width:{ctx.W * .5 - pad * 1.5:.1f}px;'
+                    f'display:flex;flex-direction:column;gap:{gap};justify-content:center;z-index:2">{kicker}{head}{sub}{num}'
+                    f'<div style="flex:1 1 auto;max-height:{ctx.px(4)}"></div>{panel}</div>')
+            right = (f'<div style="position:absolute;right:0;top:0;bottom:0;width:{ctx.W * .5:.1f}px;display:flex">'
+                     + photo(ctx, a) + "</div>")
+            body = left + right
+        else:
+            # the accent block takes the whole right third, edge to edge
+            ctx._strip, sw = False, 0  # the brand moves into the block: nothing runs down the edge over the colour
+            brand_line = " · ".join(x for x in (plain(ctx.brand.get("name") or ""), plain(c.get("date_line") or "")) if x)
+            panel = fact_panel(ctx, c, rows, bleed=(0, pad, pad), top_label=brand_line or None,
+                               lead_text=plain(c.get("sub")) if thin else None)
+            if thin:
+                sub = ""
+            body = (f'<div style="{box(ctx, pad)}display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:{ctx.px(6)}">'
+                    f'<div style="display:flex;flex-direction:column;gap:{gap};justify-content:center;min-width:0">{kicker}{head}{sub}{num}</div>'
+                    f'<div style="display:flex;flex-direction:column;margin-top:{-pad:.1f}px;min-width:0">'
+                    + panel.replace("flex:none;", "flex:1 1 auto;", 1).replace(f"padding:{ctx.px(4.2)} ", f"padding:{pad * 1.5:.1f}px ", 1)
+                    + "</div></div>")
+        css = "em.hl{font-style:normal;color:" + t["accent_text"] + "}"
+        return page(ctx, fonts_css, body, css + ".pattern{display:none}")
+    tall = ctx.H / ctx.W > 1.2
+    lead_in = thin and not has_img and bool(c.get("sub"))
+    panel = fact_panel(ctx, c, rows, bleed=(pad, pad + sw, pad), lead_text=plain(c.get("sub")) if lead_in else None,
+                       min_h=(ctx.H * ((.38 if lead_in else .48) if ctx.H / ctx.W > 1.7 else .42 if ctx.H / ctx.W > 1.55 else .32)
+                              if tall and not has_img else 0))
+    if lead_in:
+        sub = ""
+    if has_img:  # the photo runs edge to edge and lands on the colour block; the title gives way before it does
+        middle = photo(ctx, a).replace("flex:1 1 0;min-height:0;",
+                                       f"flex:1 1 0;min-height:{ctx.H * (.3 if o == 'square' else .26):.0f}px;"
+                                       f"margin:0 {-(pad + sw):.1f}px 0 {-pad:.1f}px;", 1)
     else:
-        middle = photo(ctx, a) if has_img else f'<div style="flex:1 1 auto;min-height:{ctx.px(2)}"></div>'
-        lower = ""
-        if not has_img and ctx.H / ctx.W > 1.2 and sub:
-            # tall page, no photo: the lead sits in the air a little below the middle, so the page has no single hole
-            middle = (f'<div style="flex:3 1 0;min-height:{ctx.px(2)}"></div>{sub}'
-                      f'<div style="flex:2 1 0;min-height:{ctx.px(1)}"></div>')
-            sub = ""
-        body = (f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{gap}">{strip}'
-                + f'<div style="height:{(ctx.H * .05 if ctx.H / ctx.W > 1.55 else 2 * u) if o != "square" else .5 * u:.0f}px;flex:none"></div>'
-                + kicker + head + sub + num + middle + lower + led + foot + "</div>")
+        middle = f'<div style="flex:1 1 auto;min-height:{ctx.px(2)}"></div>'
+    if has_img and panel:  # photo and block touch: no gap between them
+        panel = panel.replace("margin:0 ", f"margin:{-ctx.u * 3:.1f}px ", 1)
+    body = (f'<div style="{box(ctx, pad)}display:flex;flex-direction:column;gap:{gap}">{strip}'
+            + f'<div style="height:{(ctx.H * .04 if ctx.H / ctx.W > 1.55 else 1.5 * u) if o != "square" else 0:.0f}px;flex:none"></div>'
+            + kicker + head + sub + num + middle + panel + "</div>")
     css = "em.hl{font-style:normal;color:" + t["accent_text"] + "}"
     return page(ctx, fonts_css, body, css + ".pattern{display:none}")
 
